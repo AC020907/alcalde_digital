@@ -3,8 +3,10 @@ class NodoDecision:
         self.texto = texto
         self.consecuencia = consecuencia
         self.etiqueta = etiqueta
-        self.izquierda = None
-        self.derecha = None        
+        self.hijos = []
+
+    def agregar_hijo(self, nodo):
+        self.hijos.append(nodo)
 
     def es_hoja(self):
-        return self.izquierda is None and self.derecha is None
+        return len(self.hijos) == 0
