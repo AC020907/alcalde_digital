@@ -28,31 +28,6 @@ class Ciudad:
     def get_conflictos(self):
         return self.conflictos
 
-    # ===== ACCIONES =====
-
-    def verificar(self):
-        self.info_verificada = min(100, self.info_verificada + 5)
-        self.confianza = min(100, self.confianza + 3)
-        self.desinformacion = max(0, self.desinformacion - 4)
-
-    def compartir(self, es_verificada):
-        if es_verificada:
-            self.confianza = min(100, self.confianza + 2)
-            self.bienestar = min(100, self.bienestar + 1)
-        else:
-            self.desinformacion = min(100, self.desinformacion + 5)
-            self.conflictos = min(100, self.conflictos + 3)
-            self.convivencia = max(0, self.convivencia - 3)
-
-    def reportar(self):
-        self.conflictos = max(0, self.conflictos - 2)
-        self.info_verificada = min(100, self.info_verificada + 2)
-
-    def ignorar(self, tipo):
-        if tipo in ("FALSA", "RUMOR"):
-            self.desinformacion = min(100, self.desinformacion + 3)
-            self.conflictos = min(100, self.conflictos + 2)
-
     # ===== CONDICIONES DE JUEGO =====
 
     def derrota_inmediata(self):

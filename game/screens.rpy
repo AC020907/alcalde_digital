@@ -37,13 +37,6 @@ screen sistema_civitas():
                         Call("nueva_publicacion")
                     ]
 
-screen sistemaPost():
-    if banco.hay_mas():
-        timer timeLeft action [
-            SetVariable("timeLeft", newTimer()),
-            Call("nueva_publicacion")
-        ] repeat True
-
 screen hud_ciudad():
     zorder 50
 
