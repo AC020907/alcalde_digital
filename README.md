@@ -85,17 +85,34 @@ game/
 
 ---
 
+## Cómo ejecutar el juego
+
+### Requisitos
+
+- [Ren'Py 8.5](https://www.renpy.org/latest.html) instalado
+
+### Pasos
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/g4bblcs/Alcalde-Digital.git
+   ```
+
+2. Abre el **launcher de Ren'Py**.
+
+3. Haz clic en **Add an Existing Project** y selecciona la carpeta `Alcalde-Digital`.
+
+4. Selecciona el proyecto en la lista y presiona **Launch Project**.
+
+> No se requiere instalar Python por separado — Ren'Py incluye su propio intérprete.
+
+---
+
 ## Documentación técnica
 
 Documentación completa con diagramas, código anotado y reporte de cumplimiento de la Entrega 1:
 
 **[Ver documentación →](https://claude.ai/artifact/XZ6UqSxWpqkspFc1PwwUW7)**
-
----
-
-## Ejecutar el juego
-
-Abre el **launcher de Ren'Py**, selecciona el proyecto `Alcalde-Digital` y presiona **Launch Project**.
 
 ---
 
