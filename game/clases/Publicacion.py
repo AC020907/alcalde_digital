@@ -1,12 +1,15 @@
 import random
 from clases.Tree import ArbolDecisiones
+from clases.ArbolAVL import ArbolAVL
 
 
 class Publicacion:
-    def __init__(self, autor, contenido, es_falsa, arbol):
+
+    def __init__(self, autor, contenido, es_falsa, nivel_riesgo, arbol):
         self.autor = autor
         self.contenido = contenido
         self.es_falsa = es_falsa
+        self.nivel_riesgo = nivel_riesgo
         self.arbol = arbol
 
 
@@ -35,20 +38,28 @@ class SesionPublicacion:
 class BancoPublicaciones:
 
     def __init__(self, publicaciones):
-        self.pendientes = list(publicaciones)
+        self.avl = ArbolAVL()
+        for pub in publicaciones:
+            self.avl.agregar(pub)
 
     def hay_mas(self):
-        return len(self.pendientes) > 0
+        return self.avl.raiz is not None
 
     def siguiente(self):
-        pub = random.choice(self.pendientes)
-        self.pendientes.remove(pub)
-        return pub
+        # Entrega la publicacion de MENOR riesgo primero: escalada progresiva
+        nodo = self.avl._minimo_nodo(self.avl.raiz)
+        self.avl.borrar(nodo.get_clave())
+        return nodo.get_publicacion()
+
+    def inorden_riesgos(self):
+        resultado = []
+        self.avl.inorden_texto(self.avl.raiz, resultado)
+        return resultado
 
 
-def armar_publicacion(autor, contenido, es_falsa, pregunta, izq, der):
+def armar_publicacion(autor, contenido, es_falsa, nivel_riesgo, pregunta, izq, der):
     arbol = ArbolDecisiones()
     arbol.insertar(pregunta, [])
-    arbol.insertar(izq["texto"], ['izq'], izq["efecto"], izq["etiqueta"])
-    arbol.insertar(der["texto"], ['der'], der["efecto"], der["etiqueta"])
-    return Publicacion(autor, contenido, es_falsa, arbol)
+    arbol.insertar(izq["texto"], ['izq'], izq.get("efecto"), izq["etiqueta"])
+    arbol.insertar(der["texto"], ['der'], der.get("efecto"), der["etiqueta"])
+    return Publicacion(autor, contenido, es_falsa, nivel_riesgo, arbol)

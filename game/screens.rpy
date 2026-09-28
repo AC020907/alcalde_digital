@@ -17,27 +17,25 @@ default timeLeft = 15.0 # Tiempo inicial para el post
 default postReady = False
 
 screen sistema_civitas():
-    if banco.hay_mas():
-        
-        if not postReady:
-            timer timeLeft action SetVariable("postReady", True) repeat True
-            
-        else:
-            frame:
-                align (0.95, 0.05) # Se ubica en la esquina superior derecha
-                padding (15, 15)
-                background "#1e293bdd" # Color de fondo oscuro semitransparente
-                
-                vbox:
-                    spacing 5
-                    text "Nueva notificación de Civitas" size 16 color "#38bdf8"
-                    textbutton "Abrir aplicación":
-                        
-                        action [
-                            SetVariable("postReady", False),
-                            SetVariable("timeLeft", newTimer()),
-                            Call("nueva_publicacion")
-                        ]
+    if not banco.hay_mas():
+        timer 0.5 action Jump("evaluar_final")
+    elif not postReady:
+        timer timeLeft action SetVariable("postReady", True) repeat True
+    else:
+        frame:
+            align (0.95, 0.05)
+            padding (15, 15)
+            background "#1e293bdd"
+
+            vbox:
+                spacing 5
+                text "Nueva notificacion de Civitas" size 16 color "#38bdf8"
+                textbutton "Abrir aplicacion":
+                    action [
+                        SetVariable("postReady", False),
+                        SetVariable("timeLeft", newTimer()),
+                        Call("nueva_publicacion")
+                    ]
 
 screen sistemaPost():
     if banco.hay_mas():
@@ -46,10 +44,36 @@ screen sistemaPost():
             Call("nueva_publicacion")
         ] repeat True
 
+screen hud_ciudad():
+    zorder 50
+
+    frame:
+        align (0.5, 0.0)
+        background "#0f172acc"
+        padding (12, 6, 12, 6)
+
+        hbox:
+            spacing 14
+
+            text "InfoVerif: [ciudad.get_info_verificada()]" color "#4ade80" size 13
+            text "Confianza: [ciudad.get_confianza()]" color "#4ade80" size 13
+            text "Convivencia: [ciudad.get_convivencia()]" color "#4ade80" size 13
+            text "Bienestar: [ciudad.get_bienestar()]" color "#4ade80" size 13
+
+            text "|" color "#475569" size 13
+
+            text "Desinform: [ciudad.get_desinformacion()]" color "#f87171" size 13
+            text "Conflictos: [ciudad.get_conflictos()]" color "#f87171" size 13
+
+            text "|" color "#475569" size 13
+
+            text "Rep: [jugador.get_reputacion()]" color "#fbbf24" size 13
+            text "Pts: [jugador.get_puntos()]" color "#fbbf24" size 13
+
 transform normalImage(x,y):
     zoom 0.45
     yalign y
-    xalign x    
+    xalign x
 
 style default:
     properties gui.text_properties()

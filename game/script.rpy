@@ -1,17 +1,45 @@
-﻿# The script of the game goes in this file.
-
-# Declare characters used by this game. The color argument colorizes the
-# name of the character.
-# The game starts here.
+# El script del juego comienza aqui.
 
 label start:
-    show screen sistema_civitas
-    "Hoy es un día tranquilo en la ciudad."
-    "Demasiado tranquilo, de hecho..."
-    "Voy a seguir caminando hacia la universidad mientras reviso mis cosas."
-    "Parece que no hay nada interesante por hacer hoy."
+    call intro_historia
 
-    while banco.hay_mas():
-        "tal vez debería revisar mi teléfono para ver si hay algo nuevo."
+    "Antes de comenzar, elige tu rol en Ciudad Nova:"
+    menu:
+        "Ciudadano - Interactua con informacion cotidianamente.":
+            $ jugador.set_rol("Ciudadano")
+        "Periodista - Detecta noticias falsas con mayor precision.":
+            $ jugador.set_rol("Periodista")
+        "Influencer - Tus decisiones tienen mayor alcance en Civitas.":
+            $ jugador.set_rol("Influencer")
+        "Candidato a Alcalde - Construye confianza y responde publicaciones.":
+            $ jugador.set_rol("Candidato")
+
+    "[jugador.get_desc_rol()]"
+    "Rol seleccionado: [jugador.get_rol()]. La ciudad depende de tus decisiones."
+
+    show screen sistema_civitas
+    show screen hud_ciudad
+
+    pause
+
+label evaluar_final:
+    hide screen sistema_civitas
+    hide screen hud_ciudad
+    if ciudad.victoria(jugador):
+        jump victoria
+    else:
+        $ razon_derrota = "Los indicadores no alcanzaron el minimo requerido."
+        jump derrota
+
+label victoria:
+    "Ciudad Nova prospero gracias a tu gestion responsable de la informacion."
+    "Puntos: [jugador.get_puntos()] | Reputacion: [jugador.get_reputacion()]%"
+    "Tu rol fue: [jugador.get_rol()]. Ciudad Nova te lo agradece."
     return
 
+label derrota:
+    hide screen sistema_civitas
+    hide screen hud_ciudad
+    "[razon_derrota]"
+    "Tu mandato ha llegado a su fin. Ciudad Nova ha caido en el caos informativo."
+    return
