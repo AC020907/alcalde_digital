@@ -20,7 +20,8 @@ label start:
     show screen sistema_civitas
     show screen hud_ciudad
 
-    pause
+    while banco.hay_mas():
+        "Revisa tu telefono... puede aparecer una publicacion nueva en Civitas."
 
 label evaluar_final:
     hide screen sistema_civitas
