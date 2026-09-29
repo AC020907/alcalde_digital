@@ -34,7 +34,7 @@ label evaluar_final:
 
 label victoria:
     "Ciudad Nova prospero gracias a tu gestion responsable de la informacion."
-    "Puntos: [jugador.get_puntos()] | Reputacion: [jugador.get_reputacion()]%"
+    "Puntos: [jugador.get_puntos()] | Reputacion: [jugador.get_reputacion()]%%"
     "Tu rol fue: [jugador.get_rol()]. Ciudad Nova te lo agradece."
     return
 

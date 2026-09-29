@@ -1,4 +1,5 @@
 from clases.NodoAVL import NodoAVL
+from clases.Clase_pila import Clase_pila
 
 
 class ArbolAVL:
@@ -200,52 +201,44 @@ class ArbolAVL:
     # ===== RECORRIDOS ITERATIVOS (lista como pila, igual que Stack de Java) =====
 
     def preorden_iterativo(self, nodo):
-        pila = []
+        pila = Clase_pila()
         p = nodo
-        while p is not None or len(pila) > 0:
+        while p is not None or not pila.esta_vacia():
             if p is not None:
                 print(str(p.get_clave()) + "-", end="")
-                self.impila(pila, p)
+                pila.impila(p)
                 p = p.get_izquierdo()
             else:
-                p = self.campila(pila)
+                p = pila.campila()
                 p = p.get_derecho()
 
     def inorden_iterativo(self, nodo):
-        pila = []
+        pila = Clase_pila()
         p = nodo
-        while p is not None or len(pila) > 0:
+        while p is not None or not pila.esta_vacia():
             if p is not None:
-                self.impila(pila, p)
+                pila.impila(p)
                 p = p.get_izquierdo()
             else:
-                p = self.campila(pila)
+                p = pila.campila()
                 print(str(p.get_clave()) + "-", end="")
                 p = p.get_derecho()
 
     def posorden_iterativo(self, nodo):
         if nodo is None:
             return
-        pila1 = []
-        pila2 = []
-        self.impila(pila1, nodo)
-        while len(pila1) > 0:
-            p = self.campila(pila1)
-            self.impila(pila2, p)
+        pila1 = Clase_pila()
+        pila2 = Clase_pila()
+        pila1.impila(nodo)
+        while not pila1.esta_vacia():
+            p = pila1.campila()
+            pila2.impila(p)
             if p.get_izquierdo() is not None:
-                self.impila(pila1, p.get_izquierdo())
+                pila1.impila(p.get_izquierdo())
             if p.get_derecho() is not None:
-                self.impila(pila1, p.get_derecho())
-        while len(pila2) > 0:
-            print(str(self.campila(pila2).get_clave()) + "-", end="")
-
-    def impila(self, pila, p):
-        pila.append(p)
-
-    def campila(self, pila):
-        if len(pila) > 0:
-            return pila.pop()
-        return None
+                pila1.impila(p.get_derecho())
+        while not pila2.esta_vacia():
+            print(str(pila2.campila().get_clave()) + "-", end="")
 
     # ===== UTILITARIOS =====
 

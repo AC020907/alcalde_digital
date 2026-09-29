@@ -34,6 +34,7 @@ label nueva_publicacion:
         "[sesion.actual.texto]"
 
     $ aplicar_consecuencia(sesion.actual.consecuencia)
+    $ procesando = False
 
     $ razon_derrota = ciudad.derrota_inmediata() or ""
     if razon_derrota:

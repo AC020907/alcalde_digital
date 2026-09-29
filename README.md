@@ -6,7 +6,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-yellow.svg)](https://www.python.org/)
 [![Estado](https://img.shields.io/badge/Estado-Entrega%201-orange.svg)]()
 [![Uninorte](https://img.shields.io/badge/Uninorte-Estructuras%20de%20Datos%20II-purple.svg)]()
-[![Documentación](https://img.shields.io/badge/Docs-Ver%20documentación-0e7490.svg)](https://claude.ai/artifact/XZ6UqSxWpqkspFc1PwwUW7)
+[![Documentación](https://img.shields.io/badge/Docs-Ver%20documentación-0e7490.svg)](https://claude.ai/artifact/RR6Giy5q9NNkm4wDwvMjJU)
 
 ---
 
@@ -58,7 +58,7 @@ Verificar antes de actuar siempre produce mejores resultados para Ciudad Nova.
 ## Estructuras de datos implementadas
 
 - **Árbol AVL** (`ArbolAVL.py`) — almacena las publicaciones ordenadas por `nivel_riesgo`. Garantiza que el jugador enfrente primero las publicaciones de menor riesgo y las más peligrosas al final. Incluye rotaciones LL/RR/LR/RL, recorridos recursivos e iterativos, y métodos utilitarios (`hojas`, `gradoArbol`, `suma`, `esPerfecto`, `nodosEnNivel`, `buscarPadre`, `tio`).
-- **Lista como pila** (`impila` / `campila`) — usada en los recorridos iterativos del AVL.
+- **Clase_pila** (`Clase_pila.py`) — stack genérico, equivalente de `Stack<>` de Java. Clase independiente igual que en los proyectos de referencia del profesor. Usada en los tres recorridos iterativos del AVL (`preorden`, `inorden`, `posorden` iterativos).
 - **Árbol de decisiones N-ario** (`Tree.py` / `Node.py`) — cada publicación tiene su propio árbol que modela las 4 acciones del diagrama del laboratorio.
 - **BancoPublicaciones** (`Publicacion.py`) — extrae siempre la publicación de menor riesgo del AVL con `minimo_nodo` + `borrar` en O(log n).
 
@@ -69,6 +69,7 @@ Verificar antes de actuar siempre produce mejores resultados para Ciudad Nova.
 ```
 game/
 ├── clases/
+│   ├── Clase_pila.py       ← stack genérico (equiv. Java Stack<>)
 │   ├── NodoAVL.py          ← nodo del árbol AVL
 │   ├── ArbolAVL.py         ← AVL completo con rotaciones y utilitarios
 │   ├── Node.py             ← NodoDecision N-ario
@@ -112,7 +113,7 @@ game/
 
 Documentación completa con diagramas, código anotado y reporte de cumplimiento de la Entrega 1:
 
-**[Ver documentación →](https://claude.ai/artifact/XZ6UqSxWpqkspFc1PwwUW7)**
+**[Ver documentación →](https://claude.ai/artifact/RR6Giy5q9NNkm4wDwvMjJU)**
 
 ---
 

@@ -15,13 +15,14 @@ init python:
 
 default timeLeft = 15.0 # Tiempo inicial para el post
 default postReady = False
+default procesando = False
 
 screen sistema_civitas():
     if not banco.hay_mas():
         timer 0.5 action Jump("evaluar_final")
-    elif not postReady:
+    elif not postReady and not procesando:
         timer timeLeft action SetVariable("postReady", True) repeat True
-    else:
+    elif postReady and not procesando:
         frame:
             align (0.95, 0.05)
             padding (15, 15)
@@ -33,6 +34,7 @@ screen sistema_civitas():
                 textbutton "Abrir aplicacion":
                     action [
                         SetVariable("postReady", False),
+                        SetVariable("procesando", True),
                         SetVariable("timeLeft", newTimer()),
                         Call("nueva_publicacion")
                     ]
