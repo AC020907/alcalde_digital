@@ -28,6 +28,15 @@ class SesionPublicacion:
     def terminada(self):
         return self.actual.es_hoja()
 
+    def en_verificacion(self):
+        """True si el nodo actual es el de '?Es verdadera?' (dos hijos: Si / No)."""
+        return self.actual is not self.publicacion.arbol.raiz and len(self.actual.hijos) == 2
+
+    def resolver_verificacion(self):
+        """Verificar revela la verdad: avanza a la hoja Si (verdadera) o No (falsa)."""
+        indice = 1 if self.publicacion.es_falsa else 0
+        return self.elegir(indice)
+
 
 class BancoPublicaciones:
 
