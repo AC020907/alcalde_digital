@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 ## Initialization
 ################################################################################
 
@@ -8,62 +8,22 @@ init offset = -1
 ################################################################################
 ## Styles
 ################################################################################
-init python:
-    import random
-    def newTimer():
-        return random.uniform(10.0, 20.0)
-
-default timeLeft = 15.0 # Tiempo inicial para el post
-default postReady = False
-default procesando = False
-
-screen sistema_civitas():
-    if not banco.hay_mas():
-        timer 0.5 action Jump("evaluar_final")
-    elif not postReady and not procesando:
-        timer timeLeft action SetVariable("postReady", True) repeat True
-    elif postReady and not procesando:
-        frame:
-            align (0.95, 0.05)
-            padding (15, 15)
-            background "#1e293bdd"
-
-            vbox:
-                spacing 5
-                text "Nueva notificacion de Civitas" size 16 color "#38bdf8"
-                textbutton "Abrir aplicacion":
-                    action [
-                        SetVariable("postReady", False),
-                        SetVariable("procesando", True),
-                        SetVariable("timeLeft", newTimer()),
-                        Call("nueva_publicacion")
-                    ]
-
-screen hud_ciudad():
-    zorder 50
-
+screen civitas_notificacion():
+    modal True
     frame:
-        align (0.5, 0.0)
-        background "#0f172acc"
-        padding (12, 6, 12, 6)
+        at (tarjeta_entra if efectos_activos() else tarjeta_fade)
+        align (0.95, 0.14)
+        padding (20, 16)
+        background "#1e293bee"
+        vbox:
+            spacing 8
+            text "Nueva notificación de Civitas" size 22 color "#38bdf8"
+            textbutton "Abrir aplicación":
+                action Return()
+                hover_sound "assets/audio/sfx/hover_decision.wav"
+                activate_sound "assets/audio/sfx/click_compartir.wav"
 
-        hbox:
-            spacing 14
 
-            text "InfoVerif: [ciudad.get_info_verificada()]" color "#4ade80" size 13
-            text "Confianza: [ciudad.get_confianza()]" color "#4ade80" size 13
-            text "Convivencia: [ciudad.get_convivencia()]" color "#4ade80" size 13
-            text "Bienestar: [ciudad.get_bienestar()]" color "#4ade80" size 13
-
-            text "|" color "#475569" size 13
-
-            text "Desinform: [ciudad.get_desinformacion()]" color "#f87171" size 13
-            text "Conflictos: [ciudad.get_conflictos()]" color "#f87171" size 13
-
-            text "|" color "#475569" size 13
-
-            text "Rep: [jugador.get_reputacion()]" color "#fbbf24" size 13
-            text "Pts: [jugador.get_puntos()]" color "#fbbf24" size 13
 
 transform normalImage(x,y):
     zoom 0.45
@@ -278,7 +238,7 @@ style choice_button is button
 style choice_button_text is button_text
 
 style choice_vbox:
-    xalign 0.5
+    xalign 0.30
     ypos 405
     yanchor 0.5
 
@@ -286,6 +246,8 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
+    hover_sound "assets/audio/sfx/hover_decision.wav"
+    activate_sound "assets/audio/sfx/click_compartir.wav"
 
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
@@ -816,6 +778,11 @@ screen preferences():
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+
+                vbox:
+                    style_prefix "check"
+                    label _("Accesibilidad")
+                    textbutton _("Reducir efectos (sin temblor, parpadeo ni sacudidas)") action ToggleField(persistent, "efectos_reducidos")
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
