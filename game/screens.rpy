@@ -367,6 +367,66 @@ style navigation_button_text:
     properties gui.text_properties("navigation_button")
 
 
+## Zonas transparentes sobre los botones dibujados en la ilustracion.
+screen inicio_navigation():
+
+    button:
+        xpos 55
+        ypos 480
+        xsize 355
+        ysize 77
+        background None
+        hover_background None
+        action Start()
+        hovered Play("sound", "assets/audio/sfx/hover_decision.wav")
+        activate_sound "assets/audio/sfx/click_compartir.wav"
+
+    button:
+        xpos 55
+        ypos 570
+        xsize 355
+        ysize 77
+        background None
+        hover_background None
+        action ShowMenu("load")
+        hovered Play("sound", "assets/audio/sfx/hover_decision.wav")
+        activate_sound "assets/audio/sfx/click_compartir.wav"
+
+    button:
+        xpos 55
+        ypos 660
+        xsize 355
+        ysize 77
+        background None
+        hover_background None
+        action ShowMenu("preferences")
+        hovered Play("sound", "assets/audio/sfx/hover_decision.wav")
+        activate_sound "assets/audio/sfx/click_compartir.wav"
+
+    button:
+        xpos 55
+        ypos 750
+        xsize 355
+        ysize 77
+        background None
+        hover_background None
+        action ShowMenu("about")
+        hovered Play("sound", "assets/audio/sfx/hover_decision.wav")
+        activate_sound "assets/audio/sfx/click_compartir.wav"
+
+    if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+        button:
+            xpos 55
+            ypos 840
+            xsize 355
+            ysize 77
+            background None
+            hover_background None
+            action Quit(confirm=True)
+            hovered Play("sound", "assets/audio/sfx/hover_decision.wav")
+            activate_sound "assets/audio/sfx/click_compartir.wav"
+
+
 ## Main Menu screen ############################################################
 ##
 ## Used to display the main menu when Ren'Py starts.
@@ -378,26 +438,10 @@ screen main_menu():
     ## This ensures that any other menu screen is replaced.
     tag menu
 
-    add gui.main_menu_background
+    add "images/Image/Pantalla_de_inicio.png":
+        xysize (1920, 1080)
 
-    ## This empty frame darkens the main menu.
-    frame:
-        style "main_menu_frame"
-
-    ## The use statement includes another screen inside this one. The actual
-    ## contents of the main menu are in the navigation screen.
-    use navigation
-
-    if gui.show_name:
-
-        vbox:
-            style "main_menu_vbox"
-
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
+    use inicio_navigation
 
 
 style main_menu_frame is empty
