@@ -1,121 +1,136 @@
-# Alcalde Digital
+# Alcalde Digital — Civitas
 
-> Juego educativo de novela visual sobre gestión de desinformación en redes sociales, desarrollado en **Ren'Py + Python**.
+**Alcalde Digital** es una novela visual de investigación sobre desinformación, hecha en **Ren'Py 8.5**. Eres el alcalde de Ciudad Nova durante la semana anterior a las elecciones. Un lunes a las 6 de la mañana, un rumor dice que el agua de la ciudad está envenenada. Cada publicación que compartes, verificas o ignoras cambia la ciudad.
 
-[![Ren'Py](https://img.shields.io/badge/Ren'Py-8.5-blue.svg)](https://www.renpy.org/)
-[![Python](https://img.shields.io/badge/Python-3.x-yellow.svg)](https://www.python.org/)
-[![Estado](https://img.shields.io/badge/Estado-Entrega%201-orange.svg)]()
-[![Uninorte](https://img.shields.io/badge/Uninorte-Estructuras%20de%20Datos%20II-purple.svg)]()
-[![Documentación](https://img.shields.io/badge/Docs-Ver%20documentación-0e7490.svg)](https://claude.ai/artifact/RR6Giy5q9NNkm4wDwvMjJU)
+> Los me gusta no son evidencia.
+
+Proyecto para la **Feria Gamer 2026**.
 
 ---
 
-## Sobre el juego
+## Características
 
-**Alcalde Digital** transcurre en **Ciudad Nova** durante una campaña electoral. La red social **Civitas** está inundada de publicaciones: algunas verdaderas, otras falsas, muchas sin verificar.
-
-El jugador asume un rol público y debe decidir qué hacer con cada publicación que recibe. Sus decisiones no son neutrales: compartir sin verificar propaga la desinformación, ignorar puede ser igual de dañino, y reportar lo falso fortalece la confianza ciudadana. Al final de las 10 rondas, Ciudad Nova habrá prosperado o colapsado según las elecciones tomadas.
-
----
-
-## Roles
-
-| Rol | Amplificador | Descripción |
-|---|---|---|
-| Ciudadano | ×1.0 | Rol base — interactúa con la información cotidiana |
-| Periodista | ×1.5 | Detecta noticias falsas con mayor precisión |
-| Influencer | ×2.0 | Sus decisiones tienen el mayor alcance en Civitas |
-| Candidato | ×1.2 | Construye confianza y enfrenta rumores directamente |
-
----
-
-## Las 4 acciones
-
-Ante cada publicación el jugador puede:
-
-1. **Compartir** — difundirla de inmediato
-2. **Verificar** — investigar si es verdadera o falsa, y luego compartir o reportar
-3. **Ignorar** — no hacer nada
-4. **Reportar** — denunciar contenido falso (disponible dentro del flujo de verificación)
-
-Verificar antes de actuar siempre produce mejores resultados para Ciudad Nova.
+- **Historia con decisiones**: prólogo, tres actos y un domingo de elecciones. Las elecciones tienen consecuencias inmediatas y diferidas.
+- **CivitasNet**: una red social ficticia que reacciona a lo que haces. Puedes inspeccionar cada publicación (fuente, contexto, estado de verificación) y guardar pistas.
+- **Expediente**: un cuaderno de investigación con hechos observados, hipótesis, conclusiones comprobadas e hipótesis refutadas.
+- **Cuatro minijuegos** integrados en la historia:
+  - **Moderación Express**: limpia los comentarios de Martina; borra bots y aprueba a las personas reales.
+  - **Caza-Rumores**: frena un rumor que se propaga en tiempo real por la red de la ciudad.
+  - **Rastreador**: un tablero de evidencias donde reconstruyes la cadena de difusión de un rumor hasta su origen.
+  - **La Gran Viralización**: el ataque final, dos horas antes de abrir las urnas.
+- **NOVA**: la red de cuentas automáticas detrás de los rumores, con un giro que depende de lo que hiciste.
+- **Eventos variables**: cada partida es un poco distinta, sin bloquear el avance.
+- **Cuatro finales**: Ciudad Informada, Ciudad Dividida, Caos Informativo y un final secreto que se obtiene investigando.
+- **Modo Feria** (unos 8 minutos): versión condensada con los cuatro minijuegos, pensada para exhibición.
+- **Arte**: personajes con sprites transparentes y seis expresiones cada uno, fondos ilustrados y luz de escena según el lugar.
+- **Accesibilidad**: opción de reducir movimiento, velocidad de texto ajustable y control con ratón o teclado.
 
 ---
 
-## Indicadores de Ciudad Nova
+## Cómo ejecutarlo
 
-| Indicador | Tipo | Inicial | Condición crítica |
-|---|---|---|---|
-| Información verificada | positivo | 50 | — |
-| Confianza ciudadana | positivo | 60 | ≤ 20 → derrota inmediata |
-| Convivencia | positivo | 70 | — |
-| Bienestar | positivo | 65 | — |
-| Desinformación | negativo | 30 | ≥ 80 → derrota inmediata |
-| Conflictos | negativo | 20 | ≥ 80 → derrota inmediata |
+1. Descarga el **SDK de Ren'Py 8.5.x** desde <https://www.renpy.org/latest.html>.
+2. Clona este repositorio:
+   ```bash
+   git clone https://github.com/AC020907/alcalde_digital.git
+   ```
+3. Abre el lanzador de Ren'Py, en «Preferencias → Directorio de proyectos» elige la carpeta que contiene el proyecto y selecciónalo.
+4. Pulsa **Launch Project**.
+
+En el menú principal:
+- **Nueva partida**: la historia completa.
+- **Modo Feria (8 min)**: la versión corta para exhibición.
+
+### Controles
+
+| Acción | Cómo |
+|---|---|
+| Avanzar el diálogo | Clic, Enter o espacio |
+| Elegir una opción | Clic, o flechas + Enter |
+| CivitasNet / Expediente | Botones bajo los indicadores, arriba a la derecha |
+| Historial, guardar, cargar, opciones | Barra inferior o Esc |
+| Moderación Express | ← / A borrar · → / D aprobar |
+| Rastreador | Arrastrar fichas, o teclas 1–6 + Z X C · H pista · Enter comprobar |
 
 ---
 
-## Estructuras de datos implementadas
-
-- **Árbol AVL** (`ArbolAVL.py`) — almacena las publicaciones ordenadas por `nivel_riesgo`. Garantiza que el jugador enfrente primero las publicaciones de menor riesgo y las más peligrosas al final. Incluye rotaciones LL/RR/LR/RL, recorridos recursivos e iterativos, y métodos utilitarios (`hojas`, `gradoArbol`, `suma`, `esPerfecto`, `nodosEnNivel`, `buscarPadre`, `tio`).
-- **Clase_pila** (`Clase_pila.py`) — stack genérico, equivalente de `Stack<>` de Java. Clase independiente igual que en los proyectos de referencia del profesor. Usada en los tres recorridos iterativos del AVL (`preorden`, `inorden`, `posorden` iterativos).
-- **Árbol de decisiones N-ario** (`Tree.py` / `Node.py`) — cada publicación tiene su propio árbol que modela las 4 acciones del diagrama del laboratorio.
-- **BancoPublicaciones** (`Publicacion.py`) — extrae siempre la publicación de menor riesgo del AVL con `minimo_nodo` + `borrar` en O(log n).
-
----
-
-## Arquitectura
+## Estructura del proyecto
 
 ```
 game/
-├── clases/
-│   ├── Clase_pila.py       ← stack genérico (equiv. Java Stack<>)
-│   ├── NodoAVL.py          ← nodo del árbol AVL
-│   ├── ArbolAVL.py         ← AVL completo con rotaciones y utilitarios
-│   ├── Node.py             ← NodoDecision N-ario
-│   ├── Tree.py             ← ArbolDecisiones con recorridos
-│   ├── Publicacion.py      ← Publicacion, SesionPublicacion, BancoPublicaciones
-│   ├── Ciudad.py           ← 6 indicadores + condiciones de victoria/derrota
-│   └── Jugador.py          ← roles con amplificador de impacto
-├── story/
-│   └── intro.rpy           ← narración introductoria
-├── objects.rpy             ← 10 publicaciones con 4 acciones cada una
-├── script.rpy              ← flujo principal del juego
-└── screens.rpy             ← HUD en tiempo real + sistema de notificaciones
+├── clases/            Lógica en Python (sin dependencias de Ren'Py)
+│   ├── GrafoSocial.py        Grafo dirigido ponderado, BFS y DFS
+│   ├── RedCivitas.py         Las 28 cuentas de Ciudad Nova y sus conexiones
+│   ├── ArbolAVL.py           Banco de publicaciones ordenado por riesgo
+│   ├── Clase_pila.py         Pila para los recorridos iterativos del AVL
+│   ├── Tree.py               Árbol N-ario de decisiones de cada publicación
+│   ├── Moderador.py          Cola FIFO de comentarios
+│   ├── CazaRumores.py        Motor de los minijuegos en tiempo real
+│   ├── PuzzleEvidencias.py   Puzzle del Rastreador
+│   └── Investigacion.py      CivitasNet, expediente, eventos y final secreto
+├── minijuegos/        Pantallas y lógica de los cuatro minijuegos
+├── story/             Historia, personajes, CivitasNet, expediente, finales y modo feria
+├── images/            Fondos y sprites de personajes
+├── assets/            Audio, fondos de minijuegos e íconos
+├── gui/ · fonts/      Interfaz y tipografías
+└── screens.rpy · options.rpy · script.rpy
+tests/
+└── test_civitas_logica.py   Pruebas de la lógica pura
 ```
 
 ---
 
-## Cómo ejecutar el juego
+## Estructuras de datos
 
-### Requisitos
+| Estructura | Dónde se usa |
+|---|---|
+| **Grafo dirigido ponderado** | La red social de la ciudad: quién sigue a quién (`GrafoSocial`). |
+| **BFS por niveles** | La propagación de rumores en Caza-Rumores y en la Gran Viralización; las horas del Rastreador. |
+| **DFS inverso** | La validación de la cadena del Rastreador y el cálculo de las pistas. |
+| **Árbol AVL** | El banco de publicaciones del teléfono, que se entregan de menor a mayor riesgo. |
+| **Pila** | Los recorridos iterativos del AVL (`Clase_pila`). |
+| **Árbol N-ario** | Las opciones de cada publicación: Compartir / Verificar (Sí, No) / Ignorar. |
+| **Cola FIFO** | Los comentarios de Moderación Express. |
 
-- [Ren'Py 8.5](https://www.renpy.org/latest.html) instalado
+### Modo sustentación y laboratorio
 
-### Pasos
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/g4bblcs/Alcalde-Digital.git
-   ```
-
-2. Abre el **launcher de Ren'Py**.
-
-3. Haz clic en **Add an Existing Project** y selecciona la carpeta `Alcalde-Digital`.
-
-4. Selecciona el proyecto en la lista y presiona **Launch Project**.
-
-> No se requiere instalar Python por separado — Ren'Py incluye su propio intérprete.
+Al ejecutar desde el lanzador de Ren'Py, pulsa **Shift+L** en el menú principal para abrir el laboratorio. Desde ahí puedes:
+- lanzar cada minijuego por separado;
+- activar el modo sustentación, que muestra los recorridos BFS y DFS;
+- revisar CivitasNet, el expediente y los sprites.
 
 ---
 
-## Documentación técnica
+## Pruebas
 
-Documentación completa con diagramas, código anotado y reporte de cumplimiento de la Entrega 1:
+Las pruebas de lógica pura cubren los catálogos, CivitasNet, el expediente, los eventos variables, el final secreto y el puzzle. No necesitan Ren'Py:
 
-**[Ver documentación →](https://claude.ai/artifact/RR6Giy5q9NNkm4wDwvMjJU)**
+```bash
+python tests/test_civitas_logica.py
+```
+
+Para revisar los scripts: en el lanzador de Ren'Py, **Check Script (Lint)**.
 
 ---
 
-*Estructuras de Datos II · Universidad del Norte · 2026*
+## Documentación
 
+- `Guia_Alcalde_Digital.pdf` / `.docx`: guía completa del juego. Incluye una sección marcada como spoiler sobre el final secreto.
+- `GAME_AUDIT.md`: decisiones de diseño, sistemas y pendientes técnicos.
+- `PROTOCOLO_PRUEBAS_JUGADORES.md`: plantilla para probar el juego con jugadores.
+
+---
+
+## Equipo
+
+| Integrante | Rol |
+|---|---|
+| _Nombre_ | _Rol_ |
+| _Nombre_ | _Rol_ |
+| _Nombre_ | _Rol_ |
+
+---
+
+## Contexto
+
+Proyecto académico para el curso de Estructuras de Datos, presentado en la Feria Gamer 2026.
