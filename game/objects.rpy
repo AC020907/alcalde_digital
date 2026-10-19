@@ -17,37 +17,40 @@ init python:
             elif hasattr(store.ciudad, clave):
                 nuevo = max(0, min(100, getattr(store.ciudad, clave) + valor))
                 setattr(store.ciudad, clave, nuevo)
+        mostrar_cambios(consecuencia)
 
 label nueva_publicacion:
     if not banco.hay_mas():
         return
 
     $ sesion = SesionPublicacion(banco.siguiente())
-
-    "Recibiste una publicacion nueva en Civitas."
-    "[sesion.publicacion.autor]: [sesion.publicacion.contenido]"
-    "[sesion.actual.texto]"
+    $ publicaciones_vistas += 1
+    play sound "assets/audio/sfx/notificacion.wav"
+    window hide
 
     while not sesion.terminada():
-        $ eleccion = renpy.display_menu(sesion.opciones())
+        $ eleccion = renpy.call_screen("telefono_civitas", sesion=sesion)
         $ sesion.elegir(eleccion)
-        "[sesion.actual.texto]"
+
+    window auto
+    civitas "[sesion.actual.texto]"
 
     $ aplicar_consecuencia(sesion.actual.consecuencia)
-    $ procesando = False
+    $ ultima_accion = accion_elegida(sesion)
+    $ ultima_publicacion_falsa = sesion.publicacion.es_falsa
+    $ registrar_decision_publicacion(sesion.publicacion, ultima_accion)
+
+    call reaccion_red_civitas(sesion)
 
     $ razon_derrota = ciudad.derrota_inmediata() or ""
     if razon_derrota:
-        jump derrota
+        jump final_caos
 
     return
 
-# Personajes
-
-define inf = Character("Influencer")
-define may = Character("Candidato a Alcalde")
-define inv = Character("Investigador")
-define ci = Character("Civil")
+default publicaciones_vistas = 0
+default ultima_accion = None
+default ultima_publicacion_falsa = False
 
 # Estado de la ciudad y del jugador
 
