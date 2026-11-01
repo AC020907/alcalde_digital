@@ -20,10 +20,10 @@ init python:
         credibilidad = jugador.get_reputacion()
         estable = estabilidad()
         return [
-            ("Confianza", confianza, "#5b5bd6", confianza <= 30),
-            ("Desinformación", desinformacion, "#e86a7e", desinformacion >= 65),
-            ("Credibilidad", credibilidad, "#8c2f4b", credibilidad <= 25),
-            ("Estabilidad", estable, "#2f9e8f", estable <= 35),
+            ("Confianza", confianza, "#7c7cf0", confianza <= 30),
+            ("Desinformación", desinformacion, "#f0667a", desinformacion >= 65),
+            ("Credibilidad", credibilidad, "#d6779a", credibilidad <= 25),
+            ("Estabilidad", estable, "#3fcf8e", estable <= 35),
         ]
 
     NOMBRES_INDICADOR = {
@@ -65,31 +65,32 @@ transform cambio_flotante(retraso):
 screen hud_ciudad():
     zorder 50
     frame:
-        xalign 0.985
-        ypos 16
-        xsize 330
-        padding (22, 16, 22, 18)
-        background Frame("gui/frame.png", 30, 30)
-        vbox:
-            spacing 6
-            text "CIUDAD NOVA" size 15 bold True color "#8c2f4b" kerning 2
+        xfill True
+        ysize 92
+        padding (40, 12, 40, 10)
+        background Solid("#120d1ceb")
+        hbox:
+            xfill True
+            spacing 36
             for nombre, valor, color, critico in indicadores_hud():
                 fixed:
-                    ysize 38
+                    xsize 250
                     if critico:
                         at hud_temblor
-                    text nombre size 15 color ("#c0392b" if critico else "#5b4f72")
-                    text "[valor]" size 15 bold True color "#2b2440" xalign 1.0
+                    text nombre size 20 color ("#f0667a" if critico else "#c9b8d8")
+                    text "[valor]" size 34 bold True color color ypos 22
                     bar:
-                        ypos 22
+                        ypos 66
                         value StaticValue(valor, 100)
-                        xsize 286
-                        ysize 10
+                        xsize 250
+                        ysize 6
                         left_bar Solid(color)
-                        right_bar Solid("#eadff0")
-            null height 6
+                        right_bar Solid("#2f2744")
+            null width 10
             hbox:
-                spacing 10
+                xalign 1.0
+                yalign 0.5
+                spacing 14
                 use hud_acceso("CivitasNet", feed_sin_ver(), Show("civitasnet"))
                 use hud_acceso("Expediente", pistas_sin_ver(), Show("expediente"))
 
@@ -117,7 +118,7 @@ screen cambios_indicadores(lineas):
     zorder 60
     vbox:
         xalign 0.985
-        ypos 290
+        ypos 110
         spacing 4
         for i, (texto, bueno) in enumerate(lineas):
             frame:
