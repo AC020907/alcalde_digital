@@ -39,6 +39,10 @@ label laboratorio_grafos:
         "Minijuego 2 - Moderador (estructura)":
             call minijuego_moderador
 
+        "QA - Mapa de Ciudad Nova (carro)":
+            $ renpy.show_screen("mapa_ciudad")
+            "Maneja el carro con las flechas; F9 muestra las calles. Cierra el mapa con Esc."
+
         "QA - Revisión visual de sprites, encuadres y fondos":
             call revision_visual
 

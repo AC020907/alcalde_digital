@@ -15,6 +15,9 @@ JUEGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "game")
 sys.path.insert(0, JUEGO)
 
 from clases import Investigacion as inv  # noqa: E402
+from clases import Misiones  # noqa: E402
+from clases.MapaCiudad import (Carro, RUMBOS, UBICACIONES_FERIA, crear_mapa_nova,  # noqa: E402
+                               rumbo_de_angulo)
 from clases.PuzzleEvidencias import PuzzleEvidencias  # noqa: E402
 from clases.RedCivitas import crear_red_civitas  # noqa: E402
 
@@ -321,6 +324,92 @@ class Puzzle(unittest.TestCase):
         p.tick(80)
         self.assertEqual(p.estado, "derrota")
         self.assertFalse(p.resultado()["exito"])
+
+
+class TestMapaCiudad(unittest.TestCase):
+    def setUp(self):
+        self.mapa = crear_mapa_nova()
+
+    def test_grafo_conexo_y_paradas(self):
+        self.assertTrue(self.mapa.es_conexo())
+        for ubicacion in ("centro", "barrio_sur", "alcaldia", "prensa", "universidad", "barrio_norte",
+                          "parque", "transporte"):
+            self.assertIn(ubicacion, self.mapa.paradas)
+        for ubicacion in UBICACIONES_FERIA:
+            self.assertIn(ubicacion, self.mapa.paradas)
+
+    def test_rumbos(self):
+        self.assertEqual(rumbo_de_angulo(0), "der")
+        self.assertEqual(rumbo_de_angulo(90), "abajo")
+        self.assertEqual(rumbo_de_angulo(-90), "arriba")
+        self.assertEqual(rumbo_de_angulo(180), "izq")
+        self.assertEqual(rumbo_de_angulo(-45), "arriba_diag_der")
+        self.assertEqual(rumbo_de_angulo(135), "abajo_diag_izq")
+        self.assertEqual(set(RUMBOS), {rumbo_de_angulo(a) for a in range(0, 360, 45)})
+        # la histeresis evita parpadeos justo en el borde de un sector
+        self.assertEqual(rumbo_de_angulo(24, previo="der"), "der")
+        self.assertEqual(rumbo_de_angulo(24), "abajo_diag_der")
+
+    def test_carro_siempre_sobre_las_calles(self):
+        carro = Carro(self.mapa, "alcaldia")
+        direcciones = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, -1), (-1, 1), (0, 0)]
+        for paso in range(2400):
+            dx, dy = direcciones[(paso // 90) % len(direcciones)]
+            carro.avanzar(1 / 60.0, dx, dy)
+            x, y = carro.posicion()
+            (xa, ya), (xb, yb) = self.mapa.pos[carro.origen], self.mapa.pos[carro.destino]
+            desvio = abs((xb - xa) * (ya - y) - (xa - x) * (yb - ya))
+            largo = self.mapa.longitud(carro.origen, carro.destino)
+            self.assertLess(desvio / largo if largo else 0.0, 0.5)
+            self.assertIn(carro.rumbo, RUMBOS)
+
+    def test_carro_llega_a_cada_parada(self):
+        for ubicacion, nodo in self.mapa.paradas.items():
+            carro = Carro(self.mapa, nodo)
+            self.assertEqual(carro.ubicacion_cercana(), ubicacion)
+
+    def test_carro_se_detiene_sin_calle(self):
+        carro = Carro(self.mapa, "nw4")  # extremo de calle: solo sale hacia la glorieta
+        carro.avanzar(0.5, -1, 0)
+        self.assertTrue(carro.en_nodo())
+        self.assertEqual(carro.velocidad, 0.0)
+
+    def test_guardado_del_carro(self):
+        carro = Carro(self.mapa, "alcaldia")
+        for _ in range(40):
+            carro.avanzar(1 / 60.0, -1, 0)
+        otro = Carro(self.mapa, "alcaldia")
+        otro.restaurar(pickle.loads(pickle.dumps(carro.estado())))
+        self.assertEqual(otro.posicion(), carro.posicion())
+        otro.restaurar({"origen": "no_existe", "destino": "x", "avance": 5})
+        self.assertEqual(otro.posicion(), carro.posicion())
+
+
+class TestMisiones(unittest.TestCase):
+    def test_ubicaciones_existen_en_el_mapa(self):
+        mapa = crear_mapa_nova()
+        for m in Misiones.MISIONES:
+            self.assertIn(m["ubicacion"], mapa.paradas)
+
+    def test_orden_y_estados(self):
+        self.assertEqual(Misiones.mision_activa([])["id"], "lunes_plaza")
+        estados = Misiones.estado_misiones(["lunes_plaza"])
+        self.assertEqual([e for _, e in estados][:3], ["hecha", "activa", "bloqueada"])
+        self.assertIsNone(Misiones.mision_activa([m["id"] for m in Misiones.MISIONES]))
+
+    def test_viajes_conducidos_de_la_feria(self):
+        feria = {m["id"] for m in Misiones.misiones_de(feria=True)}
+        self.assertTrue(set(Misiones.FERIA_CONDUCIR) <= feria)
+        self.assertEqual(len(Misiones.FERIA_CONDUCIR), 3)
+
+    def test_feria_solo_usa_sus_cuatro_lugares(self):
+        mapa = crear_mapa_nova()
+        lista = Misiones.misiones_de(feria=True)
+        self.assertTrue(lista)
+        for m in lista:
+            self.assertIn(m["ubicacion"], UBICACIONES_FERIA)
+        self.assertEqual({m["ubicacion"] for m in lista}, set(UBICACIONES_FERIA))
+        self.assertTrue(all(u in mapa.paradas for u in UBICACIONES_FERIA))
 
 
 if __name__ == "__main__":
