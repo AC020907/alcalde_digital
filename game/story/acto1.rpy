@@ -4,6 +4,7 @@ label acto1:
     call screen titulo_acto("ACTO I  -  LUNES", "El rumor del agua", "Los comentarios también son una ciudad.")
     $ avanzar_momento(inv.LUNES)
 
+    call viajar_a_mision("lunes_plaza")
     scene bg ciudad at paneo with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.5 if_changed
     show screen hud_ciudad
@@ -12,7 +13,9 @@ label acto1:
 
     call nueva_publicacion
     call comentario("claudia")
+    $ completar_mision("lunes_plaza")
 
+    call viajar_a_mision("lunes_martina")
     scene bg estudio_martina with negro
     show screen tarjeta_lugar("LUNES  -  11:30 A.M.", "Estudio de Martina")
     "Un mensaje directo te cita en un estudio lleno de luces, cámaras y peluches."
@@ -40,6 +43,7 @@ label acto1:
 
     call minijuego_con_reintento("minijuego_moderador")
     $ resultado_moderador = _return
+    $ completar_mision("lunes_martina")
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.0 if_changed
 
     if resultado_moderador["exito"]:
@@ -58,6 +62,7 @@ label acto1:
     call comentario("martina")
     call nueva_publicacion
 
+    call viajar_a_mision("lunes_noche")
     scene bg ciudad noche at paneo with lento
     play music "assets/audio/music/tema_final.wav" fadein 2.0
     show screen tarjeta_lugar("LUNES  -  11:48 P.M.", "Balcón de la Alcaldía")
@@ -72,4 +77,5 @@ label acto1:
     elif hay("moderacion_limpia"):
         c "Lo de Martina ayudó. Su desmentido tiene más reposts que el rumor. Eso casi nunca pasa."
     hide claudia with suave
+    $ completar_mision("lunes_noche")
     return

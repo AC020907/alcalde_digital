@@ -20,10 +20,10 @@ init python:
         credibilidad = jugador.get_reputacion()
         estable = estabilidad()
         return [
-            ("Confianza", confianza, "#5b5bd6", confianza <= 30),
-            ("Desinformación", desinformacion, "#e86a7e", desinformacion >= 65),
-            ("Credibilidad", credibilidad, "#8c2f4b", credibilidad <= 25),
-            ("Estabilidad", estable, "#2f9e8f", estable <= 35),
+            ("Confianza", confianza, "#7c7cf0", confianza <= 30),
+            ("Desinformación", desinformacion, "#f0667a", desinformacion >= 65),
+            ("Credibilidad", credibilidad, "#d6779a", credibilidad <= 25),
+            ("Estabilidad", estable, "#3fcf8e", estable <= 35),
         ]
 
     NOMBRES_INDICADOR = {
@@ -62,36 +62,64 @@ transform cambio_flotante(retraso):
     pause 1.8
     easeout 0.5 alpha 0.0 yoffset -24
 
+default panel_ciudad_abierto = False
+
+transform panel_lateral:
+    on show:
+        xoffset -380 alpha 0.0
+        easein 0.25 xoffset 0 alpha 1.0
+    on hide:
+        easeout 0.2 xoffset -380 alpha 0.0
+
+## El HUD son solo los accesos (sin barra de fondo) para que la escena se vea completa.
+## Las estadisticas de la ciudad viven en un panel lateral que se abre con el boton "Ciudad".
 screen hud_ciudad():
     zorder 50
-    frame:
-        xalign 0.985
-        ypos 16
-        xsize 330
-        padding (22, 16, 22, 18)
-        background Frame("gui/frame.png", 30, 30)
-        vbox:
-            spacing 6
-            text "CIUDAD NOVA" size 15 bold True color "#8c2f4b" kerning 2
-            for nombre, valor, color, critico in indicadores_hud():
-                fixed:
-                    ysize 38
-                    if critico:
-                        at hud_temblor
-                    text nombre size 15 color ("#c0392b" if critico else "#5b4f72")
-                    text "[valor]" size 15 bold True color "#2b2440" xalign 1.0
-                    bar:
-                        ypos 22
-                        value StaticValue(valor, 100)
-                        xsize 286
-                        ysize 10
-                        left_bar Solid(color)
-                        right_bar Solid("#eadff0")
-            null height 6
-            hbox:
-                spacing 10
-                use hud_acceso("CivitasNet", feed_sin_ver(), Show("civitasnet"))
-                use hud_acceso("Expediente", pistas_sin_ver(), Show("expediente"))
+    hbox:
+        xalign 1.0
+        xoffset -36
+        ypos 22
+        spacing 14
+        $ alerta = "!" if any(critico for _n, _v, _c, critico in indicadores_hud()) else 0
+        use hud_acceso("Ciudad", alerta, ToggleVariable("panel_ciudad_abierto"))
+        use hud_acceso("CivitasNet", feed_sin_ver(), Show("civitasnet"))
+        use hud_acceso("Expediente", pistas_sin_ver(), Show("expediente"))
+        use hud_acceso("Misiones", misiones_pendientes_hud(), Show("misiones_ciudad"))
+        use hud_acceso("Mapa", 0, Function(abrir_mapa_libre))
+
+    showif panel_ciudad_abierto:
+        frame at panel_lateral:
+            xpos 24
+            ypos 22
+            xsize 340
+            padding (28, 22, 28, 26)
+            background Solid("#120d1cf0")
+            vbox:
+                spacing 18
+                hbox:
+                    xfill True
+                    text "ESTADO DE LA CIUDAD" size 16 color "#a7a5f2" kerning 3 yalign 0.5
+                    textbutton "×":
+                        xalign 1.0
+                        text_size 30
+                        text_color "#c9b8d8"
+                        text_hover_color "#fbf6ee"
+                        action SetVariable("panel_ciudad_abierto", False)
+                for nombre, valor, color, critico in indicadores_hud():
+                    fixed:
+                        xsize 284
+                        ysize 80
+                        if critico:
+                            at hud_temblor
+                        text nombre size 20 color ("#f0667a" if critico else "#c9b8d8")
+                        text "[valor]" size 34 bold True color color ypos 22
+                        bar:
+                            ypos 68
+                            value StaticValue(valor, 100)
+                            xsize 284
+                            ysize 6
+                            left_bar Solid(color)
+                            right_bar Solid("#2f2744")
 
 screen hud_acceso(etiqueta, pendientes, accion):
     button:
@@ -117,7 +145,7 @@ screen cambios_indicadores(lineas):
     zorder 60
     vbox:
         xalign 0.985
-        ypos 290
+        ypos 110
         spacing 4
         for i, (texto, bueno) in enumerate(lineas):
             frame:

@@ -4,6 +4,7 @@ label elecciones:
     call screen titulo_acto("DOMINGO", "Elecciones", "Hoy Ciudad Nova decide a quién creerle.")
     $ avanzar_momento(inv.DOMINGO)
 
+    call viajar_a_mision("dom_elecciones")
     scene bg alcaldia at paneo with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.5 if_changed
     show screen hud_ciudad
@@ -56,6 +57,7 @@ label elecciones:
 
     call minijuego_con_reintento("evento_gran_viralizacion", ajustes=ayuda_viral)
     $ resultado_viral = _return
+    $ completar_mision("dom_elecciones")
     call revision_expediente
 
     stop music fadeout 2.0

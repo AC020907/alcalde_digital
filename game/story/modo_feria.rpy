@@ -15,13 +15,16 @@ label modo_feria:
 
     # ----- Lunes: primera publicacion y Moderacion -----
     $ avanzar_momento(inv.LUNES)
+    call viajar_a_mision("lunes_plaza")
     scene bg ciudad at paneo with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.0 if_changed
     show screen tarjeta_lugar("LUNES  -  9:10 A.M.", "Plaza de la Alcaldía")
     call nueva_publicacion
     call comentario("claudia")
     call eventos_momento(inv.LUNES)
+    $ completar_mision("lunes_plaza")
 
+    call viajar_a_mision("lunes_martina")
     scene bg estudio_martina with suave
     show screen tarjeta_lugar("LUNES  -  11:30 A.M.", "Estudio de Martina")
     show martina seria at escena("martina") with suave
@@ -29,6 +32,7 @@ label modo_feria:
     m "Ojo: la gente que me critica de verdad se queda. Solo borramos bots y mentiras."
     hide martina with suave
     call minijuego_moderador(cantidad=10)
+    $ completar_mision("lunes_martina")
     if _return["exito"]:
         $ subir_afinidad("martina", 2)
         show martina feliz at escena("martina") with suave
@@ -43,6 +47,7 @@ label modo_feria:
     "Miércoles. Revisas CivitasNet antes de salir."
     call abrir_civitasnet("net_nos_mintieron" if hay("desmintio_sin_datos") else ("net_acueducto_informe" if hay("pidio_analisis") else None))
 
+    call viajar_a_mision("mie_barrio_sur")
     scene bg barrio_sur at paneo with negro
     show screen tarjeta_lugar("MIÉRCOLES  -  10:20 A.M.", "Barrio Sur")
     pause 1.0
@@ -64,11 +69,13 @@ label modo_feria:
     scene bg crisis with destello
     play music "assets/audio/music/tema_tension.wav" fadein 0.5
     call minijuego_contencion(ajustes=FERIA_CONTENCION)
+    $ completar_mision("mie_barrio_sur")
     if _return["exito"]:
         $ subir_afinidad("rodrigo", 2)
 
     # ----- Viernes: Rastreador y giro de NOVA -----
     $ avanzar_momento(inv.VIERNES)
+    call viajar_a_mision("vie_redaccion")
     scene bg redaccion with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.0
     show screen tarjeta_lugar("VIERNES  -  4:05 P.M.", "Redacción de Noticias Nova")
@@ -77,18 +84,21 @@ label modo_feria:
     c "Le pasé las fichas de las cuentas al tablero. Ordénelas antes de que borren el rastro."
     hide claudia with suave
     call minijuego_rastreador(ajustes=FERIA_RASTREO)
+    $ completar_mision("vie_redaccion")
     if _return["exito"]:
         $ subir_afinidad("claudia", 2)
     call giro_nova(corto=True)
 
     # ----- Domingo: Gran Viralizacion y expediente -----
     $ avanzar_momento(inv.DOMINGO)
+    call viajar_a_mision("dom_elecciones")
     if hay("moderacion_limpia"):
         m "¡Alcalde! Estoy en vivo. ¡Lo que usted frene, yo lo desmiento al instante!"
         $ viral_feria = dict(FERIA_VIRAL, umbral_viral=17000)
     else:
         $ viral_feria = FERIA_VIRAL
     call evento_gran_viralizacion(ajustes=viral_feria)
+    $ completar_mision("dom_elecciones")
     call revision_expediente
 
     stop music fadeout 2.0

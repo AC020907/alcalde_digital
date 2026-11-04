@@ -6,6 +6,7 @@ label acto2:
     "Miércoles, 8:15 a.m. Antes de salir, revisas CivitasNet."
     call abrir_civitasnet("net_nos_mintieron" if hay("desmintio_sin_datos") else ("net_acueducto_informe" if hay("pidio_analisis") else None))
 
+    call viajar_a_mision("mie_barrio_sur")
     scene bg barrio_sur at paneo with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.5 if_changed
     show screen hud_ciudad
@@ -63,6 +64,7 @@ label acto2:
 
     call minijuego_con_reintento("minijuego_contencion")
     $ resultado_contencion = _return
+    $ completar_mision("mie_barrio_sur")
 
     scene bg barrio_sur conversacion with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.5
@@ -78,6 +80,7 @@ label acto2:
         r "No es su culpa entera... pero alguien tiene que hacer algo antes del domingo."
 
     hide rodrigo with suave
+    call viajar_a_mision("mie_operaciones")
     scene bg operaciones with negro
     show screen tarjeta_lugar("MIÉRCOLES  -  6:00 P.M.", "Centro de Operaciones")
     "Claudia reúne a todos en el centro de operaciones. Hay que decidir cómo responder antes de que caiga la noche."
@@ -119,4 +122,5 @@ label acto2:
     hide rodrigo
     with suave
     call nueva_publicacion
+    $ completar_mision("mie_operaciones")
     return

@@ -75,6 +75,7 @@ init -1 python:
 
     def preparar_partida(feria=False):
         """Elige la semilla y los eventos variables al empezar; QA: ALCALDE_SEMILLA y ALCALDE_EVENTOS."""
+        store.misiones_hechas = []
         m = mem()
         semilla_qa = os.environ.get("ALCALDE_SEMILLA")
         m["semilla"] = int(semilla_qa) if semilla_qa else renpy.random.randint(1, 999999)

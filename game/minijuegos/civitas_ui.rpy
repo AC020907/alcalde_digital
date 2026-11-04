@@ -21,7 +21,7 @@ init python:
 
     def ocultar_avisos_juego():
         for pantalla in ("alcance_publicacion", "cambios_indicadores", "notify", "tarjeta_lugar",
-                         "moderador_feedback", "puzzle_feedback"):
+                         "moderador_feedback", "puzzle_feedback", "mapa_ciudad", "misiones_ciudad"):
             renpy.hide_screen(pantalla)
 
     def formato_num(n):

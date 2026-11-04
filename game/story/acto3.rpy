@@ -4,6 +4,7 @@ label acto3:
     call screen titulo_acto("ACTO III  -  VIERNES", "El origen", "Todo rumor empezó en algún lugar.")
     $ avanzar_momento(inv.VIERNES)
 
+    call viajar_a_mision("vie_redaccion")
     scene bg barrio_prensa at paneo with negro
     play music "assets/audio/music/tema_ciudad.wav" fadein 1.5 if_changed
     show screen hud_ciudad
@@ -21,6 +22,8 @@ label acto3:
     call comentario("claudia")
 
     c seria "Y el rumor del agua volvió a la tendencia. Esta vez lo vamos a rastrear hasta el principio."
+    $ completar_mision("vie_redaccion")
+    call viajar_a_mision("vie_rastreo")
     scene bg operaciones with suave
     show screen tarjeta_lugar("VIERNES  -  4:45 P.M.", "Centro de Operaciones")
     show claudia neutral at escena("claudia") with suave
@@ -31,6 +34,7 @@ label acto3:
 
     call minijuego_con_reintento("minijuego_rastreador", ajustes=PUZZLE_HISTORIA)
     $ resultado_rastreo = _return
+    $ completar_mision("vie_rastreo")
 
     if resultado_rastreo["exito"]:
         $ nova_descubierto = True
