@@ -51,7 +51,7 @@ class BancoPublicaciones:
 
 
 def armar_publicacion(autor, contenido, es_falsa, nivel_riesgo,
-                      compartir, ignorar, verificar_si, verificar_no):
+                      compartir, ignorar, verificar_si, verificar_no, pista=None):
     """
     Construye el arbol de decisiones del PDF (pag. 4):
 
@@ -76,7 +76,8 @@ def armar_publicacion(autor, contenido, es_falsa, nivel_riesgo,
 
     # Rama 1 — Verificar (nodo intermedio)
     nodo_verificar = arbol.insertar_hijo(raiz,
-                                         "?Es verdadera la publicacion?",
+                                         ("Al verificar encuentras: %s ¿Es verdadera?" % pista) if pista
+                                         else "?Es verdadera la publicacion?",
                                          None,
                                          "Verificar antes de actuar")
 

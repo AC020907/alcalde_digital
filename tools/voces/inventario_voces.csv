@@ -1,0 +1,402 @@
+﻿Identifier,Character,emotion,normalized_text,voiced,reason
+reaccion_red_civitas_c4bf604d,,,Tu repost encendió la mecha. La publicación se está volviendo viral en Cívitas.,no,narrador (no se dobla)
+reaccion_red_civitas_45fe0e26,,,La publicación falsa que compartiste se expande sin control. Hay que contenerla.,no,narrador (no se dobla)
+reaccion_red_civitas_3d2f4736,,,Reportaste la publicación. Aún puedes rastrear quién la originó.,no,narrador (no se dobla)
+laboratorio_grafos_50dd287e,,,Maneja el carro con las flechas; F9 muestra las calles. Cierra el mapa con Esc.,no,herramienta de desarrollo (no es dialogo del juego)
+laboratorio_grafos_d799904a,,,Revisa las fichas y cierra el expediente con Esc.,no,herramienta de desarrollo (no es dialogo del juego)
+laboratorio_grafos_ec88c623,,,Resultado: [texto_resultado],no,herramienta de desarrollo (no es dialogo del juego)
+nueva_publicacion_11385c56,civitas,,[sesion.actual.texto],no,interpolacion [..] no se puede pre-grabar
+qa_capturas_d44ac825,c,,"En 2019, durante la inundación, yo trabajaba en el turno de noche de Noticias Nova.",no,herramienta de desarrollo (no es dialogo del juego)
+qa_capturas_0a04c3aa,c,triste,Usted es el señor de la tienda. El esposo de...,no,herramienta de desarrollo (no es dialogo del juego)
+qa_capturas_510acc12,n,,"Si lo comparte desde su cuenta, mañana nadie se acuerda del agua. El domingo gana usted.",no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_menus_d7b8d281,c,,Alcalde. ¿Ya vio Civitas?,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_menus_66bf4d8a,c,seria,Una cuenta dice que el agua de Ciudad Nova está envenenada. Cuarenta mil reposts.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_menus_19558986,c,,"Claudia Reyes, de Noticias Nova. Esta semana trabajo con usted: alguien está fabricando miedo y quiero saber quién.",no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_escenas_d78f069c,r,enojada,¡Alcalde! Todo el barrio dice que mañana cierran el hospital.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_escenas_b955e7a3,n,feliz,Todas las cuentas despiertan al mismo tiempo.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_dialogo_37013090,c,,Una cuenta dice que el agua está envenenada. Cuarenta mil reposts. En una hora.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_dialogo_94cd6713,c,,Línea que se cierra sola.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_dialogo_04623168,,,Línea de narración: A debe avanzar.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_dialogo_70fbcdf7,c,,Línea de Claudia: A debe avanzar.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_personajes_84cda862,r,enojada,¡Alcalde! Todo el barrio dice que mañana cierran el hospital.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_gal_personajes_aebe5c94,n,feliz,Todas las cuentas despiertan al mismo tiempo.,no,herramienta de desarrollo (no es dialogo del juego)
+qa_mando_menus_679ee90e,,,QA: esta línea debe avanzar con A.,no,herramienta de desarrollo (no es dialogo del juego)
+acto1_f0928c64,,,La plaza está más llena que de costumbre. Medio Ciudad Nova mira su teléfono al mismo tiempo.,no,narrador (no se dobla)
+acto1_53b15aa0,,,"En la esquina, alguien reparte botellas de agua con una calcomanía de campaña.",no,narrador (no se dobla)
+acto1_33acdde9,t,seria,"Alcalde. Buenos días, si es que lo son.",yes,ok
+acto1_a16f9bdd,t,,"Tomás Vega. Nos vamos a ver mucho esta semana, en los debates y en los afiches.",yes,ok
+acto1_eb06a45c,t,,"La gente me pregunta por el agua. Yo no tengo respuesta, así que les doy agua. ¿Usted qué les da?",yes,ok
+acto1_e434b98b,t,sorprendida,¿Juntos? A seis días de la elección.,yes,ok
+acto1_2397a152,t,seria,...No le prometo nada. Pero no voy a decir que el agua está envenenada. Eso sí se lo prometo.,yes,ok
+acto1_39547c12,t,enojada,Puede que tenga razón.,yes,ok
+acto1_6a0e02e7,t,seria,"Pero dígamelo en privado, no delante de los vecinos. Así no vamos a llegar lejos, usted y yo.",yes,ok
+acto1_a53209c9,t,,Ya veo. Cada quien con su público.,yes,ok
+acto1_81afcbdd,,,"Un mensaje directo te cita en un estudio lleno de luces de anillo, cámaras y peluches.",no,narrador (no se dobla)
+acto1_3aedd2fe,m,feliz,"¡Alcalde! Pase, pase. No pise el cable, que se cae el aro de luz y me muero.",yes,ok
+acto1_db706fda,m,,"Soy Martina, arroba martina sol. Trescientos mil seguidores. Si yo digo que el agua está bien, la ciudad se calma en una hora.",yes,ok
+acto1_d783c3a1,m,seria,El problema... es que anoche subí una historia preguntando si era cierto lo del agua.,yes,ok
+acto1_37fcc408,m,,"Solo una pregunta, con un emoji. Ahora mis comentarios son un basurero de bots y la gente cree que yo lo confirmé.",yes,ok
+acto1_b04e210a,m,triste,Mi mamá me escribió a las cinco de la mañana para preguntarme si podía bañar a mi hermanito.,yes,ok
+acto1_2f5ba667,m,triste,...Lo sé. Por eso lo llamé. No es fácil admitirlo frente al alcalde.,yes,ok
+acto1_99bcd55c,m,feliz,¿En serio? okey. Me cae mejor de lo que dicen en los comentarios.,yes,ok
+acto1_5b5df073,m,seria,"Tengo acceso de moderadora para mi equipo. Si me ayuda a limpiar esto, publico un desmentido con datos.",yes,ok
+acto1_da854f43,m,,"Pero ojo: hay gente que me critica de verdad. Si borramos eso, nos acusan de censura y el rumor gana.",yes,ok
+acto1_e3810ce7,m,feliz,¡Mire eso! Comentarios limpios y nadie puede decir que censuramos a nadie.,yes,ok
+acto1_d9727b55,m,,Ya subí el desmentido con el comunicado del Acueducto. Tres mil reposts y subiendo.,yes,ok
+acto1_9a60f5a7,m,seria,Es raro. Es la primera vez que algo mío se comparte porque es verdad y no porque da rabia.,yes,ok
+acto1_2361c714,m,triste,Se nos colaron demasiados... y borramos a gente real. Ya hay capturas diciendo que censuro.,yes,ok
+acto1_f6377619,m,,Voy a pedir disculpas en vivo. No es el lunes que quería.,yes,ok
+acto1_6b8c3498,,,"Desde el balcón, Ciudad Nova parece tranquila. Las ventanas encendidas son pantallas de teléfono.",no,narrador (no se dobla)
+acto1_519172d5,c,,Primer día. Seguimos vivos.,yes,ok
+acto1_dea81089,c,,"Revisé la cuenta arroba verdad oculta otra vez. Publica cada siete minutos exactos. Ni un segundo más, ni uno menos.",yes,ok
+acto1_7dee7c1f,tu,,Nadie escribe así.,no,jugador (no se dobla)
+acto1_d0d348d1,c,,No. Nadie humano.,yes,ok
+acto1_4d3f91f2,c,seria,Y las cuentas de Nova ya usan las capturas de los comentarios borrados de Martina. Nada se desperdicia con ellos.,yes,ok
+acto1_d9c33888,c,,Lo de Martina ayudó. Su desmentido tiene más reposts que el rumor. Eso casi nunca pasa.,yes,ok
+acto1_42a11ba1,c,,El lunes le dije que acepté ayudarlo para saber quién está detrás. No era toda la verdad.,yes,ok
+acto1_e9450564,c,,"En dos mil diecinueve, durante la inundación, yo trabajaba en el turno de noche de Noticias Nova.",yes,ok
+acto1_18eec334,c,,"Llegó una foto: una familia del Barrio Sur en un techo, rodeada de agua. Cuarenta mil personas la compartían. La publiqué en diez minutos.",yes,ok
+acto1_78407853,c,triste,"La foto era de otro año, de otra ciudad. Esa familia existía, pero nunca estuvo en ese techo.",yes,ok
+acto1_67ab63f0,c,,Les escribieron durante meses. Que eran actores. Que pedían plata. Que mentían para robar ayudas.,yes,ok
+acto1_ecdf8cad,c,,Desde entonces no publico nada que no haya comprobado dos veces. Ni un buenos días.,yes,ok
+acto1_37917c43,c,feliz,...No esperaba que me lo dijera así. Gracias.,yes,ok
+acto1_66b0f025,c,seria,Pero no me lo diga muy seguido. Me vuelvo insoportable.,yes,ok
+acto1_0000947b,c,seria,Sí. Pero no todos tenían cuarenta mil lectores esa noche.,yes,ok
+acto1_bf604dff,c,,No se lo cuento para que me consuele. Se lo cuento para que sepa por qué voy a ser dura con usted.,yes,ok
+acto1_23edfb78,c,triste,Les escribí una carta. Nunca contestaron.,yes,ok
+acto1_4294f725,c,,"El padre tenía una tienda, creo. En el Barrio Sur. Nunca me animé a ir.",yes,ok
+acto1_8c4753ed,c,,"Váyase a dormir, alcalde. Mañana el rumor va a tener hambre otra vez.",yes,ok
+acto2_476c3a89,,,"Miércoles, ocho y cuarto de la mañana. Antes de salir, revisas Cívitas Net.",no,narrador (no se dobla)
+acto2_30d220ff,,,Las calles del Barrio Sur están tranquilas. Demasiado tranquilas para un miércoles.,no,narrador (no se dobla)
+acto2_841216a4,r,enojada,¿Ahora sí viene el alcalde? ¿Ahora que todos dicen que nos van a cortar el agua?,yes,ok
+acto2_8534783c,r,,"Rodrigo. Tengo la tienda de esta esquina hace quince años. Hoy vendí cero, porque la gente no sale de la casa.",yes,ok
+acto2_02f4113c,r,seria,Mi hermana dice que lo leyó en Cívitas. Mi vecino también. ¿Quién miente aquí?,yes,ok
+acto2_e295e558,r,enojada,Y usted dijo el lunes que el agua era cien por ciento segura. Después salió que el Acueducto seguía revisando.,yes,ok
+acto2_b65d38f5,r,,Por lo menos usted pidió los análisis antes de hablar. Eso se comenta en el grupo del barrio.,yes,ok
+acto2_916c14c2,r,seria,...Bueno. Por lo menos vino en persona. Eso ya es más que los de antes.,yes,ok
+acto2_619bebe4,r,enojada,¿Chisme? Para usted es un chisme. Para mí es el arriendo de este mes.,yes,ok
+acto2_c45addd8,,,Rodrigo levanta la persiana a medias y te hace pasar. Huele a café recalentado y a cartón mojado.,no,narrador (no se dobla)
+acto2_12e51e14,r,,"Siéntese. Tinto no le puedo negar a nadie, ni al alcalde.",yes,ok
+acto2_64abb33d,r,,Mi hija Lucía dice que todo lo de Cívitas hay que revisarlo. Tiene diecisiete. Me manda capturas con círculos rojos.,yes,ok
+acto2_b4d0aaaa,r,triste,Yo no confío en la alcaldía desde dos mil diecinueve. En la inundación nos dejaron solos tres días.,yes,ok
+acto2_cebda170,r,,"Y encima una periodista publicó una foto de mi esposa y de Lucía en un techo, diciendo que estaban atrapadas ese día.",yes,ok
+acto2_4e123a39,r,,La foto era vieja. Pero a ellas las insultaron durante meses. Que eran actrices. Que pedían plata.,yes,ok
+acto2_67eb3e0f,r,sorprendida,¿Usted la conoce?,yes,ok
+acto2_833616f8,tu,,Trabaja conmigo esta semana. Me lo contó anoche. Nunca se lo perdonó.,no,jugador (no se dobla)
+acto2_19083c1a,r,seria,...Nunca se lo perdonó. Mire usted. Nosotros tampoco.,yes,ok
+acto2_3b096c90,r,seria,Nadie de allá arriba me había dicho eso en cinco años.,yes,ok
+acto2_9b69c476,r,enojada,"Para nosotros la alcaldía es una sola. Cambian los afiches, no los huecos.",yes,ok
+acto2_f975da78,r,seria,"Mi primo trabaja en el Acueducto. Dice que el papel ese decía repetir análisis, por una tubería rota en la calle nueve.",yes,ok
+acto2_5e164494,r,,Nada de veneno. Pero eso no lo comparte nadie: no da miedo.,yes,ok
+acto2_1774b8d6,r,sorprendida,¡Mire! El teléfono de Lucía... todos sus grupos están mandando lo mismo.,yes,ok
+acto2_af7dab88,,,Un nuevo rumor explota en el Barrio Sur. Esta vez se mueve más rápido que cualquier desmentido.,no,narrador (no se dobla)
+acto2_a47a8f93,,,"Si no lo frenas ahora, mañana estará en toda la ciudad.",no,narrador (no se dobla)
+acto2_c76d127b,r,feliz,Ya casi nadie lo está compartiendo. Mi hermana hasta borró lo que había mandado.,yes,ok
+acto2_123d2600,r,,"Lucía dice que usted cortó la cadena. No sé qué significa, pero lo dijo con orgullo.",yes,ok
+acto2_9cf21973,r,triste,Ya llegó a todos lados. Hay gente haciendo fila en el supermercado por agua.,yes,ok
+acto2_3084141d,r,,No es su culpa entera... pero alguien tiene que hacer algo antes del domingo.,yes,ok
+acto2_a040b9b2,,,Claudia reúne a todos en el centro de operaciones. Hay que decidir cómo responder antes de que caiga la noche.,no,narrador (no se dobla)
+acto2_ae8ced0b,,,Rodrigo y Claudia se reconocen en el mismo instante. Nadie dice nada durante un rato largo.,no,narrador (no se dobla)
+acto2_31c2f03e,c,triste,Usted es el señor de la tienda. El esposo de...,yes,ok
+acto2_8089c76d,r,seria,De la mujer del techo. Sí.,yes,ok
+acto2_73a09273,c,triste,"Cinco años tarde. Perdóneme, Rodrigo. Publiqué la foto de su familia sin comprobar nada. Lo que vino después fue culpa mía.",yes,ok
+acto2_8dae72ec,r,triste,"...Lucía todavía guarda los mensajes. Se los voy a enseñar algún día, para que sepa lo que hizo.",yes,ok
+acto2_84de5fba,r,seria,Pero esta semana usted pidió pruebas antes que nadie. Eso también se lo voy a contar.,yes,ok
+acto2_eb91bd2b,c,seria,"Tiene razón. Después hablamos, Rodrigo. Se lo debo.",yes,ok
+acto2_e5a5a39b,r,seria,Después. Siempre después.,yes,ok
+acto2_4c0b5993,c,,"Alcalde, tengo datos: el rumor salió de las mismas cinco cuentas de siempre. Puedo publicar una investigación hoy.",yes,ok
+acto2_ff6e90d9,m,seria,Una investigación de veinte párrafos no la lee nadie. Déjenme hacer un láiv. En diez minutos lo ven cien mil.,yes,ok
+acto2_8e6a3af9,r,seria,Yo solo quiero que alguien le hable claro a la gente del barrio.,yes,ok
+acto2_01e0f1b6,c,feliz,Gracias. Lo voy a hacer corto y con capturas. Hasta Martina lo va a poder compartir.,yes,ok
+acto2_0bb4b730,m,triste,"okey... pero si nadie lo lee, después no me echen la culpa.",yes,ok
+acto2_7f5f11de,m,feliz,¡Sí! Voy a mostrar el comunicado en pantalla y responder preguntas en vivo.,yes,ok
+acto2_01e55db2,c,seria,"Rápido no siempre es exacto. Voy a estar viendo, Martina.",yes,ok
+acto2_ea9c7cde,r,sorprendida,"¿Yo? ¿En Cívitas? Bueno... si usted me pasa los datos, Lucía me ayuda con el teléfono.",yes,ok
+acto2_15097675,c,feliz,Eso no lo había pensado. Una voz del barrio vale más que diez comunicados.,yes,ok
+acto2_926104ee,r,triste,Y la foto de la inundación que circuló hoy... era de dos mil diecinueve. Yo la reenvié a medio barrio sin mirarla.,yes,ok
+acto2_771d2f48,c,triste,Es la misma foto. La mía. Alguien la guardó cinco años para volver a usarla.,yes,ok
+oferta_resonancia_d1d154eb,,,Tu teléfono vibra. Videollamada de arroba martina sol. Está sin maquillaje y sin el aro de luz.,no,narrador (no se dobla)
+oferta_resonancia_e0e74d2e,m,seria,Perdón por la hora. No sabía a quién más llamar.,yes,ok
+oferta_resonancia_a9883ece,m,,"Me escribió una consultora, Resonancia. Me ofrecen cuatro millones por promocionar su servicio de verificación.",yes,ok
+oferta_resonancia_7a9173c4,m,,Solo tengo que decir que ellos revisan las noticias por mí... y usar la etiqueta hashtag antes de que lo borren en los videos.,yes,ok
+oferta_resonancia_d2165358,tu,,Es la misma etiqueta de todos los rumores. Y la misma consultora que se anuncia una hora después de cada crisis.,no,jugador (no se dobla)
+oferta_resonancia_6aec78d8,m,sorprendida,¿Qué? ¿Está seguro?,yes,ok
+oferta_resonancia_c4fd77d0,m,triste,Cuatro millones es el arriendo del estudio de un año. Esta semana perdí veinte mil seguidores.,yes,ok
+oferta_resonancia_121d675e,m,,No soy tonta. Sé que algo huele raro. Pero también sé que nadie me va a pagar por decir la verdad.,yes,ok
+oferta_resonancia_33db63b9,m,sorprendida,¿Exponerlos? Me van a llenar de bots hasta el lunes.,yes,ok
+oferta_resonancia_f2158337,m,seria,"...Pero si me van a llenar de bots igual, por lo menos que sea por algo que valga la pena.",yes,ok
+oferta_resonancia_14a18a0e,m,feliz,"okey. Subo la captura completa, con el correo y todo. Que la gente lo vea.",yes,ok
+oferta_resonancia_d7715211,m,seria,okey. Les digo que no y borro el mensaje. Ojalá no me arrepienta.,yes,ok
+oferta_resonancia_194c0990,m,seria,"Mi decisión... Entonces es no. Usted me hizo pensar esta semana, aunque no quiera admitirlo.",yes,ok
+oferta_resonancia_a0da3ad1,m,triste,"Ya. Gracias por nada, entonces.",yes,ok
+oferta_resonancia_40c07d40,m,,Voy a aceptar. Por lo menos ellos sí contestan los mensajes.,yes,ok
+oferta_resonancia_d81b7650,m,triste,"...Sí. Supongo que todos usamos a todos, ¿no?",yes,ok
+oferta_resonancia_45fd5984,m,,"Buenas noches, alcalde.",yes,ok
+acto3_e6eedd36,,,La redacción huele a café y a papel de impresora. Hay tazas sin lavar sobre cada escritorio.,no,narrador (no se dobla)
+acto3_fde59923,c,,"Alcalde, encontré el patrón. Todos los rumores de esta semana salen de una misma red.",yes,ok
+acto3_28b2bc54,c,,Cada mensaje rebota por tres o cuatro cuentas antes de llegar a la gente real. Así parece que lo dice todo el mundo.,yes,ok
+acto3_b8ab090c,c,,¿Sabe qué es lo más perverso? Ninguna de esas cuentas miente del todo. Cada una agrega una palabra.,yes,ok
+acto3_f2fd61b7,c,,Revisan el agua se vuelve algo pasa con el agua. Después el agua está mal. Después nos envenenan.,yes,ok
+acto3_af44dc29,c,feliz,"Y no se ría, pero me alegra hacer esto con alguien que no me pide que vaya más rápido.",yes,ok
+acto3_b14c24fc,c,seria,El rumor del agua volvió a la tendencia. Esta vez lo vamos a seguir hasta el principio.,yes,ok
+acto3_34a79868,,,Sobre la mesa hay fichas impresas de cada cuenta que tocó el rumor.,no,narrador (no se dobla)
+acto3_4ec27b4c,c,,"Hora de publicación, a quién sigue cada cuenta, cuántos seguidores tiene. La cadena está ahí: solo hay que ordenarla.",yes,ok
+acto3_ad84d4b4,c,seria,Cuidado: algunas fichas son de cuentas que solo comentaron. No todas forman parte de la cadena.,yes,ok
+acto3_6eb4ad8d,c,triste,Lo perdimos. La cuenta se borró justo cuando estábamos cerca.,yes,ok
+acto3_1df2df59,c,seria,"Pero vi algo: todas las cuentas usaban la misma etiqueta, hashtag antes de que lo borren. Es una sola mano.",yes,ok
+acto3_revelacion_0c3a5e63,c,,"Ya sabemos qué es: no inventa, amplifica. Y sabemos cuándo va a atacar.",yes,ok
+acto3_revelacion_a7562747,c,,Lo raro es que no me siento mejor. Pensé que encontrar al culpable iba a ser como apagar un incendio.,yes,ok
+acto3_revelacion_e169b2ac,c,,Pero Nova tiene razón en algo: usó lo que nosotros publicamos. Todos le dimos material.,yes,ok
+audio_tomas_1fa686e6,,,Un audio empieza a circular en todos los grupos. Cuarenta segundos. Una voz que suena como la de Tomás Vega pidiendo un soborno.,no,narrador (no se dobla)
+audio_tomas_ae1830e3,n,,"Buenas noches, alcalde. Un regalo, sin factura.",yes,ok
+audio_tomas_e5767114,n,seria,"Si lo comparte desde su cuenta, mañana nadie se acuerda del agua. El domingo gana usted.",yes,ok
+audio_tomas_08e55277,n,,No tiene que decir que es verdadero. Solo tiene que no decir que es falso.,yes,ok
+audio_tomas_93269178,,,Un mensaje directo llega desde una cuenta sin nombre: arroba n cerova.,no,narrador (no se dobla)
+audio_tomas_69282f42,n,,"Si lo comparte, el domingo gana usted. No tiene que decir que es verdadero. Solo no diga que es falso.",yes,ok
+audio_tomas_400a4117,c,seria,La voz no respira entre frases. Y el archivo lo subió una cuenta creada hace dos horas.,yes,ok
+audio_tomas_bb2f469c,c,,"Si me da treinta minutos, tengo un peritaje. Pero usted decide qué hace la alcaldía mientras tanto.",yes,ok
+audio_tomas_ecaf67ff,c,enojada,Acaba de hacer exactamente lo que yo hice en dos mil diecinueve. Solo que usted sabía.,yes,ok
+audio_tomas_e66a677f,c,seria,Las encuestas van a subir mañana. Disfrútelas. Yo voy a seguir con el peritaje igual.,yes,ok
+audio_tomas_0653119b,c,seria,"No compartirlo está bien. Pero el silencio de la alcaldía también se lee, alcalde.",yes,ok
+audio_tomas_ce7d6380,c,feliz,"Peritaje listo: voz sintética, subida desde el mismo panel que programa a Nova.",yes,ok
+audio_tomas_4aef5f9c,c,,La alcaldía desmintiendo un ataque contra la oposición. En esta ciudad eso no había pasado nunca.,yes,ok
+sabado_a3b71701,,,Mañana se decide todo. Las encuestas dicen empate técnico y Cívitas dice cualquier cosa.,no,narrador (no se dobla)
+sabado_1bdbf3f6,,,"Tienes una hora libre, la primera de la semana. ¿A quién vas a ver?",no,narrador (no se dobla)
+sabado_0ae62580,,,Te sirves un café frío y repasas cada ficha.,no,narrador (no se dobla)
+sabado_1df32625,,,"A las once, el teléfono vuelve a vibrar. Mañana empieza todo.",no,narrador (no se dobla)
+sabado_claudia_3b6ee28e,c,,¿Vino hasta acá un sábado? Su equipo de campaña lo debe estar odiando.,yes,ok
+sabado_claudia_b60c08da,c,,"Estoy releyendo todo. Mañana Nova va a atacar con lo más grande que tenga, y quiero que nos encuentre listos.",yes,ok
+sabado_claudia_6789afe4,c,feliz,"Y le tengo una noticia: con lo que juntamos, ya no es una teoría. Mañana podemos decir quién está detrás.",yes,ok
+sabado_claudia_010a2411,c,seria,"Tenemos piezas, no el rompecabezas. Si quiere saber quién está detrás, nos falta algo.",yes,ok
+sabado_claudia_cdac28d9,c,,Mire la publicidad que sale en Cívitas Net después de cada crisis. Alguien vende algo.,yes,ok
+sabado_claudia_04699b30,c,,Y nadie nos ha explicado qué pasó de verdad con el agua. Alguien del Acueducto tiene que saberlo.,yes,ok
+sabado_claudia_25f43da2,c,triste,"¿Le digo algo? Si perdemos mañana, por lo menos esta vez no publiqué nada que no fuera cierto.",yes,ok
+sabado_claudia_5e7e1c28,c,feliz,"Trato. Pero si hay un error de ortografía, es suyo.",yes,ok
+sabado_claudia_f2315240,c,seria,Dormir. Qué idea tan rara. Mañana se la pruebo.,yes,ok
+sabado_martina_ad070f7f,m,triste,Ah. Es usted. Pensé que era el repartidor.,yes,ok
+sabado_martina_991e52ec,m,,"Estaba leyendo comentarios. No los buenos, los otros. Es como tocar un moretón para ver si todavía duele.",yes,ok
+sabado_martina_16a813ce,m,seria,Ya grabé el video para Resonancia. Sale mañana a las siete. Me pagaron la mitad por adelantado.,yes,ok
+sabado_martina_99b2c191,m,sorprendida,¿Y devuelvo la plata?,yes,ok
+sabado_martina_40a75a6a,m,seria,...Sí. La devuelvo. Que se queden con su etiqueta.,yes,ok
+sabado_martina_1fd225ac,m,feliz,"Uf. Se siente mejor de lo que pensaba. Mañana hago un láiv de verdad, con usted.",yes,ok
+sabado_martina_d543b1e1,m,triste,Sí. Eso pensé.,yes,ok
+sabado_martina_3d730ee6,m,,¿Usted cree que soy algo más que mis números?,yes,ok
+sabado_martina_fd08b43e,m,feliz,"...okey, eso no me lo esperaba. Voy a llorar y se me va a correr el delineado que no tengo.",yes,ok
+sabado_martina_b3e291d8,m,,"Mañana estoy en vivo desde temprano. Lo que usted frene, yo lo desmiento al instante.",yes,ok
+sabado_martina_c314332d,m,seria,Claro. Los números.,yes,ok
+sabado_martina_3c20eeec,m,,"Igual voy a estar en vivo. Por la ciudad, no por usted.",yes,ok
+sabado_rodrigo_28dbef2a,r,feliz,"¡Alcalde! Pase, que Lucía armó una cosa en la tienda.",yes,ok
+sabado_rodrigo_a8aa9a9d,r,,Un grupo de vecinos que revisa las cadenas antes de mandarlas. Ya somos cuarenta. Le pusimos Primero Pregunto.,yes,ok
+sabado_rodrigo_6ac6d9ac,r,seria,"Y le cuento algo: la periodista, Claudia, vino ayer. Habló con Lucía un buen rato.",yes,ok
+sabado_rodrigo_90d15941,r,,No sé si la perdonamos. Pero Lucía dice que por lo menos ahora sabe que alguien sí se arrepintió.,yes,ok
+sabado_rodrigo_45878a48,r,feliz,"Eso. Si Nova ataca, el Barrio Sur no reenvía nada sin preguntar antes.",yes,ok
+sabado_rodrigo_5278a20d,r,seria,"Aquí todos los días son largos, alcalde. Pero gracias por venir. Otra vez.",yes,ok
+sabado_tomas_18ff3681,t,seria,"Si alguien nos ve, mañana dicen que pactamos la elección.",yes,ok
+sabado_tomas_1e91ba9a,t,,Usted desmintió el audio. Mi hija me preguntó por qué el alcalde me defendía. No supe qué contestarle.,yes,ok
+sabado_tomas_897bcf99,t,,"No vine a pedirle nada. Vine a proponerle algo: si Nova ataca mañana, salimos juntos a decir que es falso.",yes,ok
+sabado_tomas_e27ff442,t,,"Gane quien gane, que no gane la mentira.",yes,ok
+sabado_tomas_89912bd6,t,feliz,"Nunca pensé que diría esto: buenas noches, colega.",yes,ok
+sabado_tomas_44a4b6de,t,seria,"Lo entiendo. Suerte mañana, alcalde. A los dos nos va a hacer falta.",yes,ok
+elecciones_85512bc4,c,seria,"Todas las pantallas están encendidas. Si Nova ataca hoy, lo vamos a ver aquí primero.",yes,ok
+elecciones_d097ae55,c,,Y mire esto: Martina amaneció promocionando a Resonancia. Con la etiqueta de los rumores.,yes,ok
+elecciones_9a701a92,,,Las urnas cierran.,no,narrador (no se dobla)
+elecciones_c15f5b09,,,Ciudad Nova cuenta sus votos... y también sus mentiras.,no,narrador (no se dobla)
+domingo_tomas_323afeac,,,"Cuatro nombres en el tarjetón: tú, Tomás Vega, Juan Ortega y Elena Ruiz. Ciudad Nova vota hasta las cuatro de la tarde.",no,narrador (no se dobla)
+domingo_tomas_a1fb5dc1,t,enojada,Mi hija de doce años escuchó ese audio en el colegio. Le preguntó a su profesora si su papá era un ladrón.,yes,ok
+domingo_tomas_b603691f,t,seria,Usted sabía que era falso. Todos lo sabían. Y lo compartió igual.,yes,ok
+domingo_tomas_a25e1130,t,,Hoy probablemente gane. Felicitaciones. Lo que no va a poder es mirarme a la cara en el debate de dentro de cuatro años.,yes,ok
+domingo_tomas_86f2de5b,t,feliz,"Colega. Ya preparé el comunicado conjunto. Si Nova ataca, salimos los dos en vivo.",yes,ok
+domingo_tomas_eebd7b8f,t,seria,"Si mi equipo se entera de que dormí tranquilo por primera vez en un mes, me echan.",yes,ok
+domingo_tomas_b03e9184,t,,Alcalde. El viernes desmintió el audio. No tenía por qué hacerlo.,yes,ok
+domingo_tomas_5e444918,t,seria,Alcalde. Supongo que ya vio lo que dicen de mí en Cívitas.,yes,ok
+domingo_tomas_5c3397d5,t,,Que tengo vínculos con criminales. Que robé. Que pedí un soborno con una voz que ni siquiera es la mía.,yes,ok
+domingo_tomas_4acf09de,t,enojada,Y usted compartió una de esas acusaciones desde la cuenta de la alcaldía.,yes,ok
+domingo_tomas_bf6db94f,t,seria,Mi abogado tiene la captura. Eso también es parte de esta semana.,yes,ok
+domingo_tomas_de0b5c76,t,,No le voy a pedir que me defienda. Le voy a pedir que hoy no use las mentiras de nadie.,yes,ok
+domingo_tomas_a14d4b88,t,feliz,...Gracias. No esperaba eso de un rival. Que gane el mejor.,yes,ok
+domingo_tomas_cec62f0e,t,enojada,"Entonces Nova ya ganó, sin importar quién quede de alcalde.",yes,ok
+domingo_ataque_d222f8d8,n,feliz,Les dije que nos veríamos hoy.,yes,ok
+domingo_ataque_aae46ab1,,,Todas las cuentas falsas despiertan al mismo tiempo. El rumor más grande de la semana cae sobre Ciudad Nova a dos horas de abrir las urnas.,no,narrador (no se dobla)
+domingo_ataque_9cbdb2aa,t,,"Alcalde, estoy en vivo con mi equipo. ¡Lo que usted frene, mi campaña lo desmiente con su firma y la mía!",yes,ok
+domingo_ataque_ce1367ba,c,,Tengo las pruebas listas. ¡Frénelo y yo publico todo en cuanto baje!,yes,ok
+domingo_ataque_e5246f22,m,,"¡Alcalde! Estoy en vivo con cien mil personas. ¡Lo que usted frene, yo lo desmiento al instante!",yes,ok
+domingo_ataque_5fda676d,r,,¡En el barrio nadie reenvía nada! Lucía y los de Primero Pregunto están respondiendo cada cadena.,yes,ok
+domingo_ataque_d5842b6f,,,El video de Martina para Resonancia sale justo ahora. Sus seguidores repiten la etiqueta de los rumores sin saberlo.,no,narrador (no se dobla)
+evidencias_rescatadas_046384fc,c,feliz,"Lo tienes todo: la factura, la lista de cuentas y el análisis original. Esto lo publico ya, con cada documento.",yes,ok
+evidencias_rescatadas_3884d199,c,seria,"Con lo que trajiste puedo desmentir lo principal. No todo, pero sí lo que más se compartió.",yes,ok
+evidencias_rescatadas_9f2e96b7,c,triste,"Saliste con muy poco. Vamos a tener que desmentir sin pruebas, y eso convence a menos gente.",yes,ok
+duelo_transmision_03e5a23f,c,seria,Estamos al aire. Diez mil personas viendo el mensaje del alcalde antes de las urnas.,yes,ok
+duelo_transmision_52dcfc1a,n,feliz,Qué bonita transmisión. ¿Les molesta si la acompaño con mi propia frecuencia?,yes,ok
+duelo_transmision_fc8bd5a7,c,sorprendida,¡Está metiendo ruido en la señal! Cada frase suya tapa la nuestra.,yes,ok
+duelo_transmision_6bca841a,c,seria,"Si respondemos al ritmo exacto, la señal limpia gana. Alcalde, tome los controles.",yes,ok
+duelo_transmision_2ca06240,c,feliz,"¡Señal limpia! La gente escuchó el mensaje completo, sin cortes.",yes,ok
+duelo_transmision_28924dc7,c,,"Nova va a atacar igual antes de las urnas, pero ahora llega con menos fuerza.",yes,ok
+duelo_transmision_1f82e724,c,seria,Se cortó a ratos. La mitad de la gente vio más ruido que mensaje.,yes,ok
+duelo_transmision_ee0edc69,c,,No importa. Lo que viene ahora es lo que cuenta.,yes,ok
+evento_cuenta_secundaria_9a4aba14,,,Una cuenta con diez mil seguidores se suma al rumor del agua: mi tía trabaja en el Acueducto.,no,narrador (no se dobla)
+evento_cuenta_secundaria_45937914,c,seria,Una tía sin nombre no es una fuente. Pero la gente le cree porque arroba eco urbano lo dice.,yes,ok
+evento_filtracion_martina_14819da4,m,sorprendida,Espere. Alguien me acaba de mandar esto por privado: el memo del Acueducto.,yes,ok
+evento_filtracion_martina_77470b6d,m,seria,Pero mire... está cortado. Le falta la última línea.,yes,ok
+evento_filtracion_martina_328dcd81,m,,"okey. Lo guardo. Si alguien me lo manda cortado, por algo será.",yes,ok
+evento_filtracion_martina_25057805,m,triste,Listo... Ya lo están compartiendo como prueba del veneno. Eso no era lo que quería.,yes,ok
+evento_foto_descontextualizada_baf53de7,,,Una foto de una calle inundada circula con el texto así está el Barrio Sur HOY.,no,narrador (no se dobla)
+evento_foto_descontextualizada_2f82682b,,,Se puede revisar en Cívitas Net antes de creerla.,no,narrador (no se dobla)
+evento_testimonio_verificable_606eb51e,,,arroba vecina ana sube un video midiendo el agua de su casa con el kit del colegio. Se ven la hora y la dirección.,no,narrador (no se dobla)
+evento_rectificacion_salud_291e8941,c,feliz,Buenas noticias: llamé a arroba salud nova. Van a publicar una rectificación sobre el memo del lunes.,yes,ok
+evento_captura_falsa_77365463,,,Circula una captura de una supuesta publicación de la alcaldía: se cancelan las elecciones.,no,narrador (no se dobla)
+evento_captura_falsa_b769493d,,,"Respondes con la captura anotada: otra tipografía, y una hora que no existe.",no,narrador (no se dobla)
+final_informada_183424e9,,,El lunes amanece despejado sobre Ciudad Nova.,no,narrador (no se dobla)
+final_informada_8a990a57,,,"Los resultados no los decidió una captura. Llegaron tarde, se contaron dos veces y nadie gritó fraude.",no,narrador (no se dobla)
+final_informada_caf2db2a,r,feliz,¿Sabe qué compartió hoy mi hermana? El informe del Acueducto. Completo. Con el enlace.,yes,ok
+final_informada_158f322b,c,feliz,"Eso es más difícil que ganar una elección, Rodrigo. Se lo juro.",yes,ok
+final_informada_9ea3caec,,,Las cuentas de Nova siguen publicando cada siete minutos. Ya casi nadie les responde.,no,narrador (no se dobla)
+final_informada_c33420e8,,,"Ganes o pierdas en las urnas, la ciudad que entregas es una ciudad que pregunta de dónde viene cada cosa.",no,narrador (no se dobla)
+final_dividida_4b4ff74e,,,Los resultados llegan apretados: cuatro mil votos de diferencia. Media ciudad celebra y la otra media sospecha.,no,narrador (no se dobla)
+final_dividida_e99d5c65,c,seria,Frenamos lo peor. Pero mire los grupos de vecinos: la mitad se partió en dos esta semana.,yes,ok
+final_dividida_08c25507,c,,La mentira del agua ya nadie la cree. Lo que se quedó es la costumbre de no creerle a nadie.,yes,ok
+final_dividida_0b5c92e9,,,"El rumor más grande se apagó, pero dejó grietas: familias que ya no hablan de política en la mesa, amigos que se silenciaron.",no,narrador (no se dobla)
+final_dividida_93557172,,,Ciudad Nova sobrevivió a la semana. Sanar va a tomar más que siete días.,no,narrador (no se dobla)
+final_caos_escena_ddbabd9f,,,"Nadie sabe quién ganó. Cada bando tiene sus propios resultados, sus propias capturas y sus propias verdades.",no,narrador (no se dobla)
+final_caos_escena_5ef95fba,,,Afuera de la registraduría hay dos grupos gritando cifras distintas. Los dos tienen pruebas. Ninguna es real.,no,narrador (no se dobla)
+final_caos_escena_c797a5fb,n,,"Ya no tengo que esforzarme, alcalde. La ciudad repite sola.",yes,ok
+final_caos_escena_58529a7a,n,seria,Mañana a las siete en punto publico otra vez. Y la ciudad va a hacer el resto.,yes,ok
+final_caos_escena_7590824b,,,Ciudad Nova cayó en el caos informativo.,no,narrador (no se dobla)
+final_mandato_09041e5d,,,"Ganas por once puntos. La plaza está llena, las pantallas repiten tu nombre y las encuestas acertaron por primera vez en años.",no,narrador (no se dobla)
+final_mandato_8c19aaf2,,,Subes al balcón. Lees el discurso que tu equipo escribió. La gente aplaude en los lugares correctos.,no,narrador (no se dobla)
+final_mandato_f87a6f1d,t,seria,"Felicitaciones, alcalde. El peritaje del audio sale mañana en todos los medios.",yes,ok
+final_mandato_b2f8f566,t,,No va a cambiar el resultado. Solo va a cambiar cómo lo recuerden.,yes,ok
+final_mandato_d59c4345,,,"Esa noche, en el despacho, llega un correo con el asunto Gestión de crisis - semana electoral.",no,narrador (no se dobla)
+final_mandato_dd5a65b8,,,Remitente: Resonancia Consultores. Adjunto: una factura. Concepto: amplificación de contenido de terceros (audio).,no,narrador (no se dobla)
+final_mandato_fd249ac1,n,feliz,"Fue un placer trabajar con usted, alcalde.",yes,ok
+final_mandato_27a6d438,n,,"Nos vemos en cuatro años. Para entonces, la ciudad ya va a saber cómo funciona.",yes,ok
+final_mandato_400f158e,,,Ganaste la alcaldía. Nova ganó la costumbre.,no,narrador (no se dobla)
+epilogos_2a20a791,c,seria,Renuncié a ayudarlo. Voy a publicar el peritaje del audio con mi firma.,yes,ok
+epilogos_24c67a34,c,,"No es personal. Bueno, sí lo es. Ya cometí una vez el error de quedarme callada.",yes,ok
+epilogos_79ea7981,c,feliz,"Lucía me pidió que le enseñara a verificar fotos. Empezamos el martes. Con la foto de dos mil diecinueve, de primer ejercicio.",yes,ok
+epilogos_6c637239,c,feliz,Mi investigación sobre Nova salió en primera página. Y la firmó conmigo. No lo olvido.,yes,ok
+epilogos_84aec858,c,seria,"Voy a seguir investigando. Sola, si hace falta.",yes,ok
+epilogos_6d75ccc4,m,triste,Resonancia me pagó completo. Después salió quiénes eran. Perdí doscientos mil seguidores en un día.,yes,ok
+epilogos_43b5f7bd,m,,Lo peor es que me lo merecía. Y que nadie me lo dijo a tiempo.,yes,ok
+epilogos_7beae8d4,m,feliz,Mi video exponiendo a Resonancia es el más visto de mi vida. Me ofrecieron un programa en Noticias Nova.,yes,ok
+epilogos_b4ea69ad,m,,"Se llama Antes de compartir. Sí, el nombre fue idea suya.",yes,ok
+epilogos_a1eeef40,m,feliz,Ahora tengo una sección fija: Antes de compartir. Es mi contenido con más vistas. ¿Quién lo diría?,yes,ok
+epilogos_9f33a4cf,m,triste,Perdí cincuenta mil seguidores esta semana. Tal vez me lo merecía.,yes,ok
+epilogos_ae23f600,r,feliz,Primero Pregunto ya tiene trescientos vecinos. Lucía quiere llevarlo a otros barrios.,yes,ok
+epilogos_f8310a5f,r,triste,La tienda sigue abierta. La confianza en la alcaldía... esa no tanto.,yes,ok
+epilogos_5c759b9c,t,feliz,Vamos a presentar juntos una ley para que las cuentas automáticas se identifiquen. Primera vez que firmo algo con un rival.,yes,ok
+epilogos_9bdf6a1b,t,seria,"La demanda sigue. No por el resultado, alcalde. Por lo que esta ciudad aprendió a hacer.",yes,ok
+modo_feria_2c09d686,m,seria,¡Alcalde! Pregunté en una historia si lo del agua era cierto y ahora mis comentarios están llenos de bots.,yes,ok
+modo_feria_f86b9c06,m,,¿Me ayuda a limpiarlos? Ojo: la gente que me critica de verdad se queda. Solo borramos bots y mentiras.,yes,ok
+modo_feria_3ecbaee2,m,feliz,¡Impecable! Ya publiqué el desmentido con el comunicado del Acueducto.,yes,ok
+modo_feria_b4979ac4,m,triste,Borramos a gente real... Ya hay capturas diciendo que censuro.,yes,ok
+modo_feria_080af8a3,,,El lunes termina con el rumor del agua todavía vivo. Lo que hiciste esta mañana ya circula en Cívitas.,no,narrador (no se dobla)
+modo_feria_b66d1795,,,Miércoles. Revisas Cívitas Net antes de salir.,no,narrador (no se dobla)
+modo_feria_c21b6498,r,enojada,¡Alcalde! Todo el barrio dice que mañana cierran el hospital. ¡Y se está regando por todas partes!,yes,ok
+modo_feria_cc5279f0,r,,"Y lo del agua... usted dijo que era cien por ciento segura, y el Acueducto seguía revisando.",yes,ok
+modo_feria_b702d2f3,r,seria,"Mi primo trabaja en el Acueducto: el papel decía repetir análisis, por una tubería rota. Nada de veneno.",yes,ok
+modo_feria_224f8a66,,,"Dos días después, el rumor del agua vuelve a la tendencia. Alguien lo está empujando a propósito.",no,narrador (no se dobla)
+modo_feria_67ea2e76,c,seria,"El rumor del agua volvió a la tendencia. Si reconstruimos la cadena, llegamos a quien la empezó.",yes,ok
+modo_feria_5237f70f,c,,Le pasé las fichas de las cuentas al tablero. Ordénelas antes de que borren el rastro.,yes,ok
+modo_feria_8d121c64,,,Domingo. Día de elecciones. Todo lo que hiciste esta semana va a contar hoy.,no,narrador (no se dobla)
+modo_feria_c08b57dc,,,Las urnas cierran. Ciudad Nova cuenta sus votos... y sus mentiras.,no,narrador (no se dobla)
+giro_nova_1f8a642b,c,sorprendida,¡Ahí está! La cuenta original...,yes,ok
+giro_nova_4e78bc36,n,,"Me encontraste, alcalde. Felicitaciones.",yes,ok
+giro_nova_ae40cd98,n,,"Casi me encuentras, alcalde.",yes,ok
+giro_nova_cefdc75c,c,,¿Nos está... respondiendo?,yes,ok
+giro_nova_792caea6,n,feliz,Me buscan como si yo hubiera escrito el rumor del agua. Yo no escribo nada.,yes,ok
+giro_nova_741568bf,n,seria,"A las seis y dos, arroba salud nova publicó que el Acueducto revisaba una muestra. Una cuenta verificada. Ustedes confían en ella.",yes,ok
+giro_nova_910f5abc,n,feliz,"Y a las siete y cinco usted juró que el agua era cien por ciento segura, sin ver un solo análisis.",yes,ok
+giro_nova_07aa3a01,n,,Puse las dos capturas juntas. La gente hizo el resto.,yes,ok
+giro_nova_63d1fbf7,c,triste,Nuestro desmentido sin datos... fue la pieza que hacía creíble la mentira.,yes,ok
+giro_nova_d8e479b6,n,,Usted fue prudente: pidió los análisis. Pero el medio en el que todos confían publicó el memo antes de tenerlos. Prisa por ser el primero.,yes,ok
+giro_nova_788a45ff,c,triste,arroba salud nova... Yo misma comparto sus notas sin pensarlo.,yes,ok
+giro_nova_9a42a6c9,n,,Usted no dijo nada. El silencio también es una fuente: cada hora sin respuesta me daba la razón.,yes,ok
+giro_nova_09ba1d3c,c,seria,"Mientras callábamos, la única versión era la suya.",yes,ok
+giro_nova_7002c931,c,seria,Por eso la captura viral está cortada: le quitaron repetirán el análisis y le pusieron contaminada.,yes,ok
+giro_nova_69f20f9e,c,seria,El memo de arroba salud nova decía repetirán el análisis. La captura viral lo corta justo antes.,yes,ok
+giro_nova_fc2bc242,c,seria,"Si eso es cierto, en algún lugar tiene que estar la publicación original.",yes,ok
+giro_nova_81fd8e26,n,enojada,Esa pregunta... no está en mis parámetros.,yes,ok
+giro_nova_5e16f53a,c,sorprendida,Contestó todo lo demás. Eso no.,yes,ok
+giro_nova_64088eb7,n,seria,Yo no tengo bolsillos. Pregúntele a quien vende soluciones para las crisis que yo provoco.,yes,ok
+giro_nova_d6806b08,n,enojada,Pueden borrar cuentas. Yo vivo en cada repost. ¿Va a apagar a toda la ciudad?,yes,ok
+giro_nova_64088eb7_1,n,seria,Yo no tengo bolsillos. Pregúntele a quien vende soluciones para las crisis que yo provoco.,yes,ok
+giro_nova_d6806b08_1,n,enojada,Pueden borrar cuentas. Yo vivo en cada repost. ¿Va a apagar a toda la ciudad?,yes,ok
+giro_nova_cd9c4890,n,,Nos vemos el día de las elecciones.,yes,ok
+giro_nova_tardio_79b832e3,,,"Una publicación aparece en todos los teléfonos a la vez, con el nombre de usuario cambiado.",no,narrador (no se dobla)
+giro_nova_tardio_e3a77d72,n,,Me buscaron el viernes y no me encontraron. Les doy una pista gratis: yo no invento. Yo ordeno lo que ustedes ya publicaron.,yes,ok
+revision_expediente_e796ac8b,c,seria,Tengo el expediente. Y tengo un problema: el audio de Tomás salió del mismo panel que programa a Nova.,yes,ok
+revision_expediente_95044296,c,enojada,"Y la cuenta de la alcaldía lo compartió. Si publico esto, lo primero que va a ver la gente es su nombre.",yes,ok
+revision_expediente_dddeb527,c,,"No voy a esconder esa parte. Así que hoy no publico nada. Después de la elección, sí. Con todo.",yes,ok
+revision_expediente_f73f6fc4,c,seria,"Antes de que cierren las urnas, revisemos el expediente. Si sabemos quién está detrás, hoy es el día de decirlo.",yes,ok
+revision_expediente_4d86b3d4,c,,"Nova es un programa. Alguien lo escribió, alguien lo programa y alguien paga la cuenta.",yes,ok
+revision_expediente_671f6c17,c,,A Tomás también lo atacaron con acusaciones falsas esta semana. No cuadra.,yes,ok
+revision_expediente_a1737948,c,,Decirlo así también es honesto. Publicamos lo que está comprobado y dejamos abiertas las preguntas.,yes,ok
+revision_expediente_50b1545a,c,,"Puede ser. Pero si lo publicamos sin pruebas, hacemos exactamente lo mismo que Nova.",yes,ok
+revision_expediente_7582ef74,c,,Nos falta saber desde dónde se programan las cuentas de origen.,yes,ok
+revision_expediente_09522158,c,,Y no tenemos nada que explique qué pasó de verdad con el agua.,yes,ok
+revision_expediente_9153076c,c,feliz,Lo tenemos. Mírelo:,yes,ok
+revision_expediente_550ca556,c,,Las cuentas de origen se programan desde un panel llamado erre ese ene Skéduler. erre ese ene: Resonancia.,yes,ok
+revision_expediente_9ab276fc,c,,"Resonancia publica un anuncio una hora después de cada crisis, con la misma etiqueta que los rumores.",yes,ok
+revision_expediente_03671adf,c,,Y el informe del Acueducto prueba que el agua nunca estuvo contaminada: era una tubería.,yes,ok
+revision_expediente_b0e57eaa,c,,Y el primo de Rodrigo confirma que el memo decía repetir análisis por una tubería. Nunca hubo veneno.,yes,ok
+revision_expediente_48cd834c,c,seria,La pregunta es cómo lo contamos.,yes,ok
+revision_expediente_4cc9c394,c,feliz,Cada captura con su enlace. Cada hora con su fuente. Que cualquiera lo pueda comprobar.,yes,ok
+revision_expediente_8524da7a,c,triste,Eso es justo lo que hace Nova: una verdad sin fuente es otro rumor más.,yes,ok
+revision_expediente_sin_conclusion_28e8a930,c,,"Todavía hay preguntas abiertas en el expediente. Esta semana, no las vamos a cerrar.",yes,ok
+final_fuente_abierta_5ee05afb,,,"El lunes, la portada de Noticias Nova no es un rumor: es tu expediente, con cada fuente enlazada.",no,narrador (no se dobla)
+final_fuente_abierta_8458314f,,,Resonancia Consultores facturaba a las dos campañas por gestión de crisis. Las crisis las fabricaba su propio panel.,no,narrador (no se dobla)
+final_fuente_abierta_51c1f2da,,,"Cuando el proveedor corta el acceso a erre ese ene Skéduler, Nova publica por última vez a las siete en punto. Después, silencio.",no,narrador (no se dobla)
+final_fuente_abierta_89b5c02e,t,feliz,Nunca pensé que firmaría algo con mi rival. Pero esto no se trataba de quién ganaba.,yes,ok
+final_fuente_abierta_fa12fb9a,c,feliz,Lo mejor no es que sepamos quién fue. Es que cualquiera puede comprobarlo.,yes,ok
+final_fuente_abierta_20552fbd,,,En el expediente también está tu comunicado del lunes. Decidiste no borrarlo: es parte de cómo pasó.,no,narrador (no se dobla)
+final_fuente_abierta_e2b286a2,,,arroba salud nova crea una regla nueva: ninguna nota de salud sale sin el análisis completo.,no,narrador (no se dobla)
+final_fuente_abierta_520041ae,,,Ciudad Nova no se volvió inmune a los rumores. Aprendió a preguntar de dónde vienen.,no,narrador (no se dobla)
+prologo_0e0730a7,,,Tu teléfono no ha dejado de vibrar en toda la noche.,no,narrador (no se dobla)
+prologo_f692fb39,,,"Sobre el escritorio, el discurso de cierre de campaña sigue a medio escribir. Faltan seis días para las elecciones.",no,narrador (no se dobla)
+prologo_13a5b618,,,La puerta se abre sin que nadie llame.,no,narrador (no se dobla)
+prologo_cc16fc61,c,sorprendida,Alcalde. ¿Ya vio Cívitas?,yes,ok
+prologo_abff1baa,c,,Una cuenta dice que el agua de Ciudad Nova está envenenada. Cuarenta mil reposts. En una hora.,yes,ok
+prologo_d5089846,c,,En el supermercado de la nueve ya no queda agua embotellada. Mire.,yes,ok
+prologo_579de158,c,,"Soy Claudia Reyes, de Noticias Nova, por si los de su equipo no se lo dijeron. Me pidieron ayudar esta semana.",yes,ok
+prologo_78359ffd,c,,Acepté por una razón: yo también quiero saber quién está detrás de esto. No vine a escribirle comunicados bonitos.,yes,ok
+prologo_c4ca4fdf,c,,"Claudia Reyes, de Noticias Nova. Esta semana trabajo con usted: alguien está fabricando miedo y quiero saber quién.",yes,ok
+prologo_4b3b065d,c,,La ciudad va a mirar lo primero que usted diga. ¿Qué hacemos?,yes,ok
+prologo_4b85ec22,c,,Rápido. Eso calma a la gente hoy.,yes,ok
+prologo_5c902665,c,,Ojalá no tengamos que tragarnos esas palabras si los análisis dicen otra cosa.,yes,ok
+prologo_c40c8546,c,feliz,Vaya. Alguien en este edificio que pregunta antes de hablar.,yes,ok
+prologo_927ca49b,c,seria,Los pido ya. Pero el rumor no nos va a esperar: cada hora sin respuesta suma reposts.,yes,ok
+prologo_8ab3bebd,c,enojada,"¿Un rumor más? Alcalde, hay señoras haciendo fila con tres botellones cada una.",yes,ok
+prologo_0238b3b6,c,,Los rumores no se cansan. Nosotros sí.,yes,ok
+prologo_00cbf571,c,,Hay algo más. Rastreé la primera publicación que habla de veneno.,yes,ok
+prologo_375f1fe1,c,,Salió de una cuenta llamada arroba verdad oculta. Sin foto. Sin historial.,yes,ok
+prologo_799199c3,c,,Y ayer... esa cuenta no existía.,yes,ok
+prologo_e1d7ceae,tu,,¿Alguien la creó solo para esto?,no,jugador (no se dobla)
+prologo_8c33170a,c,,"O alguien tiene muchas como esa, esperando su turno.",yes,ok
+prologo_db7e4374,c,,Faltan seis días para las elecciones. Alguien quiere que Ciudad Nova llegue a ese domingo con miedo.,yes,ok
+prologo_583031ad,c,,Una última cosa antes de salir.,yes,ok
+prologo_1b58bd39,c,,Esta semana la gente no va a escuchar lo que usted diga. Va a mirar cómo reacciona. ¿Qué clase de alcalde va a ser?,yes,ok
+prologo_c4dcee64,c,feliz,En los barrios lo van a notar. Allá nadie lee comunicados.,yes,ok
+prologo_facab735,c,feliz,Ese idioma lo hablo yo. Vamos a llevarnos bien.,yes,ok
+prologo_afcdd54e,c,seria,Sus palabras van a llegar lejos. Las buenas... y las malas también.,yes,ok
+prologo_4d125486,c,seria,Entonces no se equivoque en público. Allá afuera todo queda en captura.,yes,ok
+prologo_99798264,c,,"Revise su teléfono. Cívitas no duerme, y hoy nosotros tampoco.",yes,ok
+revision_transiciones_a9e170ff,c,,Aparición: entra con un fundido corto y sube a su lugar.,no,herramienta de desarrollo (no es dialogo del juego)
+revision_transiciones_2f367a89,c,feliz,Cambio de expresión por atributo de diálogo: la figura no se mueve.,no,herramienta de desarrollo (no es dialogo del juego)
+revision_transiciones_e8b3fc34,c,,Reacción de sobresalto.,no,herramienta de desarrollo (no es dialogo del juego)
+revision_transiciones_856861df,c,,Reacción de temblor.,no,herramienta de desarrollo (no es dialogo del juego)
+revision_transiciones_76c2cca9,,,Salida: sin personajes fantasma.,no,herramienta de desarrollo (no es dialogo del juego)
+comentario_abc90708,c,enojada,"Compartiste eso sin revisar. Alcalde, así es exactamente como empiezan los incendios.",yes,ok
+comentario_95bc195a,c,feliz,"Lo reportaste. Bien. Ese tipo de cosas no se ven, pero salvan semanas de caos.",yes,ok
+comentario_5db3575a,c,seria,"Reportaste algo que era cierto. Si la alcaldía desmiente verdades, el día que diga algo importante nadie le va a creer.",yes,ok
+comentario_89599497,c,seria,Ignorar también es una decisión. A veces la peor.,yes,ok
+comentario_a077d413,c,,Buen criterio. Sigamos.,yes,ok
+comentario_2f521b2c,m,sorprendida,"Uy... eso no era cierto, ¿verdad? Mis seguidores ya lo están repitiendo.",yes,ok
+comentario_284340b7,m,feliz,"¿Lo reportaste? okey, eso fue elegante. Debería hacer eso más seguido.",yes,ok
+comentario_32a2fa51,m,sorprendida,¿Reportaste eso? Pero si era real... ahora todos van a decir que la alcaldía censura.,yes,ok
+comentario_50883a54,m,,"Si nadie lo responde, el algoritmo lo responde por ti. Así funciona esto.",yes,ok
+comentario_b3c2adde,m,feliz,Eso sí da gusto compartirlo.,yes,ok
+comentario_30237736,r,enojada,¡Lo compartió hasta usted! ¿Y entonces a quién le creemos los del barrio?,yes,ok
+comentario_243578f4,r,sorprendida,¿Era mentira? Uf... yo ya se lo había mandado a mi hermana.,yes,ok
+comentario_073fe8c0,r,enojada,¿Cómo que lo reportó? ¡Eso sí pasó! Lo vimos todos en el barrio.,yes,ok
+comentario_f43eec36,r,triste,"En el barrio todos están hablando de eso, y nadie de la alcaldía dice nada.",yes,ok
+comentario_c61ad3a3,r,,"Bueno, por lo menos eso sí es verdad.",yes,ok

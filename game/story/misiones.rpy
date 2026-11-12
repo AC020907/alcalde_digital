@@ -60,7 +60,7 @@ screen mision_tarjeta(mision, estado):
                     text_color "#fbf6ee"
                     text_xalign 0.5
                     text_yalign 0.5
-                    hover_sound "assets/audio/sfx/ui_hover.wav"
+                    hover_sound "assets/audio/sfx/menu_hover.ogg"
                     activate_sound "assets/audio/sfx/ui_click.wav"
                     action [Hide("misiones_ciudad"), Function(abrir_mapa_libre)]
 

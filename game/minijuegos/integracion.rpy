@@ -55,18 +55,18 @@ label reaccion_red_civitas(sesion):
 
     if accion_red == "compartir" and pub_red.es_falsa and pub_red.nivel_riesgo >= 55:
         if pub_red.nivel_riesgo >= 85 and "viralizacion" not in registro_minijuegos:
-            "Tu repost encendio la mecha. La publicacion se esta volviendo viral en Civitas."
+            "Tu repost encendió la mecha. La publicación se está volviendo viral en Civitas."
             call evento_gran_viralizacion
         elif "contencion" not in registro_minijuegos:
-            "La publicacion falsa que compartiste se expande sin control. Hay que contenerla."
+            "La publicación falsa que compartiste se expande sin control. Hay que contenerla."
             call minijuego_contencion
 
     elif accion_red == "verificar_no" and pub_red.es_falsa and pub_red.nivel_riesgo >= 75 and "rastreador" not in registro_minijuegos:
-        "Reportaste la publicacion. Aun puedes rastrear quien la origino."
+        "Reportaste la publicación. Aún puedes rastrear quién la originó."
         menu:
             "Rastrear el origen":
                 call minijuego_rastreador
-            "Dejarlo asi":
+            "Dejarlo así":
                 pass
 
     return
@@ -91,6 +91,6 @@ screen alcance_publicacion(cuentas, reposts, minutos, falsa):
         vbox:
             spacing 4
             text "CIVITAS" size 16 bold True color "#fde68a"
-            text ("Tu repost de la noticia falsa se esta moviendo" if falsa else "Tu publicacion esta circulando") size 22 bold True color "#ffffff"
-            text "Llego a %d cuentas  -  %s reposts en %d min" % (cuentas, formato_num(reposts), minutos) size 19 color "#f1f5f9"
+            text ("Tu repost de la noticia falsa se está moviendo" if falsa else "Tu publicación está circulando") size 22 bold True color "#ffffff"
+            text "Llegó a %d cuentas  -  %s reposts en %d min" % (cuentas, formato_num(reposts), minutos) size 19 color "#f1f5f9"
     timer 4.5 action Hide("alcance_publicacion")

@@ -66,7 +66,7 @@ screen propagacion_bfs(grafo, niveles, padres, titulo, estado_activo="activo", d
             null height 6
 
             if not niveles:
-                text "La publicacion no tiene desde donde propagarse."
+                text "La publicación no tiene desde dónde propagarse."
 
             for i in range(min(paso, len(niveles))):
                 hbox at fila_entrada:

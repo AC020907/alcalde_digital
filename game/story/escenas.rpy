@@ -14,7 +14,10 @@ image bg barrio_prensa = "images/bg/barrio_prensa.jpg"
 image bg barrio_sur = "images/bg/barrio_sur.jpg"
 ## Los fondos de barrio son vistas aereas: sirven de plano de establecimiento. Para
 ## conversar se desenfocan (profundidad de campo) y el personaje queda en primer plano.
-image bg barrio_sur conversacion = Transform("images/bg/barrio_sur.jpg", blur=7,
+## Las vistas aereas traen el rotulo del mapa ("BARRIO SUR") pintado: el plano de conversacion encuadra
+## una zona del mismo barrio sin rotulo ni marcadores, para que no quede un cartel detras del personaje.
+image bg barrio_sur conversacion = Transform(Crop((1050, 520, 860, 484), "images/bg/barrio_sur.jpg"),
+                                            size=(1920, 1080), blur=5,
                                             matrixcolor=SaturationMatrix(0.85) * BrightnessMatrix(-0.03))
 image bg civitas = "assets/backgrounds/fondo_rastreador.jpg"
 image bg crisis = "assets/backgrounds/fondo_contencion.jpg"
@@ -116,8 +119,14 @@ style boton_vn is default:
     background "gui/boton_menu_idle.png"
     hover_background "gui/boton_menu_hover.png"
     xysize (406, 86)
-    hover_sound "assets/audio/sfx/ui_hover.wav"
+    hover_sound "assets/audio/sfx/menu_hover.ogg"
     activate_sound "assets/audio/sfx/ui_click.wav"
+
+## Para filas de 2-3 opciones dentro de un panel: el fondo se estira como Frame en vez de recortarse.
+style boton_vn_compacto is boton_vn:
+    background Frame("gui/boton_menu_idle.png", 34, 24)
+    hover_background Frame("gui/boton_menu_hover.png", 34, 24)
+    xysize (300, 78)
 
 style boton_vn_text is default:
     size 26

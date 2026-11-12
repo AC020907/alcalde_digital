@@ -66,7 +66,7 @@ screen expediente():
                                         background ("#efe4f4" if seleccion == pid else "#fbf6ee00")
                                         hover_background "#e6dcf0"
                                         padding (14, 10)
-                                        hover_sound "assets/audio/sfx/ui_hover.wav"
+                                        hover_sound "assets/audio/sfx/menu_hover.ogg"
                                         action SetScreenVariable("seleccion", pid)
                                         hbox:
                                             spacing 10

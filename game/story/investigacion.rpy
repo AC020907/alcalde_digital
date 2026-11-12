@@ -60,7 +60,7 @@ init -1 python:
             m["pistas_nuevas"].append(pista_id)
         if aviso:
             renpy.notify(texto)
-            sonar("assets/audio/sfx/rastreo_paso.wav")
+            sfx("pista")
         return True
 
     def avanzar_momento(momento):
@@ -85,6 +85,7 @@ init -1 python:
                 momento, evento = par.split(":", 1)
                 forzados[int(momento)] = None if evento in ("", "ninguno") else evento
         m["eventos"] = inv.elegir_eventos(m["semilla"], feria, forzados)
+        iniciar_run("feria" if feria else "historia")
 
     def feed_sin_ver():
         return len(inv.posts_nuevos(mem()))
@@ -107,6 +108,7 @@ init -1 python:
         "contencion": ("crisis_contenida", "crisis_desbordada"),
         "rastreador": ("rastreo_exitoso", "rastro_perdido"),
         "viralizacion": ("viral_frenado", "viral_desbordado"),
+        "ritmo": ("duelo_ganado", "duelo_perdido"),
     }
     ACUSACIONES = ("@investigador.nova", "@ciudadano", "@sol.y.limon")
 
@@ -121,6 +123,7 @@ init -1 python:
                     dar_pista("hip_nova_creo", "refutado")
 
     def registrar_decision_publicacion(pub, accion):
+        registrar_respuesta_publicacion(pub, accion)
         compartio_falsa = accion in ("compartir", "verificar_si") and pub.es_falsa
         if compartio_falsa:
             hecho("publico_sin_verificar")

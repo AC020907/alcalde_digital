@@ -107,6 +107,7 @@ init python:
             self.fondo = renpy.displayable(FONDO_RASTREADOR if self.rastreo else (FONDO_VIRALIZACION if sim.modo == "viral" else FONDO_CONTENCION))
             self.ultimo_st = None
             self.mouse = (960, 600)
+            self.mira = []  # direcciones mantenidas (teclado o mando) que mueven la mira
             self.flotantes = []
             self.anillos = []
             self.banner = None
@@ -207,7 +208,8 @@ init python:
             dt = 0.0 if self.ultimo_st is None else max(0.0, min(0.05, st - self.ultimo_st))
             self.ultimo_st = st
             self.dt = dt
-            if renpy.get_screen("debug_arcade") is None:
+            self.mover_mira(dt)
+            if renpy.get_screen("debug_arcade") is None and not store.minijuego_pausado:
                 self.sim.actualizar(dt)
             self.consumir_eventos()
             if self.sim.terminado() and not self.fin_avisado:
@@ -334,11 +336,11 @@ init python:
             self.poner(r, Solid("#020617e8", xysize=(1920, 150)), 0, 0, st, at, (0, 0))
             self.poner(r, self.texto(self.titulo, 40, "#facc15" if self.rastreo else "#f87171", True), 40, 18, st, at, (0, 0))
             if self.rastreo:
-                objetivo = "Sigue el rastro hasta la cuenta que INICIO el rumor"
+                objetivo = "Sigue el rastro hasta la cuenta que INICIÓ el rumor"
                 controles = "CLIC cuenta: seguir rastro  -  CLIC DERECHO: retroceder  -  H: pista (-%ds)  -  CLIC rumor: frenarlo  -  ESPACIO: onda" % sim.cfg["costo_pista"]
             else:
-                objetivo = "Revienta los rumores antes de que lleguen a mas cuentas"
-                controles = "CLIC rumor en vuelo: interceptar  -  CLIC cuenta roja: cuarentena  -  ESPACIO: onda de verificacion"
+                objetivo = "Revienta los rumores antes de que lleguen a más cuentas"
+                controles = "CLIC rumor en vuelo: interceptar  -  CLIC cuenta roja: cuarentena  -  ESPACIO: onda de verificación"
             self.poner(r, self.texto(objetivo, 21, "#f8fafc", True), 40, 72, st, at, (0, 0))
             self.poner(r, self.texto(controles, 16, "#94a3b8"), 40, 108, st, at, (0, 0))
 
@@ -388,13 +390,13 @@ init python:
             numero = int(math.ceil(self.sim.intro))
             self.poner(r, self.texto(self.titulo, 64, "#facc15" if self.rastreo else "#f87171", True), 960, 300, st, at)
             if self.rastreo:
-                lineas = ["El rumor ya se esta extendiendo. Encuentra quien lo empezo.",
-                          "Haz clic en la cuenta que se lo envio a la cuenta amarilla.",
+                lineas = ["El rumor ya se está extendiendo. Encuentra quién lo empezó.",
+                          "Haz clic (o apunta y pulsa A) en la cuenta que se lo envio a la amarilla.",
                           "Pista: los colores mas MORADOS lo compartieron hace mas tiempo."]
             else:
                 lineas = ["Los rumores viajan como bolas de fuego entre cuentas.",
-                          "Haz CLIC sobre ellos para reventarlos antes de que lleguen.",
-                          "CLIC en una cuenta roja = cuarentena.   ESPACIO = onda que limpia el area."]
+                          "Haz CLIC (o apunta y pulsa A) sobre ellos para reventarlos antes de que lleguen.",
+                          "CLIC / A en una cuenta roja = cuarentena.   ESPACIO / X = onda que limpia el area."]
             for i, linea in enumerate(lineas):
                 self.poner(r, self.texto(linea, 28, "#f8fafc"), 960, 420 + i * 50, st, at)
             self.poner(r, self.texto(str(numero), 140, "#ffffff", True), 960, 720, st, at)
@@ -420,20 +422,45 @@ init python:
                 raise renpy.IgnoreEvent()
             if ev.type == pygame.MOUSEBUTTONUP and ev.button in (1, 3, 4, 5):
                 raise renpy.IgnoreEvent()
-            if ev.type == pygame.KEYDOWN:
-                if ev.key == pygame.K_SPACE:
-                    self.lanzar_onda()
-                    raise renpy.IgnoreEvent()
-                if ev.key == pygame.K_h and self.rastreo:
-                    self.sim.pedir_pista()
-                    raise renpy.IgnoreEvent()
+            direccion = direccion_evento(ev)
+            if direccion is not None:
+                nombre, vector, pulsada = direccion
+                self.mira = [d for d in self.mira if d[0] != nombre]
+                if pulsada:
+                    self.mira.append((nombre, vector))
+                raise renpy.IgnoreEvent()
+            if renpy.map_event(ev, "civ_onda"):
+                self.lanzar_onda()
+                raise renpy.IgnoreEvent()
+            if renpy.map_event(ev, "civ_accion"):
+                # Sin raton la punteria es mas dificil: radio de captura mas generoso.
+                self.clic(self.mouse[0], self.mouse[1], alcance=75)
+                raise renpy.IgnoreEvent()
+            if renpy.map_event(ev, "civ_pista") and self.rastreo:
+                self.sim.pedir_pista()
+                raise renpy.IgnoreEvent()
+            if renpy.map_event(ev, "civ_volver") and self.rastreo:
+                self.sim.volver()
+                raise renpy.IgnoreEvent()
             return None
 
-        def clic(self, x, y):
+        VELOCIDAD_MIRA = 900
+
+        def mover_mira(self, dt):
+            if not self.mira:
+                return
+            dx = sum(v[0] for _n, v in self.mira)
+            dy = sum(v[1] for _n, v in self.mira)
+            norma = math.hypot(dx, dy) or 1.0
+            x = self.mouse[0] + self.VELOCIDAD_MIRA * dt * dx / norma
+            y = self.mouse[1] + self.VELOCIDAD_MIRA * dt * dy / norma
+            self.mouse = (min(1900, max(20, x)), min(1060, max(20, y)))
+
+        def clic(self, x, y, alcance=42):
             sim = self.sim
             if not sim.jugando():
                 return
-            mejor, distancia = None, 42
+            mejor, distancia = None, alcance
             for paquete in sim.paquetes:
                 px, py = self.pos_paquete(paquete)
                 d = math.hypot(px - x, py - y)
@@ -475,6 +502,7 @@ screen arcade_ui(sim, titulo, rumor):
     zorder 40
     default vista = VistaArcade(sim, titulo, rumor)
     add vista
+    use boton_pausa_minijuego(not sim.terminado())
 
     if modo_sustentacion and not sim.terminado():
         textbutton "RED INTERNA":
@@ -532,6 +560,7 @@ screen resultado_arcade(sim):
                 xalign 0.5
                 xsize 360
                 text_xalign 0.5
+                default_focus True
                 action Return()
 
 

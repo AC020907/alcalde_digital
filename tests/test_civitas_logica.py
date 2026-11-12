@@ -24,7 +24,7 @@ from clases.RedCivitas import crear_red_civitas  # noqa: E402
 # Pistas que entrega la historia o un minijuego (no una publicacion de CivitasNet).
 PISTAS_NARRATIVAS = {"hip_nova_creo", "intervalo_7min", "testimonio_acueducto", "filtracion_parcial",
                      "panel_programacion", "captura_recortada", "rectificacion_salud", "giro_amplificacion",
-                     "nova_evade", "conclusion_resonancia"}
+                     "nova_evade", "conclusion_resonancia", "archivo_2019", "oferta_resonancia", "audio_tomas"}
 
 
 def estado(momento=0, hechos=(), pistas=(), eventos=None):

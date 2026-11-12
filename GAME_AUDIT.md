@@ -186,3 +186,158 @@ La feria solo usa variantes cortas. Para QA:
 | Media | Arrastrar fichas del puzzle con ratón real (el arrastre se probó llamando al mismo callback; clic y teclado sí se probaron en el motor). |
 | Baja | En el arte, Tomás aparece con traje y emblema de alcaldía; en la historia es el candidato rival. Se mantuvo la narrativa. |
 | Baja | Multijugador (fuera del alcance de esta entrega). |
+
+## 10. Remaster narrativo y de plataforma (2026-11-04)
+
+Pedido de la profesora: historia más atractiva, voces, mejor música y un ritmo menos precipitado. El equipo añadió: consecuencias reales, mando, versión web y clasificación online.
+
+### Historia y rutas
+- **Volumen:** de 210 a 373 bloques de diálogo y de 17 a 29 decisiones.
+- **Escenas nuevas de calma e investigación:**
+  - Tomás en la plaza (lunes).
+  - La confesión de Claudia sobre 2019 (lunes por la noche).
+  - La tienda de Rodrigo (miércoles).
+  - La oferta de Resonancia a Martina (miércoles por la noche).
+  - El audio falso de Tomás (viernes).
+  - La víspera con una persona a elegir (sábado).
+- **Arcos conectados:** la familia de la foto de 2019 es la de Rodrigo. Si el jugador une las piezas, Claudia y Rodrigo se encuentran el miércoles y él puede mediar.
+- **Consecuencias intermedias:**
+  - La oferta a Martina decide si el domingo ella ayuda o promociona a Resonancia. Exponerla da una evidencia alternativa del final secreto: `oferta_resonancia`.
+  - El audio de Tomás abre o cierra "Mandato Prestado" y bloquea el final secreto si se usó.
+  - El sábado y las alianzas deciden quién ayuda en la Gran Viralización y cambian su dificultad (`UMBRAL_ALIADO` en `story/rutas.rpy`).
+- **Cinco finales** con escena, música y personajes propios (`clases/Destinos.py`): Ciudad Informada, Ciudad Dividida, Caos Informativo, **Mandato Prestado** (nuevo) y Fuente Abierta. Los epílogos dependen de las rutas.
+
+### Puntuación Cívica y clasificación
+- **Puntuación** (`clases/Puntuacion.py`, 0–1000): verificación 300, decisiones 250, minijuegos 200, investigación 150 y ciudad 100. El final no garantiza el máximo.
+- **Clasificación online:** backend en `leaderboard/` (93 pruebas). El cliente está en `story/leaderboard.rpy`: alias anónimo, cola de envíos pendientes y nunca bloquea la partida.
+- **Archivo de Destinos:** los finales como coleccionables.
+
+### Voces y música
+- **Voces:** 301 líneas dobladas con TTS de Windows (`tools/voces/`): Claudia, Martina, Rodrigo, Tomás y NOVA, con voz procesada.
+  - Ren'Py las reproduce con `config.auto_voice` y baja la música mientras alguien habla.
+  - Narrador y jugador no tienen voz, como en las novelas visuales clásicas.
+- **Música:** 14 temas y 10 efectos nuevos, compuestos de forma procedural (`tools/musica/`). Hay un leitmotiv de Ciudad Nova y otro de NOVA. El sistema `musica()` está en `story/rutas.rpy`.
+- **Aviso:** voces y música se verificaron numéricamente (sonoridad, picos, bucles, espectrogramas), pero **nadie las ha escuchado todavía**.
+
+### Mando, móvil y web
+- **Mando** (`story/mando.rpy`): acciones comunes para teclado y gamepad.
+  - Mapa, Moderador y arcade (mira virtual) funcionan con cruceta y botones.
+  - En el Rastreador, la cruceta mueve el foco entre fichas y huecos, y A elige y coloca.
+  - Y no oculta la interfaz, porque congelaba los minijuegos.
+- **Móvil:**
+  - Flechas táctiles en el mapa, botón "Llegar" e "Ir directo".
+  - Texto un 20 % más grande en teléfonos.
+  - En la web se oculta "Salir" y en vertical aparece un aviso de girar el teléfono.
+- **Build web:** exportada con el módulo oficial de Ren'Py 8.5.3 (101 MB en total, 47,7 MB de descarga inicial; imágenes, música y voces se descargan bajo demanda). Pasos en `DESPLIEGUE.md`.
+
+### Pruebas ejecutadas
+| Prueba | Resultado |
+|---|---|
+| Lint de Ren'Py | Sin errores |
+| `tests/test_civitas_logica.py` | 37 OK |
+| `tests/test_destinos_puntuacion.py` | 19 OK |
+| `leaderboard` (pytest) | 93 OK |
+| `tests/qa_recorridos.py` (guion real en el motor, 5 perfiles × historia y feria) | 10/10 llegan a su final esperado |
+| Envío real juego → servidor local | Aceptado, rechazo por duración imposible, sin servidor (queda en cola) y reconexión (reenvío) |
+| Web en navegador | Arranca, reproduce el prólogo, descarga las voces y consulta la clasificación con CORS |
+| Mando (eventos simulados con `controller.post_event`) | Mapa, Moderador, Caza-Rumores y Rastreador responden |
+| Capturas reales del motor | Escritorio y variante móvil (`RENPY_VARIANT`) revisadas |
+
+**No probado:** mando físico, iPhone y Android reales, escucha humana de voces y música, y despliegue en Render y GitHub Pages (requiere las cuentas del equipo).
+**QA reproducible:** `python tests/qa_recorridos.py [--api URL]`. Aparta `game/saves` mientras corre, para no tocar el progreso real.
+
+## 11. Pulido final y QA para la feria (2026-11-04)
+
+### Doblaje
+- **Auditoría objetiva** con `tools/voces/auditar_voces.py`. Transcribe cada línea con un reconocedor offline en español (Vosk) y mide WER, silencios, saturación y sonoridad. El resultado queda en `tools/voces/auditoria_voces.csv`.
+- **Problemas encontrados y corregidos:**
+  - 108 de 301 líneas tenían silencios internos de más de 1 s, porque OneCore cierra cada bloque de prosodia con una pausa larga. Ahora las pausas se comprimen a un máximo natural por personaje, y quedan **0 líneas** con más de 1 s.
+  - "Civitas" se acentuaba "ci-VI-tas": ahora es "Cívitas".
+  - "RSN-Scheduler" era ininteligible.
+  - Se doblaban 11 líneas de herramientas de desarrollo, entre ellas "Reacción de temblor"; ya no.
+- **Resultado:** 298 líneas. WER mediano 0 en Claudia, Martina, Rodrigo y Tomás, y 0,09 en NOVA (voz procesada). Ninguna saturación.
+- **Pendiente:** la escucha humana. El reconocedor no detecta voces monótonas, poco emotivas o con acento poco natural. Las 133 líneas de las escenas clave están priorizadas para grabación humana en `tools/voces/GRABACION_RECOMENDADA.md`.
+
+### Música y sonido
+- Los sonidos de interfaz usan los efectos nuevos: hover, confirmación de decisiones y pista nueva.
+- **Mezcla inicial:** música 0,7, efectos 0,8 y voz 1,0, con atenuación de la música mientras se habla.
+- Los 14 temas pasan la verificación de sonoridad, picos y bucles.
+- **Pendiente:** la escucha humana.
+
+### Narrativa
+- Se eliminó la redundancia de Claudia sobre por qué aceptó ayudar: en el balcón ahora revela que "no era toda la verdad".
+- En feria, Claudia se presenta y hay transiciones entre días.
+- La ayuda del aliado del domingo, o el perjuicio del video de Martina, se anuncia en pantalla.
+- **Duración medida por recorrido** (no estimada):
+
+| Modo | Líneas | Palabras | Voz |
+|---|---|---|---|
+| Feria | 71–82 | ~1.000 | ~5 min |
+| Historia | 153–190 | 2.000–2.550 | 9–12,5 min |
+
+  Con los minijuegos, la feria dura unos 10–12 min. El botón ahora dice "Modo Feria (10 min)".
+
+### Mando (eventos simulados, sin hardware)
+**Funciona:**
+- Menú principal: la cruceta mueve el foco.
+- El diálogo avanza con A.
+- El teléfono de Civitas completo funciona con cruceta y A.
+- CivitasNet y el expediente se cierran con B.
+- El Archivo de Destinos y la clasificación se cierran con A.
+- Mapa, Moderador, Caza-Rumores y Rastreador funcionan, incluida la colocación de fichas con A.
+- Corregido: Y ya no congela minijuegos.
+
+**Sin confirmar:** en el menú de elecciones, el ratón inyectado funciona, pero el teclado y el mando inyectados no. Todo apunta a un artefacto de la inyección (es el menú estándar de Ren'Py), pero **no se pudo verificar** con teclado real ni con mando. Se añadió foco inicial en la primera opción. Es la **prueba manual prioritaria**.
+
+### Web
+- Descarga inicial reducida de 59 a 47,7 MB:
+  - la música pasa a carga progresiva;
+  - se excluyen 30 paneles de personaje sin uso, los placeholders y el sprite de influencer.
+- La build no incluye partidas guardadas, herramientas ni documentos.
+- La build anterior se probó en el navegador (arranque, voces, clasificación con CORS). **La build optimizada final no se pudo abrir**, porque el panel del navegador no estaba disponible: hay que probarla.
+
+### Leaderboard
+Auditoría y endurecimiento: 142 pruebas. Ver la sección "Seguridad" de `leaderboard/README.md`.
+- La tabla pública solo muestra partidas verificadas, con duración medida por el servidor y umbrales mayores para puntuaciones altas.
+- Hay límites por jugador.
+- Se corrigieron falsos rechazos a jugadores honestos.
+- En producción el CORS solo admite GitHub Pages.
+- Cada partida de feria cuenta como un visitante nuevo.
+
+### Pruebas manuales pendientes (antes de la feria)
+1. **Mando físico:** menú de elecciones (cruceta + A), los cuatro minijuegos, mapa, pausa (Start) y pantalla final.
+2. **Teléfono real** (iPhone Safari y Android Chrome, en horizontal): carga, sonido tras el primer toque, Rastreador táctil, mapa táctil y final.
+3. **Escucha** de voces (empezando por `GRABACION_RECOMENDADA.md`) y de la música en cada escena.
+4. **Partida completa** contra Render + Neon reales.
+5. **Sesiones** con 5 jugadores nuevos según `PROTOCOLO_PRUEBAS_JUGADORES.md`.
+
+## 12. Auditoría final con capturas del motor real (2026-11-05)
+
+**Método:** `tests/qa_visual.py` fotografía el juego real.
+- **Recorridos:** el guion completo de los 5 perfiles, una captura por línea.
+- **Galería por etapas** (`game/qa_galeria.rpy`): menús, escenas, teléfono, CivitasNet, expediente, mapa, los 5 minijuegos jugados con entradas de mando simuladas (victoria, derrota, error y abandono) y las 5 pantallas de final.
+- **Detalle:** el detalle por defecto y las rutas de las capturas están en `RELEASE_READINESS.md`.
+
+| P | Defecto | Causa raíz | Corrección |
+|---|---|---|---|
+| P0 | El Duelo de Frecuencias se congelaba tras pausar y pulsar CONTINUAR. Las notas quedaban quietas y el duelo se perdía. | `VistaDuelo` solo pide cuadros desde `render()` mientras se juega. Al reanudar, nadie pedía el primero. | `renpy.redraw` al reanudar y al abandonar. Verificado: pausa y reanudación con mando dan S, 97 %. |
+| P1 | Moderación: con mando, A no salía de la pantalla de resultados. | Al terminar seguían visibles la tarjeta y BORRAR/APROBAR, y el foco podía quedar en ellos. | Se ocultan al terminar, `civ_accion` continúa y el botón usa el estilo del juego. |
+| P2 | En el tutorial y la pausa del duelo, los botones y el texto se salían del panel. | Tres `boton_vn` (406 px) no caben en 1068 px. | Estilo `boton_vn_compacto` (300 px, `Frame`) y panel de pausa de 1040 px. |
+| P2 | Guardar, Cargar, Ayuda y las confirmaciones salían en inglés ("Page 1", "empty slot", "Upload Sync", toda la ayuda). | El proyecto no tenía traducción de los textos del motor. | `game/tl/spanish` (traducción oficial del SDK), `config.language = "spanish"` y Sync desactivado. Las voces siguen sonando: 63 de 87 líneas con voz en el recorrido; el resto es narración. |
+| P2 | El rótulo del mapa "BARRIO SUR" quedaba detrás de Rodrigo en la conversación. | Las vistas aéreas traen el rótulo pintado. | El plano de conversación encuadra una zona del barrio sin rótulos. El inpainting se descartó porque dejaba una mancha. |
+| P2 | Textos visibles sin tildes: publicaciones de CivitasNet, avisos de alcance, narración de la red, avisos y motivos de fin de los arcades y del rastreo, "Versión" y "LA GRAN VIRALIZACIÓN". | Textos escritos sin acentos. | 47 líneas corregidas solo en cadenas visibles, sin tocar claves de diccionario. La narración no tiene voz, así que no se rompe ningún archivo de voz. |
+| P3 | Las notas del duelo pasaban por encima del título y la barra de señal. Al abandonar quedaban notas congeladas detrás del resultado. | Se dibujaban desde y = −60 y también en resultados. | Las notas nacen bajo la cabecera con un fundido y no se dibujan en resultados. |
+| P3 | 3,8 MB de PNG opacos en la descarga inicial web (fondos de menú). | `main_menu.png` y `game_menu.png` sin transparencia. | JPG: de 3,05 MB a 0,68 MB y de 0,74 MB a 0,07 MB. |
+| P3 | El botón EMPEZAR del Rastreador usaba el estilo por defecto (azul) sobre un panel claro. | — | Usa `boton_vn`. |
+
+**Comprobado y sin defecto:**
+- **Los 5 finales** se alcanzan con renderizado real: secreto, informada, mandato, caos y dividida.
+- **El QR** de la pantalla final se decodifica desde la captura a `https://ac020907.github.io/pruebaslaboratorio/`.
+- **Mando:** A avanza la narración, las líneas de personaje, las pausas `{w}` del prólogo y las líneas `{nw}`. El historial registra las líneas.
+- **Gran Viralización sin intervenir** se pierde: 0/15 semillas en historia y 1/15 en feria.
+- **La web publicada** no sirve `.env`, partidas, herramientas ni `.git`. El backend responde con la base de datos OK, `/docs` está cerrado y no hay CORS para orígenes ajenos.
+
+**Artefactos del arnés de QA, no del juego:**
+- **Historial y menú:** el QA arranca dentro del `splashscreen`, donde Ren'Py desactiva historial y menú del juego. La galería los restaura.
+- **Texto animado:** la primera A completa la línea y la segunda avanza, que es lo esperado. Las capturas usan texto instantáneo.
+- **Ventana:** pedir 1920×1080 en ventana da 1739×978, porque Windows reserva la barra de tareas. Es la misma proporción 16:9.

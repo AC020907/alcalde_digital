@@ -79,7 +79,7 @@ class RastreoEnVivo(CazaRumores):
             self._evento("rastro", nodo=nodo, puntos=ganados)
             if nodo == self.origen:
                 self.puntos += self.cfg["bono_contencion"]
-                self._terminar("victoria", "Encontraste a %s: inicio el rumor." % self.grafo.nombre(nodo))
+                self._terminar("victoria", "Encontraste a %s: inició el rumor." % self.grafo.nombre(nodo))
             return True
         self.pistas_falsas += 1
         self.combo = 0
@@ -113,9 +113,9 @@ class RastreoEnVivo(CazaRumores):
         if self.estado != "jugando":
             return
         if self.viralidad() >= 1.0:
-            self._terminar("derrota", "El rumor se volvio VIRAL antes de encontrar el origen. Era %s." % self.grafo.nombre(self.origen))
+            self._terminar("derrota", "El rumor se volvió VIRAL antes de encontrar el origen. Era %s." % self.grafo.nombre(self.origen))
         elif self.transcurrido >= self.cfg["duracion"]:
-            self._terminar("derrota", "Se acabo el tiempo. El origen era %s." % self.grafo.nombre(self.origen))
+            self._terminar("derrota", "Se acabó el tiempo. El origen era %s." % self.grafo.nombre(self.origen))
 
     def calificacion(self):
         if not self.exito():

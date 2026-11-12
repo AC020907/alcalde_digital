@@ -127,7 +127,7 @@ screen hud_acceso(etiqueta, pendientes, accion):
         ysize 44
         background Frame("gui/telefono_boton.png", 30, 30)
         hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
-        hover_sound "assets/audio/sfx/ui_hover.wav"
+        hover_sound "assets/audio/sfx/menu_hover.ogg"
         activate_sound "assets/audio/sfx/ui_click.wav"
         action accion
         text etiqueta size 16 bold True color "#fbf6ee" align (0.5, 0.5)
@@ -373,7 +373,8 @@ screen choice(items):
 
     vbox:
         for i, item in enumerate(items):
-            textbutton item.caption action item.action at opcion_entrada(i * 0.07)
+            # Foco inicial en la primera opcion: con mando o teclado se elige sin buscar el foco.
+            textbutton item.caption action item.action at opcion_entrada(i * 0.07) default_focus (i == 0)
 
 
 style choice_vbox is vbox
@@ -389,8 +390,8 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    hover_sound "assets/audio/sfx/ui_hover.wav"
-    activate_sound "assets/audio/sfx/eleccion.wav"
+    hover_sound "assets/audio/sfx/menu_hover.ogg"
+    activate_sound "assets/audio/sfx/decision.ogg"
 
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
@@ -489,7 +490,7 @@ screen navigation():
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Ayuda") action ShowMenu("help")
+            textbutton _("Ayuda") action Show("ayuda_civitas")
 
         if renpy.variant("pc"):
 
@@ -542,6 +543,7 @@ screen main_menu():
     frame at menu_boton_entrada(0.1):
         xpos 34
         ypos 446
+        # 512 tambien en la web: el fondo trae un boton "Salir" dibujado que este marco tapa.
         xysize (440, 512)
         background Frame("gui/frame.png", 30, 30)
 
@@ -551,17 +553,17 @@ screen main_menu():
         spacing -6
         for i, (etiqueta, accion, imagen) in enumerate([
                 (_("Nueva partida"), Start(), "gui/boton_menu_idle.png"),
-                (_("Modo Feria (8 min)"), Start("modo_feria"), "gui/boton_menu_feria.png"),
+                (_("Modo Feria (12 min)"), Start("modo_feria"), "gui/boton_menu_feria.png"),
                 (_("Cargar partida"), ShowMenu("load"), "gui/boton_menu_idle.png"),
                 (_("Opciones"), ShowMenu("preferences"), "gui/boton_menu_idle.png"),
-                (_("Créditos"), ShowMenu("about"), "gui/boton_menu_idle.png"),
-                (_("Salir"), Quit(confirm=False), "gui/boton_menu_idle.png")]):
+                (_("Arena (2-4 jugadores)"), Start("arena"), "gui/boton_menu_idle.png"),
+                (_("Salir"), Quit(confirm=False), "gui/boton_menu_idle.png")][:5 if renpy.emscripten else 6]):
             button:
                 xysize (406, 86)
                 background imagen
                 hover_background "gui/boton_menu_hover.png"
-                hover_sound "assets/audio/sfx/ui_hover.wav"
-                activate_sound "assets/audio/sfx/ui_click.wav"
+                hover_sound "assets/audio/sfx/menu_hover.ogg"
+                activate_sound "assets/audio/sfx/menu_select.ogg"
                 action accion
                 at menu_boton_entrada(0.25 + i * 0.07)
                 text etiqueta:
@@ -570,6 +572,36 @@ screen main_menu():
                     size 26
                     color "#2b2440"
                     bold True
+
+    hbox:
+        xalign 0.985
+        yalign 0.93
+        spacing 18
+        at menu_boton_entrada(0.8)
+        textbutton _("Ayuda"):
+            style "boton_vn_compacto"
+            text_style "boton_vn_text"
+            ysize 86
+            xsize 230
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("ayuda_civitas")
+        textbutton _("Créditos"):
+            style "boton_vn_compacto"
+            text_style "boton_vn_text"
+            ysize 86
+            xsize 230
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action ShowMenu("about")
+        textbutton _("Archivo de Destinos"):
+            style "boton_vn"
+            text_style "boton_vn_text"
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("archivo_destinos")
+        textbutton _("Clasificación"):
+            style "boton_vn"
+            text_style "boton_vn_text"
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("leaderboard_pantalla")
 
     text "v[config.version]  -  Feria Gamer 2026" size 18 color "#fbf6ee" xalign 0.985 yalign 0.985 outlines [(2, "#2b244080", 0, 0)]
 
@@ -725,7 +757,7 @@ screen about():
             spacing 10
             label "Alcalde Digital"
             text "Una novela visual sobre la desinformación en Ciudad Nova."
-            text "Version [config.version]\n"
+            text "Versión [config.version]\n"
             label "Equipo"
             text "Estructuras de Datos II - Universidad del Norte, 2026"
             text "Desarrollo, narrativa, interfaz y arte: equipo Alcalde Digital\n"
@@ -927,6 +959,10 @@ screen preferences():
                     style_prefix "check"
                     label _("Accesibilidad")
                     textbutton _("Reducir movimiento") action ToggleField(persistent, "reducir_movimiento")
+                    textbutton _("Controles táctiles en el mapa") action ToggleField(persistent, "controles_tactiles")
+                    textbutton _("Avisos visuales de sonido") action ToggleField(persistent, "avisos_sonido")
+
+                use ayuda_mando
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -981,6 +1017,11 @@ screen preferences():
                         textbutton _("Silenciar todo"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+                        if config.has_voice:
+                            textbutton _("Bajar la música cuando hablan"):
+                                action Preference("emphasize audio", "toggle")
+                                style "mute_all_button"
 
 
 style pref_label is gui_label

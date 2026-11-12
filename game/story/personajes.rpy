@@ -29,13 +29,23 @@ init -5 python:
     # dialogo (linea base) con un fundido inferior, asi el corte nunca se ve y la cara queda
     # por encima del texto. (lienzo de referencia en px, zoom, linea base y); el fundido usa el
     # tamano real del PNG. La linea base nivela los ojos; NOVA es mas bajito a proposito.
+    # Todos usan los sprites oficiales en el estilo del equipo (tools/arte/importar_sprites.py):
+    # lienzo de 760 px de alto con el mismo encuadre en todas sus expresiones.
     ENCUADRE_SPRITE = {
-        "claudia": ((578, 546), 1.32, 945),
-        "martina": ((576, 547), 1.32, 962),
-        "rodrigo": ((560, 544), 1.32, 935),
-        "tomas":   ((542, 549), 1.32, 940),
-        "nova":    ((558, 527), 1.12, 955),
+        "claudia": ((579, 760), 0.96, 1000),
+        "martina": ((682, 760), 0.96, 1010),
+        "rodrigo": ((772, 760), 0.96, 1000),
+        "tomas":   ((761, 760), 0.96, 1000),
+        "nova":    ((500, 760), 0.92, 1010),
     }
+
+    # Expresiones con el mismo dibujo (o que faltan en el paquete): se reutiliza un solo archivo.
+    #   Claudia seria = neutral y Rodrigo serio = neutral (identicos pixel a pixel en el paquete);
+    #   NOVA no trae "feliz": se usa su neutral (guino y sonrisa).
+    ALIAS_EXPRESION = {("claudia", "seria"): "neutral", ("rodrigo", "seria"): "neutral", ("nova", "feliz"): "neutral"}
+
+    def expresion_real(nombre, expresion):
+        return ALIAS_EXPRESION.get((nombre, expresion), expresion)
 
     def retrato_base(nombre, expresion, lado):
         base = "images/personajes/%s_base.png" % nombre
@@ -67,6 +77,7 @@ init -5 python:
         return renpy.loadable("images/personajes/sprites/%s_neutral.png" % nombre)
 
     def retrato_escena(nombre, expresion):
+        expresion = expresion_real(nombre, expresion)
         sprite = "images/personajes/sprites/%s_%s.png" % (nombre, expresion)
         if renpy.loadable(sprite):
             _, zoom, _ = ENCUADRE_SPRITE[nombre]
@@ -78,6 +89,7 @@ init -5 python:
         return retrato_base(nombre, expresion, 400)
 
     def retrato_lado(nombre, expresion):
+        expresion = expresion_real(nombre, expresion)
         for ruta in ("images/personajes/sprites/lado/%s_%s_lado.png", "images/personajes/lateral/%s_%s_lado.png"):
             if renpy.loadable(ruta % (nombre, expresion)):
                 return ruta % (nombre, expresion)
@@ -157,7 +169,7 @@ init -5 python:
 
 
 default hablante = None
-default afinidad = {"claudia": 0, "martina": 0, "rodrigo": 0}
+default afinidad = {"claudia": 0, "martina": 0, "rodrigo": 0, "tomas": 0}
 
 image ctc_flecha:
     "gui/ctc.png"
