@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Civitas · Tabla de Honor</title>
+<style>
+  :root {
+    --cream: #fbf6ee; --ink: #2b2440; --violet: #5b5bd6; --lavender: #a7a5f2;
+    --coral: #e86a7e; --wine: #8c2f4b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--cream); color: var(--ink);
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    min-height: 100vh; padding: clamp(12px, 2.5vw, 40px);
+  }
+  main { max-width: 1100px; margin: 0 auto; }
+  header { display: flex; align-items: center; gap: 24px; justify-content: space-between; flex-wrap: wrap; }
+  h1 { margin: 0; font-size: clamp(1.8rem, 5vw, 3.6rem); letter-spacing: .02em; color: var(--violet); }
+  h1 small { display: block; font-size: .38em; color: var(--wine); letter-spacing: .12em; text-transform: uppercase; }
+  #qr { text-align: center; font-size: .8rem; color: var(--wine); }
+  #qr img { width: clamp(90px, 14vw, 150px); height: auto; display: block; border: 6px solid #fff; border-radius: 12px; }
+  nav { display: flex; gap: 10px; margin: 22px 0 14px; }
+  nav button {
+    flex: 1; font: inherit; font-weight: 700; font-size: clamp(1rem, 2.6vw, 1.7rem);
+    padding: .6em 1em; border-radius: 999px; cursor: pointer;
+    border: 3px solid var(--lavender); background: #fff; color: var(--violet);
+  }
+  nav button[aria-selected="true"] { background: var(--violet); border-color: var(--violet); color: #fff; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  li {
+    display: grid; grid-template-columns: 2.2em 1fr auto; align-items: center; gap: 4px 14px;
+    background: #fff; border-radius: 18px; padding: .6em 1em;
+    border-left: 10px solid var(--lavender); box-shadow: 0 2px 0 rgba(43,36,64,.08);
+  }
+  li:nth-child(1) { border-left-color: var(--coral); }
+  li:nth-child(2) { border-left-color: var(--violet); }
+  li:nth-child(3) { border-left-color: var(--wine); }
+  .rank { font-size: clamp(1.4rem, 3.6vw, 2.6rem); font-weight: 800; color: var(--violet); text-align: center; }
+  .alias { font-size: clamp(1.1rem, 3vw, 2.1rem); font-weight: 700; overflow-wrap: anywhere; }
+  .meta { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: clamp(.8rem, 1.7vw, 1.15rem); }
+  .score { grid-row: 1 / span 2; grid-column: 3; font-size: clamp(1.6rem, 4.4vw, 3.2rem); font-weight: 800; color: var(--wine); text-align: right; }
+  .badge { padding: .1em .7em; border-radius: 999px; background: var(--lavender); color: var(--ink); font-weight: 700; }
+  .badge.informada { background: #bfe3c9; } .badge.dividida { background: #f3d58b; }
+  .badge.caos { background: var(--coral); color: #fff; } .badge.mandato { background: var(--wine); color: #fff; }
+  .badge.secreto { background: var(--violet); color: #fff; }
+  .ok { color: var(--violet); font-weight: 700; }
+  .plat { color: #6b6485; }
+  #status { margin-top: 16px; font-size: .95rem; color: #6b6485; text-align: center; }
+  #status.err { color: var(--coral); font-weight: 700; }
+  .empty { text-align: center; padding: 2em; font-size: 1.4rem; color: #6b6485; }
+  @media (max-width: 480px) {
+    li { grid-template-columns: 1.8em 1fr auto; padding: .5em .7em; gap: 2px 8px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1><small>Alcalde Digital</small>Tabla de Honor</h1>
+    <div id="qr" hidden>
+      <img src="/static/qr.png" alt="Código QR para jugar" onload="document.getElementById('qr').hidden=false" onerror="this.parentElement.remove()">
+      Escanea y juega
+    </div>
+  </header>
+  <nav role="tablist">
+    <button role="tab" id="tab-historia" data-mode="historia" aria-selected="true">Historia</button>
+    <button role="tab" id="tab-feria" data-mode="feria" aria-selected="false">Modo Feria</button>
+  </nav>
+  <ol id="list" aria-live="polite"></ol>
+  <div id="status"></div>
+</main>
+<script>
+(function () {
+  var REFRESH_MS = 15000;
+  var mode = location.hash === "#feria" ? "feria" : "historia";
+  var list = document.getElementById("list");
+  var statusEl = document.getElementById("status");
+  var tabs = document.querySelectorAll("nav button");
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+
+  function render(entries) {
+    list.textContent = "";
+    if (!entries.length) {
+      list.appendChild(el("li", "empty", "Aún no hay puntuaciones. Sé la primera persona en jugar."));
+      list.firstChild.style.display = "block";
+      return;
+    }
+    entries.forEach(function (e) {
+      var li = el("li");
+      li.appendChild(el("div", "rank", e.rank));
+      li.appendChild(el("div", "alias", e.alias));
+      li.appendChild(el("div", "score", e.score));
+      var meta = el("div", "meta");
+      meta.appendChild(el("span", "badge " + e.final, e.final_title));
+      meta.appendChild(el("span", "plat", e.platform === "web" ? "Web" : "PC"));
+      if (e.verified) meta.appendChild(el("span", "ok", "✓ verificada"));
+      li.appendChild(meta);
+      list.appendChild(li);
+    });
+  }
+
+  function load() {
+    var requested = mode;
+    fetch("/api/leaderboard?mode=" + requested + "&limit=10", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (data) {
+        if (requested !== mode) return;
+        render(data.entries);
+        statusEl.className = "";
+        statusEl.textContent = "Actualizado " + new Date().toLocaleTimeString("es") + " · se refresca cada 15 s";
+      })
+      .catch(function () {
+        statusEl.className = "err";
+        statusEl.textContent = "Sin conexión con el servidor. Reintentando...";
+      });
+  }
+
+  function select(next) {
+    mode = next;
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.mode === mode)); });
+    history.replaceState(null, "", "#" + mode);
+    load();
+  }
+
+  tabs.forEach(function (t) { t.addEventListener("click", function () { select(t.dataset.mode); }); });
+  select(mode);
+  setInterval(load, REFRESH_MS);
+})();
+</script>
+</body>
+</html>

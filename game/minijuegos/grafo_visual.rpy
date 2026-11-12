@@ -112,7 +112,7 @@ init python:
                 lienzo.polygon(color, [(x2, y2), p1, p2])
             return r
 
-    def capa_aristas(grafo, pos, resaltadas=None, atenuar=()):
+    def capa_aristas(grafo, pos, resaltadas=None, atenuar=(), ancho=None):
         """resaltadas: {(origen, destino): color}. Cada arista se acorta para terminar en el borde del nodo."""
         resaltadas = resaltadas or {}
         segmentos = []
@@ -138,11 +138,12 @@ init python:
             segmentos.append((int(x1 + ux * r1 + ox), int(y1 + uy * r1 + oy),
                               int(x2 - ux * r2 + ox), int(y2 - uy * r2 + oy), color, grosor))
         segmentos.sort(key=lambda s: s[5])
-        clave = tuple(segmentos)
+        ancho = ancho or GRAFO_ANCHO_CAPA
+        clave = (ancho, tuple(segmentos))
         if clave not in CapaAristas.cache:
             if len(CapaAristas.cache) > 60:
                 CapaAristas.cache.clear()
-            CapaAristas.cache[clave] = CapaAristas(segmentos, GRAFO_ANCHO_CAPA, GRAFO_ALTO_CAPA)
+            CapaAristas.cache[clave] = CapaAristas(segmentos, ancho, GRAFO_ALTO_CAPA)
         return CapaAristas.cache[clave]
 
     def efecto_nodo(nombre):
@@ -212,9 +213,9 @@ style grafo_button_text is default:
 
 ## Dibuja el grafo completo. Cada vista (BFS, rastreador, contencion...)
 ## solo decide el estado/efecto/accion de cada nodo y que aristas resaltar.
-screen grafo_red(grafo, pos, estados, efectos={}, acciones={}, resaltadas={}, subtitulos={}, atenuar=()):
+screen grafo_red(grafo, pos, estados, efectos={}, acciones={}, resaltadas={}, subtitulos={}, atenuar=(), ancho=None):
 
-    add capa_aristas(grafo, pos, resaltadas, atenuar)
+    add capa_aristas(grafo, pos, resaltadas, atenuar, ancho)
 
     for nodo in grafo.lista_nodos():
         $ x, y = pos[nodo]

@@ -6,37 +6,8 @@ init python:
     from clases.Moderador import ColaModeracion
     from clases.Publicacion import Publicacion
 
-    # (autor, texto, creada, es_bot). Ojo: la critica dura pero real NO se borra.
-    COMENTARIOS_MODERACION = [
-        ("@noticias_YA_2391", "COMPARTE ANTES DE QUE LO BORREN!!! la alcaldia esconde la verdad bit.ly/v3rd4d", "hace 2 dias", True),
-        ("@lucia.marquez", "Martina, ¿tienes la fuente de lo del agua? Mi mamá está preocupada.", "2017", False),
-        ("@verdad.oculta.77", "EL AGUA ESTA ENVENENADA. NO LA TOMEN. LOS MEDIOS CALLAN.", "ayer", True),
-        ("@don.pedro", "Yo vivo en el Barrio Sur y el agua sale normal, no exageren.", "2022", False),
-        ("@patriota_nova_01", "Despierten!!! #CiudadNovaMiente #CiudadNovaMiente #CiudadNovaMiente", "hace 3 dias", True),
-        ("@camila.r", "El alcalde llega tarde a todo. Igual que con los huecos de mi calle.", "2019", False),
-        ("@info24_real", "Gana un bono de 500.000 si compartes esto con 10 amigos", "hace 1 dia", True),
-        ("@profe.andres", "Antes de compartir, revisen el comunicado oficial de la empresa de acueducto.", "2015", False),
-        ("@user8812345", "yo tambien lo vi yo tambien lo vi yo tambien lo vi", "hoy", True),
-        ("@sofia.sur", "No me gusta la gestión del alcalde, pero esto del agua suena a mentira.", "2018", False),
-        ("@alerta_ciudadana_x", "URGENTE: mañana cortan el agua en toda la ciudad (fuente: confía)", "hace 4 dias", True),
-        ("@marta.ventas", "Martina, te sigo hace años y te pido que verifiques antes de publicar.", "2015", False),
-        ("@bot_nova_445", "Los que defienden al alcalde están pagados. Todos.", "ayer", True),
-        ("@leo.centro", "Qué pereza este tema, mejor hablemos de los conciertos del sábado jaja", "2019", False),
-        ("@nova.libre.real", "Video filtrado: funcionarios echando químicos al tanque >> bit.ly/xx9", "hace 2 dias", True),
-        ("@pipe.skate", "Esta administración es un desastre y lo voy a seguir diciendo.", "2023", False),
-        ("@ciudadano_consciente_9", "Si no compartes eres cómplice. #DespiertaNova", "hoy", True),
-        ("@lector.critico", "La universidad publicó análisis del agua de ayer: todo dentro de lo normal.", "2016", False),
-        ("@hidro_verdad", "Mi primo trabaja en el acueducto y dice que es cierto (no puede dar su nombre)", "hace 6 dias", True),
-        ("@fan.noticias", "Martina, ¿vas a hacer live hoy? Quiero preguntarte sobre esto.", "2020", False),
-        ("@xx_ciudadnova_xx", "RT RT RT RT el agua el agua el agua", "hoy", True),
-        ("@vecino.anonimo", "Soy nuevo en Civitas y no sé a quién creerle, la verdad.", "2024", False),
-    ]
+    from clases.moderacion_datos import COMENTARIOS_MODERACION, publicaciones_moderacion
 
-    def publicaciones_moderacion(semilla, cantidad=16):
-        rng = random.Random("moderacion|%s" % semilla)
-        elegidos = rng.sample(COMENTARIOS_MODERACION, cantidad)
-        return [Publicacion(autor, texto, es_bot, 0, None) for autor, texto, _, es_bot in elegidos], \
-               {autor: creada for autor, _, creada, _ in elegidos}
 
     def avatar_comentario(autor):
         if red_civitas.existe(autor):
@@ -109,12 +80,11 @@ screen moderador_ui(cola, creadas):
     zorder 40
 
     if not cola.terminado():
-        timer 0.05 repeat True action Function(tick_moderacion, cola, 0.05)
+        timer 0.05 repeat True action If(minijuego_pausado, NullAction(), Function(tick_moderacion, cola, 0.05))
+        use boton_pausa_minijuego
         if cola.jugando():
-            key "K_LEFT" action Function(moderar, cola, True)
-            key "K_a" action Function(moderar, cola, True)
-            key "K_RIGHT" action Function(moderar, cola, False)
-            key "K_d" action Function(moderar, cola, False)
+            key "civ_izq" action Function(moderar, cola, True)
+            key "civ_der" action Function(moderar, cola, False)
 
     add "bg civitas"
     add Solid("#1b1426b0")
@@ -142,7 +112,8 @@ screen moderador_ui(cola, creadas):
     if cola.racha >= 3:
         text "RACHA x[cola.racha]" size 34 bold True color "#facc15" xalign 0.5 ypos 170 outlines [(3, "#2b2440", 0, 0)]
 
-    if cola.actual is not None and cola.intro <= 0:
+    # Al terminar se retiran tarjeta y botones: si no, el mando puede quedarse con el foco en BORRAR/APROBAR.
+    if cola.actual is not None and cola.intro <= 0 and not cola.terminado():
         bar:
             xalign 0.5
             ypos 330
@@ -162,7 +133,7 @@ screen moderador_ui(cola, creadas):
             xalign 0.5
             ypos 820
             spacing 60
-            textbutton "<  BORRAR  (A)":
+            textbutton "<  BORRAR":
                 xsize 400
                 ysize 90
                 background Frame("gui/telefono_boton.png", 30, 30)
@@ -172,9 +143,9 @@ screen moderador_ui(cola, creadas):
                 text_color "#fbf6ee"
                 text_xalign 0.5
                 text_yalign 0.5
-                hover_sound "assets/audio/sfx/ui_hover.wav"
+                hover_sound "assets/audio/sfx/menu_hover.ogg"
                 action Function(moderar, cola, True)
-            textbutton "APROBAR  (D)  >":
+            textbutton "APROBAR  >":
                 xsize 400
                 ysize 90
                 background Frame("gui/telefono_boton.png", 30, 30)
@@ -184,7 +155,7 @@ screen moderador_ui(cola, creadas):
                 text_color "#fbf6ee"
                 text_xalign 0.5
                 text_yalign 0.5
-                hover_sound "assets/audio/sfx/ui_hover.wav"
+                hover_sound "assets/audio/sfx/menu_hover.ogg"
                 action Function(moderar, cola, False)
 
     if cola.intro > 0:
@@ -193,7 +164,7 @@ screen moderador_ui(cola, creadas):
             align (0.5, 0.45)
             spacing 20
             text "Los comentarios de Martina están llenos de bots." size 36 color "#fbf6ee" xalign 0.5
-            text "← o A: borrar     → o D: aprobar" size 32 bold True color "#facc15" xalign 0.5
+            text "Borrar: flecha izquierda, tecla A o cruceta izquierda     Aprobar: flecha derecha, tecla D o cruceta derecha" size 26 bold True color "#facc15" xalign 0.5
             text "Ojo: criticar al alcalde no es desinformación." size 28 color "#c9b8d8" xalign 0.5
             text "%d" % (int(cola.intro) + 1) size 140 bold True color "#ffffff" xalign 0.5
 
@@ -211,12 +182,12 @@ screen moderador_ui(cola, creadas):
                 text "Aciertos: [cola.aciertos]   Errores: [cola.errores]   Mejor racha: x[cola.mejor_racha]" size 24 color "#2b2440" xalign 0.5
                 text "Puntos: " + formato_num(cola.puntos) size 30 bold True color "#8c2f4b" xalign 0.5
                 textbutton "CONTINUAR":
-                    style "grafo_button"
-                    text_style "grafo_button_text"
+                    style "boton_vn"
+                    text_style "boton_vn_text"
                     xalign 0.5
-                    xsize 360
-                    text_xalign 0.5
+                    default_focus True
                     action Return()
+        key "civ_accion" action Return()
 
 
 label minijuego_moderador(semilla=None, aplicar=True, cantidad=16):

@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: civitas-leaderboard
+    runtime: python
+    plan: free
+    rootDir: leaderboard
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      # Neon/Supabase connection string (include ?sslmode=require).
+      - key: DATABASE_URL
+        sync: false
+      # Only the GitHub Pages origin of the web build (desktop clients send no Origin).
+      - key: ALLOWED_ORIGINS
+        value: https://ac020907.github.io
+      # Optional: >= 16 chars enables DELETE /api/admin/scores/{run_id}.
+      - key: ADMIN_TOKEN
+        generateValue: true
+      # Shared venue WiFi: many phones behind one public IP.
+      - key: RATE_SCORES_PER_HOUR
+        value: "300"
+      - key: RATE_START_PER_HOUR
+        value: "600"
+      - key: RATE_GET_PER_MIN
+        value: "600"

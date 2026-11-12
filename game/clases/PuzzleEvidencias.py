@@ -61,6 +61,7 @@ class PuzzleEvidencias:
         self.caso = dict(CASOS_FUENTE[self.rumor], viral=RUMORES[self.rumor])
         self._generar(candidatos or CANDIDATOS_ORIGEN, senuelos)
         self.slots = [None] * eslabones
+        self.intentos = []                     # [(slots, conclusion)] de cada comprobacion: la Arena los reproduce
         self.conclusion = None
         self.revision = [None] * eslabones     # True/False tras comprobar
         self.conclusion_ok = None
@@ -228,6 +229,7 @@ class PuzzleEvidencias:
         if not self.jugando() or not self.listo():
             return False
         self.comprobaciones_usadas += 1
+        self.intentos.append((list(self.slots), self.conclusion))
         self.explicaciones = []
         receptor = self.inicio
         for i, carta in enumerate(self.slots):

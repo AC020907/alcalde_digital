@@ -1,0 +1,142 @@
+"""
+Publicaciones del telefono de Civitas en el modo Historia (datos puros, probados en tests/test_coherencia_educativa.py).
+
+Regla educativa (rubrica §2-3, §11): la consecuencia depende de la VERACIDAD y de la ACCION.
+- Verificar y acertar (compartir con fuente lo verdadero, reportar lo falso) es lo mejor.
+- Compartir sin verificar algo verdadero suma poco; algo falso resta.
+- Equivocarse al verificar (reportar lo verdadero, avalar lo falso) resta: no se premia el error.
+- Ignorar no suma puntos: un rumor ignorado sigue circulando; una noticia util ignorada no llega.
+Cada publicacion trae la "pista" que el jugador ve al pulsar Verificar, para que decida con evidencias.
+"""
+
+AVALAR_FALSA = {
+    "texto": "La das por cierta sin pruebas y la difundes con tu credibilidad. El rumor gana fuerza.",
+    "efecto": {"desinformacion": 5, "confianza": -3, "reputacion": -6, "puntos": -8},
+}
+REPORTAR_VERDADERA = {
+    "texto": "La reportas como falsa, pero era cierta: frenaste información útil y desconfían de ti.",
+    "efecto": {"confianza": -3, "info_verificada": -2, "reputacion": -4, "puntos": -5},
+}
+
+PUBLICACIONES_HISTORIA = [
+    {"autor": "@verde.ciudad", "contenido": "El colegio San Marcos lanzó una campaña de reciclaje.",
+     "es_falsa": False, "nivel_riesgo": 10,
+     "pista": "El colegio lo publicó en su web oficial con fotos y fecha.",
+     "compartir": {"etiqueta": "Compartir", "texto": "La difundes de inmediato. La comunidad se suma y el bienestar mejora.",
+                   "efecto": {"bienestar": 3, "confianza": 1, "puntos": 4}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "La oportunidad pasa desapercibida. Nada cambia.", "efecto": {"bienestar": -1}},
+     "verificar_si": {"etiqueta": "Sí, es verdadera — Compartir",
+                      "texto": "Verificas y confirmas. La difundes con credibilidad. Excelente gestión.",
+                      "efecto": {"bienestar": 5, "confianza": 3, "info_verificada": 3, "puntos": 8}},
+     "verificar_no": dict(REPORTAR_VERDADERA, etiqueta="No, es falsa — Reportar")},
+
+    {"autor": "@salud.nova", "contenido": "La alcaldía inauguró el nuevo hospital del sur esta mañana.",
+     "es_falsa": False, "nivel_riesgo": 15,
+     "pista": "Hay video de la inauguración y la Secretaría de Salud lo confirma.",
+     "compartir": {"etiqueta": "Compartir", "texto": "Los ciudadanos reciben la buena noticia. La confianza en instituciones crece.",
+                   "efecto": {"bienestar": 4, "confianza": 2, "puntos": 5}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "La noticia no llega a tiempo. Oportunidad perdida.", "efecto": {"bienestar": -1}},
+     "verificar_si": {"etiqueta": "Sí, es verdadera — Compartir",
+                      "texto": "Confirmas con la alcaldía y difundes con datos. Gestión ejemplar.",
+                      "efecto": {"bienestar": 6, "confianza": 4, "info_verificada": 3, "puntos": 10}},
+     "verificar_no": dict(REPORTAR_VERDADERA, etiqueta="No, es falsa — Reportar")},
+
+    {"autor": "@candidata.luna", "contenido": "Propongo convertir el lote abandonado del barrio norte en zona verde.",
+     "es_falsa": False, "nivel_riesgo": 20,
+     "pista": "Es una propuesta de campaña: está en su programa registrado. Se puede discutir, pero no es un bulo.",
+     "compartir": {"etiqueta": "Compartir", "texto": "La propuesta gana respaldo ciudadano. La ciudad florece.",
+                   "efecto": {"bienestar": 2, "confianza": 2, "puntos": 4}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "Los ciudadanos sienten que nadie escucha las propuestas.", "efecto": {"convivencia": -1}},
+     "verificar_si": {"etiqueta": "Sí, es seria — Compartir con contexto",
+                      "texto": "Verificas la propuesta y la compartes aclarando que es una promesa de campaña.",
+                      "efecto": {"bienestar": 4, "confianza": 3, "convivencia": 2, "puntos": 8}},
+     "verificar_no": {"etiqueta": "No, es propaganda — Reportar",
+                      "texto": "Reportas una propuesta legítima solo por ser de campaña. Eso es censurar el debate.",
+                      "efecto": {"convivencia": -3, "confianza": -2, "reputacion": -3, "puntos": -4}}},
+
+    {"autor": "@barrio.central", "contenido": "Vecinos del barrio central llevan tres semanas sin alumbrado público.",
+     "es_falsa": False, "nivel_riesgo": 30,
+     "pista": "Hay 14 reclamos registrados en la empresa de energía desde hace tres semanas.",
+     "compartir": {"etiqueta": "Compartir", "texto": "Visibilizas el problema. La gente siente que su voz importa.",
+                   "efecto": {"convivencia": 2, "confianza": 1, "puntos": 4}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "Los vecinos pierden la fe en las instituciones.", "efecto": {"convivencia": -2, "confianza": -2}},
+     "verificar_si": {"etiqueta": "Sí, es real — Gestionar y comunicar acciones",
+                      "texto": "Verificas y canalizas la queja oficial. La convivencia mejora.",
+                      "efecto": {"convivencia": 4, "confianza": 3, "bienestar": 2, "puntos": 8}},
+     "verificar_no": dict(REPORTAR_VERDADERA, etiqueta="No, es exagerado — Reportar",
+                          efecto={"convivencia": -3, "confianza": -3, "reputacion": -4, "puntos": -5})},
+
+    {"autor": "@salud.publica", "contenido": "Se registraron 40 casos de gripe en escuelas del centro. Las autoridades investigan.",
+     "es_falsa": False, "nivel_riesgo": 40,
+     "pista": "El boletín epidemiológico oficial de esta semana registra los 40 casos.",
+     "compartir": {"etiqueta": "Compartir", "texto": "La ciudadanía actúa con prevención. Buen manejo de la información.",
+                   "efecto": {"info_verificada": 2, "bienestar": 1, "puntos": 4}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "Los ciudadanos no saben de la alerta. Se siguen contagiando.",
+                 "efecto": {"bienestar": -3, "desinformacion": 2}},
+     "verificar_si": {"etiqueta": "Sí, es verdadera — Informar con datos médicos",
+                      "texto": "Confirmas con autoridades de salud y difundes con calma. Excelente.",
+                      "efecto": {"info_verificada": 5, "confianza": 3, "bienestar": 3, "puntos": 10}},
+     "verificar_no": dict(REPORTAR_VERDADERA, etiqueta="No, es exagerado — Reportar para evitar pánico",
+                          efecto={"bienestar": -3, "confianza": -3, "info_verificada": -2, "reputacion": -4, "puntos": -5})},
+
+    {"autor": "@preocupado99", "contenido": "Dicen que el gobierno va a privatizar el acueducto. Ya no tendremos agua gratis.",
+     "es_falsa": True, "nivel_riesgo": 55,
+     "pista": "Empieza con «dicen que». No hay ningún decreto ni noticia oficial sobre el acueducto.",
+     "compartir": {"etiqueta": "Compartir", "texto": "El rumor se propaga rápidamente. Los ciudadanos entran en conflicto.",
+                   "efecto": {"conflictos": 5, "desinformacion": 4, "confianza": -3, "puntos": -6}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "El rumor sigue circulando sin respuesta. La tensión aumenta.",
+                 "efecto": {"conflictos": 2, "desinformacion": 2}},
+     "verificar_si": dict(AVALAR_FALSA, etiqueta="Sí, es verdad — Compartir con evidencia oficial"),
+     "verificar_no": {"etiqueta": "No, es falso — Reportar y desmentir",
+                      "texto": "La verdad prevalece. La confianza en las instituciones se fortalece.",
+                      "efecto": {"reputacion": 6, "confianza": 4, "desinformacion": -5, "puntos": 12}}},
+
+    {"autor": "@noticias.nova", "contenido": "Fuentes anónimas afirman que el alcalde ordenará el cierre de todos los parques.",
+     "es_falsa": True, "nivel_riesgo": 60,
+     "pista": "«Fuentes anónimas» y «todos los parques»: ningún parque tiene orden de cierre en la web de Ambiente.",
+     "compartir": {"etiqueta": "Compartir", "texto": "El rumor llega a miles. Los conflictos aumentan por la incertidumbre.",
+                   "efecto": {"conflictos": 5, "desinformacion": 4, "convivencia": -3, "puntos": -6}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "El rumor circula sin freno. La tensión sigue creciendo.",
+                 "efecto": {"conflictos": 2, "desinformacion": 3}},
+     "verificar_si": dict(AVALAR_FALSA, etiqueta="Sí, es verdad — Informar con datos oficiales"),
+     "verificar_no": {"etiqueta": "No, es falso — Reportar y comunicar la verdad",
+                      "texto": "Confirmas que es falso y lo comunicas. La ciudad respira tranquila.",
+                      "efecto": {"info_verificada": 5, "confianza": 3, "desinformacion": -4, "puntos": 10}}},
+
+    {"autor": "@sol.y.limon", "contenido": "Escuché que el alcalde robó fondos públicos para comprar su casa. Lo vi en un video.",
+     "es_falsa": True, "nivel_riesgo": 75,
+     "pista": "El video no muestra ninguna transacción y la casa aparece en registros de 2009.",
+     "compartir": {"etiqueta": "Compartir", "texto": "La acusación se viraliza. Si era falsa, destruiste a un inocente.",
+                   "efecto": {"reputacion": -8, "desinformacion": 5, "conflictos": 4, "puntos": -8}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "El rumor crece y la gente duda de las instituciones.",
+                 "efecto": {"reputacion": -4, "desinformacion": 3}},
+     "verificar_si": dict(AVALAR_FALSA, etiqueta="Sí, hay evidencia — Compartir con pruebas"),
+     "verificar_no": {"etiqueta": "No, es falso — Reportar y desmentir",
+                      "texto": "La gente te cree. Tu reputación se consolida. La verdad gana.",
+                      "efecto": {"reputacion": 10, "confianza": 5, "desinformacion": -5, "puntos": 14}}},
+
+    {"autor": "@investigador.nova", "contenido": "Tengo pruebas de que el candidato Tomás tiene vínculos con grupos criminales.",
+     "es_falsa": True, "nivel_riesgo": 85,
+     "pista": "Dice tener pruebas, pero no muestra ninguna. La cuenta se creó hace dos días.",
+     "compartir": {"etiqueta": "Compartir", "texto": "La ciudad entra en caos. Una acusación sin verificar destruye reputaciones.",
+                   "efecto": {"desinformacion": 6, "conflictos": 5, "confianza": -5, "puntos": -10}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "La grave acusación queda sin respuesta. La incertidumbre crece.",
+                 "efecto": {"conflictos": 3, "desinformacion": 2}},
+     "verificar_si": dict(AVALAR_FALSA, etiqueta="Sí, hay evidencia — Reportar a autoridades",
+                          texto="Das por buenas unas «pruebas» que nadie ha visto y lo elevas a denuncia. El rumor se legitima."),
+     "verificar_no": {"etiqueta": "No, es fabricado — Reportar la manipulación",
+                      "texto": "Expones la manipulación. Ciudad Nova se protege de la desinformación.",
+                      "efecto": {"info_verificada": 5, "confianza": 3, "desinformacion": -4, "puntos": 10}}},
+
+    {"autor": "@ciudadano", "contenido": "El candidato a alcalde ha sido acusado de corrupción por 3 millones de pesos.",
+     "es_falsa": True, "nivel_riesgo": 90,
+     "pista": "No existe ninguna denuncia en la Fiscalía ni nota en medios: solo esta cuenta lo afirma.",
+     "compartir": {"etiqueta": "Compartir", "texto": "El rumor se propaga. Si era falso, destruiste a un inocente y pierdes credibilidad.",
+                   "efecto": {"reputacion": -15, "desinformacion": 8, "conflictos": 6, "puntos": -12}},
+     "ignorar": {"etiqueta": "Ignorar", "texto": "La acusación sigue circulando sin respuesta. La desconfianza aumenta.",
+                 "efecto": {"conflictos": 4, "confianza": -3, "desinformacion": 3}},
+     "verificar_si": dict(AVALAR_FALSA, etiqueta="Sí, hay evidencia — Investigar y publicar pruebas"),
+     "verificar_no": {"etiqueta": "No, es falsa — Reportar y exigir rectificación",
+                      "texto": "Proteges al acusado inocente. La transparencia gana. Ciudad Nova prospera.",
+                      "efecto": {"reputacion": 12, "info_verificada": 6, "confianza": 4, "desinformacion": -5, "puntos": 12}}},
+]

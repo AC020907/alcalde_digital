@@ -41,6 +41,14 @@ HECHOS = (
     "confio_claudia", "confio_martina", "confio_rodrigo", "martina_publico_filtracion",
     # NOVA y desenlace
     "nova_hablo", "giro_desmentido", "giro_medio", "giro_silencio", "expediente_publicado",
+    # Relaciones y rutas (remaster narrativo)
+    "tomas_saludo", "tomas_desaire", "claudia_conto_2019", "rodrigo_disculpa_2019",
+    "martina_rechazo_resonancia", "martina_acepto_resonancia", "martina_expuso_oferta",
+    "uso_audio_tomas", "ignoro_audio_tomas", "defendio_tomas",
+    "visita_claudia", "visita_martina", "visita_rodrigo", "visita_tomas",
+    "alianza_tomas", "domingo_juego_limpio", "domingo_indiferente",
+    # Duelo de Frecuencias (minijuego ritmico del domingo)
+    "duelo_ganado", "duelo_perdido",
 )
 
 CATEGORIAS_PISTA = ["publicacion", "captura", "documento", "testimonio", "conexion"]
@@ -184,7 +192,18 @@ PUBLICACIONES_NET = [
           contexto="La publicación aparece dentro de CivitasNet con el nombre de usuario cambiado. Es NOVA hablando en la red, no un fallo de tu teléfono.",
           condicion=("nova_hablo",), likes=0, reposts=0),
 
+    _post("net_audio_tomas", VIERNES, 5, "@PatriotaNova", "influencer", "19:40",
+          "AUDIO FILTRADO: Tomás Vega pidiendo un soborno. Escúchenlo antes de que lo borren. #AntesDeQueLoBorren",
+          fuente="Archivo de audio sin origen",
+          contexto="La cuenta tiene dos horas de creada. El audio no tiene fecha, lugar ni testigos.",
+          pista="audio_tomas", revelado=((("defendio_tomas",), "manipulada"),), likes=31000, reposts=17500),
+
     # ----- Domingo -----
+    _post("net_martina_patrocinio", DOMINGO, 1, "@martina.sol", "influencer", "07:10",
+          "#Publi ¿Cansados de no saber qué creer? @resonancia.consultores verifica por ustedes. #AntesDeQueLoBorren",
+          estado="publicidad", fuente="Contenido patrocinado",
+          contexto="Martina aceptó la oferta de Resonancia el miércoles. La etiqueta es la misma de todos los rumores de la semana.",
+          condicion=("martina_acepto_resonancia",), likes=21000, reposts=3900),
     _post("net_tomas_demanda", DOMINGO, 1, "@tomas.vega", "personaje", "07:30",
           "Voy a demandar a quienes difundieron la acusación falsa contra mí. Incluida la cuenta del alcalde.",
           fuente="Declaración del candidato", condicion=("acuso_sin_evidencia",), likes=14000, reposts=5100),
@@ -210,6 +229,18 @@ PUBLICACIONES_NET = [
     _post("net_tomas_responde", None, 8, "@tomas.vega", "personaje", "hace 3 min",
           "El alcalde compartió una acusación contra mí sin una sola prueba. Que la muestre o que la borre.",
           fuente="Declaración del candidato", condicion=("acuso_sin_evidencia",), likes=8900, reposts=3600),
+    _post("net_martina_expone", None, 7, "@martina.sol", "influencer", "hace 6 min",
+          "Me ofrecieron cuatro millones por vender 'verificación' con la misma etiqueta de los rumores. Dije que no. Les dejo el mensaje completo.",
+          estado="verificada", fuente="Captura del mensaje original, con remitente",
+          pista="oferta_resonancia", condicion=("martina_expuso_oferta",), likes=88000, reposts=26000),
+    _post("net_alcalde_audio", None, 7, "@noticias.nova", "medio", "hace 2 min",
+          "La cuenta oficial del alcalde compartió el audio atribuido a Tomás Vega. Dos peritos consultados dicen que la voz es sintética.",
+          estado="verificada", fuente="Peritaje independiente",
+          condicion=("uso_audio_tomas",), likes=26000, reposts=9800),
+    _post("net_tomas_agradece", None, 8, "@tomas.vega", "personaje", "hace 1 min",
+          "El alcalde y yo no estamos de acuerdo en casi nada. Hoy desmintió un audio falso que me atacaba. Eso también es democracia.",
+          estado="verificada", fuente="Declaración del candidato",
+          condicion=("defendio_tomas",), likes=47000, reposts=15000),
     _post("net_reporto_verdad", None, 7, "@vecina.ana", "ciudadano", "hace 4 min",
           "La alcaldía reportó como falsa una publicación que era cierta. ¿Y ahora a quién le creemos?",
           condicion=("reporto_verdad",), likes=2600, reposts=900),
@@ -282,6 +313,17 @@ PISTAS = {p["id"]: p for p in [
            estado="hipotesis", relacion=("anuncio_resonancia",)),
     _pista("captura_falsa", "La captura de las elecciones", "captura", "CivitasNet", DOMINGO,
            "La supuesta publicación de la alcaldía usa otra tipografía y marca las 25:10."),
+    _pista("archivo_2019", "La inundación de 2019", "testimonio", "Claudia", LUNES,
+           "En 2019 Claudia publicó la foto de una familia del Barrio Sur 'atrapada' por la inundación. La foto era de otro año. La familia recibió amenazas durante meses.",
+           relacion=("foto_2019",)),
+    _pista("oferta_resonancia", "La oferta a Martina", "documento", "Martina", MIERCOLES,
+           "Resonancia Consultores le ofreció a Martina cuatro millones por promocionar su 'servicio de verificación' y usar #AntesDeQueLoBorren en sus videos. El mensaje viene firmado desde un correo @rsn-scheduler.",
+           preguntas=("¿Por qué una consultora usa la etiqueta de los rumores?",),
+           relacion=("anuncio_resonancia", "panel_programacion")),
+    _pista("audio_tomas", "El audio de Tomás Vega", "captura", "CivitasNet", VIERNES,
+           "Cuarenta segundos en los que 'Tomás' pide un soborno. La voz no respira entre frases y el archivo salió de una cuenta creada hoy.",
+           estado="hipotesis", preguntas=("¿Es su voz o una voz sintética?",),
+           por_estado={"comprobado": "Peritaje de Noticias Nova: voz sintética. El archivo se subió desde el mismo panel RSN-Scheduler que programa a NOVA."}),
     _pista("conclusion_resonancia", "Quién gana con el caos", "conexion", "Tu conclusión", DOMINGO,
            "Resonancia Consultores programa las cuentas (RSN-Scheduler), recorta información real del Acueducto y vende la 'solución' una hora después de cada crisis.",
            estado="comprobado", relacion=("panel_programacion", "anuncio_resonancia", "testimonio_acueducto", "informe_acueducto")),
@@ -290,7 +332,7 @@ PISTAS = {p["id"]: p for p in [
 # Grupos de evidencia del final secreto: una pista de cada grupo.
 PISTAS_CLAVE = {
     "rastreador": ("panel_programacion",),
-    "civitasnet": ("anuncio_resonancia",),
+    "civitasnet": ("anuncio_resonancia", "oferta_resonancia"),
     "dialogo": ("testimonio_acueducto", "informe_acueducto"),
 }
 

@@ -14,6 +14,11 @@
 
 define config.name = _("Alcalde Digital")
 
+## Interfaz del motor (guardar/cargar, ayuda, confirmaciones, fechas) en espanol: tl/spanish viene de la
+## traduccion oficial del SDK de Ren'Py. Los dialogos ya estan escritos en espanol y no cambian.
+define config.language = "spanish"
+define config.has_sync = False
+
 
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
@@ -48,7 +53,7 @@ define build.name = "DigitalMayor"
 
 define config.has_sound = True
 define config.has_music = True
-define config.has_voice = False
+define config.has_voice = True
 
 
 ## To allow the user to play a test sound on the sound or voice channel,
@@ -183,6 +188,34 @@ init python:
     build.classify('**/.**', None)
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
+    build.classify('game/qa_*.rpy', None)
+    build.classify('game/qa_*.rpyc', None)
+    # Partidas guardadas y herramientas del equipo: nunca se publican.
+    build.classify('game/saves/**', None)
+    build.classify('game/saves.*/**', None)
+    build.classify('tools/**', None)
+    build.classify('tests/**', None)
+    build.classify('docs/**', None)
+    build.classify('leaderboard/**', None)
+    build.classify('revision_visual/**', None)
+    build.classify('demo_arena/**', None)
+    build.classify('qa_*/**', None)
+    build.classify('*.md', None)
+    build.classify('Guia_*', None)
+    build.classify('dialogue*.tab', None)
+    build.classify('traceback.txt', None)
+    build.classify('errors.txt', None)
+    build.classify('log.txt', None)
+    # Arte sin uso en tiempo de ejecucion: los paneles antiguos solo serian respaldo si faltara el sprite
+    # transparente (existen los 30), y los placeholders y el influencer son de la entrega 1.
+    for _expr in ('neutral', 'feliz', 'seria', 'enojada', 'triste', 'sorprendida'):
+        build.classify('game/images/personajes/*_%s.png' % _expr, None)
+    # Arte anterior de los personajes con sprites oficiales nuevos: solo seria respaldo y mezclaria estilos.
+    build.classify('game/images/personajes/lateral/**', None)
+    for _personaje_viejo in ('claudia', 'martina', 'rodrigo', 'nova', 'tomas'):
+        build.classify('game/images/personajes/%s_base.png' % _personaje_viejo, None)
+    build.classify('game/images/placeholder*.png', None)
+    build.classify('game/images/influencer/**', None)
 
     ## To archive files, classify them as 'archive'.
 
@@ -211,7 +244,7 @@ init python:
 
 ## Audio, ritmo y presentacion.
 
-define config.main_menu_music = "assets/audio/music/tema_menu.wav"
+define config.main_menu_music = "assets/audio/music/menu.ogg"
 define config.fade_music = 1.0
 define config.has_autosave = True
 # Las clases del juego (Ciudad, Jugador, banco AVL) viven en modulos .py: Ren'Py no puede

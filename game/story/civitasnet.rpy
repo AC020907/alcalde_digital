@@ -144,7 +144,7 @@ screen net_post_feed(post, nueva):
         padding (0, 0)
         background None
         hover_background Solid("#ffffff0a")
-        hover_sound "assets/audio/sfx/ui_hover.wav"
+        hover_sound "assets/audio/sfx/menu_hover.ogg"
         action [SetScreenVariable("seleccion", post["id"]), SetScreenVariable("vista", "detalle")]
         use net_post(post, nueva)
 
@@ -184,7 +184,7 @@ screen net_nav(activa):
                         background None
                         padding (0, 0)
                         action accion
-                        hover_sound ("assets/audio/sfx/ui_hover.wav" if accion else None)
+                        hover_sound ("assets/audio/sfx/menu_hover.ogg" if accion else None)
                         vbox:
                             spacing nz(3)
                             xalign 0.5
@@ -270,7 +270,7 @@ screen net_inspeccionar(post, adj):
                 spacing nz(12)
                 imagebutton:
                     idle net_icono("volver")
-                    hover_sound "assets/audio/sfx/ui_hover.wav"
+                    hover_sound "assets/audio/sfx/menu_hover.ogg"
                     action SetScreenVariable("vista", "feed")
                     yalign 0.5
                 text "Publicación" size nz(18) bold True color "#fbf6ee" yalign 0.5
@@ -303,8 +303,8 @@ screen net_inspeccionar(post, adj):
                             ysize nz(52)
                             background Frame(NET_RUTA % "boton_expediente.png", 24, 24)
                             hover_foreground Solid("#ffffff1f")
-                            hover_sound "assets/audio/sfx/ui_hover.wav"
-                            activate_sound "assets/audio/sfx/eleccion.wav"
+                            hover_sound "assets/audio/sfx/menu_hover.ogg"
+                            activate_sound "assets/audio/sfx/decision.ogg"
                             action Function(dar_pista, post["pista"])
                             hbox:
                                 align (0.5, 0.5)
@@ -356,7 +356,7 @@ style net_boton is default:
     background Frame("gui/telefono_boton.png", 30, 30)
     hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
     padding (26, 14)
-    hover_sound "assets/audio/sfx/ui_hover.wav"
+    hover_sound "assets/audio/sfx/menu_hover.ogg"
 
 style net_boton_text is default:
     size 20

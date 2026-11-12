@@ -300,7 +300,7 @@ class CazaRumores:
                 if self.estado_nodo[vecino] == "sano" and vecino not in self.en_camino:
                     self._enviar(nodo, vecino, rapido=True)
             self._evento("banner", titulo="INFLUENCER COMPARTE EL RUMOR",
-                         texto="%s lo publico: rafaga de reposts" % self.grafo.nombre(nodo), malo=True)
+                         texto="%s lo publicó: ráfaga de reposts" % self.grafo.nombre(nodo), malo=True)
         elif clave == "botnet":
             bots = self._sanos("bot")
             self.rng.shuffle(bots)
@@ -329,10 +329,10 @@ class CazaRumores:
         v = self.viralidad()
         if v >= 0.85 and "critico" not in self._avisos:
             self._avisos.update(("critico", "tendencia"))
-            self._evento("banner", titulo="VIRALIDAD CRITICA", texto="Estas a punto de perder el control", malo=True)
+            self._evento("banner", titulo="VIRALIDAD CRÍTICA", texto="Estás a punto de perder el control", malo=True)
         elif v >= 0.6 and "tendencia" not in self._avisos:
             self._avisos.add("tendencia")
-            self._evento("banner", titulo="TENDENCIA #1 EN CIVITAS", texto="El rumor esta en todas partes", malo=True)
+            self._evento("banner", titulo="TENDENCIA #1 EN CIVITAS", texto="El rumor está en todas partes", malo=True)
 
     def _terminar(self, estado, motivo):
         self.estado = estado
@@ -343,7 +343,7 @@ class CazaRumores:
         if self.estado != "jugando":
             return
         if self.viralidad() >= 1.0:
-            self._terminar("derrota", "El rumor se volvio VIRAL con %d reposts." % self.reposts)
+            self._terminar("derrota", "El rumor se volvió VIRAL con %d reposts." % self.reposts)
         elif self.transcurrido >= self.cfg["duracion"]:
             self.puntos += self.cfg["bono_contencion"]
             self._terminar("victoria", "Resististe la crisis: Civitas sigue bajo control.")

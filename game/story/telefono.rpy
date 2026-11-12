@@ -92,8 +92,8 @@ screen telefono_civitas(sesion):
                     ysize 64
                     background Frame("gui/telefono_boton.png", 30, 30)
                     hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
-                    hover_sound "assets/audio/sfx/ui_hover.wav"
-                    activate_sound "assets/audio/sfx/eleccion.wav"
+                    hover_sound "assets/audio/sfx/menu_hover.ogg"
+                    activate_sound "assets/audio/sfx/decision.ogg"
                     action Return(indice)
                     at opcion_telefono(0.2 + i * 0.08)
                     hbox:

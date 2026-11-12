@@ -7,7 +7,7 @@
 label giro_nova(corto=False):
     $ hecho("nova_hablo")
     scene bg civitas with destello
-    play music "assets/audio/music/tema_tension.wav" fadein 0.3
+    $ musica("nova", fadein=0.3)
     show claudia sorprendida at escena("claudia", 0.28) with rapido
     if not corto:
         c sorprendida "¡Ahí está! La cuenta original..."
@@ -15,7 +15,7 @@ label giro_nova(corto=False):
     $ interferencia()
     pause 0.5
     show nova neutral at escena("nova", 0.72) with Dissolve(0.08)
-    play sound "assets/audio/sfx/alarma_viral.wav"
+    $ sfx("glitch")
     if hay("rastreo_exitoso"):
         n "{cps=35}Me encontraste, alcalde. Felicitaciones.{/cps}"
     else:
@@ -57,7 +57,7 @@ label giro_nova(corto=False):
         $ dar_pista("hip_nova_creo", "refutado")
     $ interferencia()
 
-    if tiene_pista("anuncio_resonancia"):
+    if tiene_pista("anuncio_resonancia") or tiene_pista("oferta_resonancia"):
         menu:
             "¿Trabajas para Resonancia Consultores?":
                 $ interferencia()
@@ -87,7 +87,7 @@ label giro_nova_tardio:
     if hay("nova_hablo"):
         return
     $ hecho("nova_hablo")
-    play sound "assets/audio/sfx/alarma_viral.wav"
+    $ sfx("glitch")
     $ interferencia()
     "Una publicación aparece en todos los teléfonos a la vez, con el nombre de usuario cambiado."
     call abrir_civitasnet("net_nova_intervenida")
@@ -103,27 +103,38 @@ label revision_expediente:
     if not any(grupos.values()):
         return
     scene bg operaciones with negro
-    play music "assets/audio/music/tema_final.wav" fadein 1.5
+    $ musica("revelacion")
     show claudia seria at escena("claudia") with suave
+    if hay("uso_audio_tomas"):
+        c seria "Tengo el expediente. Y tengo un problema: el audio de Tomás salió del mismo panel que programa a NOVA."
+        c enojada "Y la cuenta de la alcaldía lo compartió. Si publico esto, lo primero que va a ver la gente es su nombre."
+        c "No voy a esconder esa parte. Así que hoy no publico nada. Después de la elección, sí. Con todo."
+        $ calidad_decision("dom_expediente", 0.3)
+        hide claudia with suave
+        return
     c seria "Antes de que cierren las urnas, revisemos el expediente. Si sabemos quién está detrás, hoy es el día de decirlo."
 
     menu:
         "¿Quién está detrás de la campaña?"
 
         "NOVA, por su cuenta.":
+            $ calidad_decision("dom_expediente", 0.4)
             c "NOVA es un programa. Alguien lo escribió, alguien lo programa y alguien paga la cuenta."
             jump .sin_conclusion
         "Tomás Vega, para ganar la elección.":
+            $ calidad_decision("dom_expediente", 0.0)
             c "A Tomás también lo atacaron con acusaciones falsas esta semana. No cuadra."
             jump .sin_conclusion
-        "Resonancia Consultores." if tiene_pista("anuncio_resonancia"):
+        "Resonancia Consultores." if grupos["civitasnet"]:
             pass
         "Todavía no lo sabemos.":
+            $ calidad_decision("dom_expediente", 0.8)
             c "Decirlo así también es honesto. Publicamos lo que está comprobado y dejamos abiertas las preguntas."
             $ aplicar_consecuencia({"reputacion": 2})
             jump .sin_conclusion
 
     if not inv.final_secreto_disponible(memoria):
+        $ calidad_decision("dom_expediente", 0.6)
         c "Puede ser. Pero si lo publicamos sin pruebas, hacemos exactamente lo mismo que NOVA."
         if not grupos["rastreador"]:
             c "Nos falta saber desde dónde se programan las cuentas de origen."
@@ -146,8 +157,10 @@ label revision_expediente:
             $ dar_pista("conclusion_resonancia", "comprobado")
             $ hecho("expediente_publicado")
             $ final_secreto = True
+            $ calidad_decision("dom_expediente", 1.0)
             c feliz "Cada captura con su enlace. Cada hora con su fuente. Que cualquiera lo pueda comprobar."
         "Filtrarlo desde una cuenta anónima para que se haga viral rápido.":
+            $ calidad_decision("dom_expediente", 0.2)
             c triste "Eso es justo lo que hace NOVA: una verdad sin fuente es otro rumor más."
             $ aplicar_consecuencia({"reputacion": -4})
             $ dar_pista("conclusion_resonancia", "hipotesis")

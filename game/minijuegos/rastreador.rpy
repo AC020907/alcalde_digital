@@ -64,6 +64,9 @@ init python:
                 renpy.show_screen("puzzle_feedback", texto=texto, correcto=False)
 
     def puzzle_tick(p):
+        if store.minijuego_pausado:
+            p.reloj = None          # al reanudar no se descuenta el tiempo en pausa
+            return
         p.tick_reloj(time.time())
         puzzle_procesar_eventos(p)
 
@@ -171,6 +174,7 @@ screen tarjeta_evidencia(p, nodo, cabecera=None, color_borde="#00000000"):
 screen puzzle_rastreo_ui(p, rumor):
     modal True
     zorder 40
+    use boton_pausa_minijuego(p.jugando())
 
     add "bg operaciones"
     add Solid("#1b1426c8")
@@ -292,7 +296,7 @@ screen puzzle_rastreo_ui(p, rumor):
                 text_color ("#fde68a" if elegida and p.conclusion_ok is False else "#fbf6ee")
                 text_xalign 0.5
                 text_yalign 0.5
-                hover_sound "assets/audio/sfx/ui_hover.wav"
+                hover_sound "assets/audio/sfx/menu_hover.ogg"
                 sensitive p.jugando()
                 action Function(p.elegir_conclusion, clave)
     if p.explicaciones and p.jugando():
@@ -337,12 +341,12 @@ screen puzzle_rastreo_ui(p, rumor):
             text_insensitive_color "#8b84a8"
             text_xalign 0.5
             text_yalign 0.5
-            hover_sound "assets/audio/sfx/ui_hover.wav"
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
             sensitive p.jugando() and p.listo()
             action Function(puzzle_comprobar, p)
     if p.jugando() and not p.listo() and p.fase == "cadena":
         text "Completa la cadena y elige una conclusión para comprobar." size 18 color "#8b84a8" xalign 0.5 ypos 992
-    text "Teclado: 1-%d elige ficha  ·  Z X C colocan de izquierda a derecha  ·  H pista  ·  Enter comprueba" % len(p.cartas):
+    text "Teclado: 1-%d elige ficha · Z X C colocan · H pista · Enter comprueba     Mando: cruceta mueve · A elige y coloca · Y pista" % len(p.cartas):
         xalign 0.5
         ypos 1030
         size 16
@@ -353,7 +357,7 @@ screen puzzle_rastreo_ui(p, rumor):
             key "K_%d" % (i + 1) action Function(puzzle_tecla_carta, p, i)
         for i in range(p.eslabones):
             key TECLAS_HUECO[i] action Function(puzzle_tecla_hueco, p, i)
-        key "K_h" action Function(puzzle_pista, p)
+        key "civ_pista" action Function(puzzle_pista, p)
         if p.listo():
             key "K_RETURN" action Function(puzzle_comprobar, p)
             key "K_KP_ENTER" action Function(puzzle_comprobar, p)
@@ -408,7 +412,7 @@ screen puzzle_rastreo_ui(p, rumor):
                             text_xalign 0.5
                             text_yalign 0.5
                             text_textalign 0.5
-                            hover_sound "assets/audio/sfx/ui_hover.wav"
+                            hover_sound "assets/audio/sfx/menu_hover.ogg"
                             action Function(puzzle_inferencia, p, clave)
                 if p.explicacion_inferencia:
                     text p.explicacion_inferencia size 21 bold True color "#c0392b" xalign 0.5 textalign 0.5
@@ -449,15 +453,16 @@ screen puzzle_rastreo_ui(p, rumor):
                 text "Tienes %d s y %d comprobaciones. Hay cuentas señuelo." % (int(p.tiempo_total), p.comprobaciones) size 22 bold True color "#c0392b" xalign 0.5
                 null height 6
                 textbutton "EMPEZAR":
-                    style "grafo_button"
-                    text_style "grafo_button_text"
+                    style "boton_vn"
+                    text_style "boton_vn_text"
                     xalign 0.5
-                    xsize 360
-                    text_xalign 0.5
+                    default_focus True
                     action Function(p.empezar)
 
     # ---- Resultado ----
     if p.terminado():
+        # Con mando el foco puede quedar en una ficha de debajo: A / Enter continuan siempre.
+        key "civ_accion" action Return()
         $ nota = p.calificacion()
         $ color_nota = {"S": "#facc15", "A": "#22c55e", "B": "#38bdf8", "C": "#a78bfa", "D": "#ef4444"}[nota]
         add Solid("#000000b0")
@@ -498,6 +503,7 @@ screen puzzle_rastreo_ui(p, rumor):
                     xalign 0.5
                     xsize 360
                     text_xalign 0.5
+                    default_focus True
                     action Return()
 
 

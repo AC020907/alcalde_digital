@@ -1,12 +1,10 @@
-## Evento "La Gran Viralizacion" (arcade, version extrema de Caza-Rumores).
-## Uso:  call evento_gran_viralizacion
-## El rumor arranca con varias oleadas ya calculadas por BFS, viaja mas
-## rapido y aparecen focos nuevos mas seguido.
+## La Gran Viralizacion: la crisis del domingo. Antes su reto repetia el arcade de Caza-Rumores (misma clase y
+## misma pantalla); ahora la respuesta del jugador es el plataformero «Ruta de la Verdad - Infiltracion NOVA».
+## El label y la clave "viralizacion" se conservan: finales, expediente, puntuacion y guardados no cambian.
+## Uso:  call evento_gran_viralizacion            (ajustes: {"nivel": "historia"|"feria"|"arena", "extra_s": n})
 
 label evento_gran_viralizacion(origen=None, semilla=None, aplicar=True, ajustes=None):
-    $ semilla_viral = semilla if semilla is not None else renpy.random.randint(1, 999999)
-    $ focos_viral = focos_viralizacion(red_civitas, origen or ORIGEN_RUMOR, semilla_viral, 2)
-    $ viralizacion = CazaRumores(red_civitas, "viral", focos_viral, semilla_viral, ajustes)
-    call jugar_arcade(viralizacion, "LA GRAN VIRALIZACION", RUMORES[semilla_viral % len(RUMORES)])
-    $ resultado_minijuego = registrar_minijuego(viralizacion.resultado(), aplicar)
-    return resultado_minijuego
+    $ nivel_viral = (ajustes or {}).get("nivel", "historia")
+    call minijuego_plataformas(nivel_viral, aplicar, ajustes, (ajustes or {}).get("tutorial", True))
+    $ viralizacion = plataformas
+    return _return

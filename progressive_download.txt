@@ -1,0 +1,11 @@
+# RenPyWeb progressive download rules - first match applies
+# '+' = progressive download, '-' = keep in game.zip (default)
+# See https://www.renpy.org/doc/html/build.html#classifying-and-ignoring-files for matching
+#
+# +/- type path
+- image game/gui/**
++ image game/**
++ music game/audio/**
+# La banda sonora vive en assets/: se descarga al sonar por primera vez, no en la carga inicial.
++ music game/assets/audio/music/**
++ voice game/voice/**

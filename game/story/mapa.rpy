@@ -96,14 +96,7 @@ init python:
         return cuadros
 
     class MapaConduccion(renpy.Displayable):
-        """El mapa ilustrado con el carro encima. Flechas o WASD conducen; Enter entra al lugar."""
-
-        TECLAS = {
-            pygame.K_LEFT: (-1, 0), pygame.K_a: (-1, 0),
-            pygame.K_RIGHT: (1, 0), pygame.K_d: (1, 0),
-            pygame.K_UP: (0, -1), pygame.K_w: (0, -1),
-            pygame.K_DOWN: (0, 1), pygame.K_s: (0, 1),
-        }
+        """El mapa ilustrado con el carro encima. Flechas, WASD o mando conducen; Enter o A entra al lugar."""
 
         def __init__(self, obligatorio=False, destino=None, **kwargs):
             super(MapaConduccion, self).__init__(**kwargs)
@@ -116,6 +109,7 @@ init python:
             self.cuadros = cargar_cuadros_carro()
             self.sombra = Solid("#0000004d")
             self.pulsadas = []
+            self.pulso = None  # (vector, segundos): un toque en las flechas tactiles conduce un momento
             self.previo = None
             self.camara = None
             self.cerca = self.carro.ubicacion_cercana()
@@ -129,17 +123,46 @@ init python:
 
         def direccion(self):
             dx = dy = 0
-            for tecla in self.pulsadas:
-                ax, ay = self.TECLAS[tecla]
+            for _nombre, (ax, ay) in self.pulsadas:
                 dx, dy = (ax or dx), (ay or dy)
+            if self.pulso and not (dx or dy):
+                dx, dy = self.pulso[0]
             return dx, dy
+
+        def empujar(self, dx, dy):
+            self.pulso = [(dx, dy), 0.6]
+            renpy.redraw(self, 0)
+
+        def tocar_accion(self):
+            """Boton tactil equivalente a Enter / A."""
+            if not self.cerca:
+                return None
+            if self.obligatorio:
+                if self.cerca == self.destino:
+                    self.guardar()
+                    return "llegada"
+                mision = mision_destino()
+                if mision:
+                    renpy.notify("Aquí todavía no pasa nada. Tu misión: %s, en %s." % (
+                        mision["titulo"], UBICACIONES[mision["ubicacion"]][0]))
+                return None
+            entrar_ubicacion(self.cerca)
+            return None
 
         def render(self, width, height, st, at):
             dt = 0.0 if self.previo is None else min(0.05, st - self.previo)
             self.previo = st
+            if self.pulso:
+                self.pulso[1] -= dt
+                if self.pulso[1] <= 0:
+                    self.pulso = None
             dx, dy = self.direccion()
             self.carro.avanzar(dt, dx, dy)
             self.cerca = self.carro.ubicacion_cercana()
+            if self.cerca != self.cerca_avisada:
+                # Conduciendo con las flechas tactiles no hay eventos: el boton LLEGAR debe actualizarse igual.
+                self.cerca_avisada = self.cerca
+                renpy.restart_interaction()
 
             x, y = self.carro.posicion()
             objetivo = max(0.0, min(y * MAPA_ESCALA - height / 2.0, ALTO_REF * MAPA_ESCALA - height))
@@ -206,24 +229,21 @@ init python:
         # ----- entrada -----
 
         def event(self, ev, x, y, st):
-            if ev.type == pygame.KEYDOWN:
-                if ev.key in self.TECLAS:
-                    if ev.key in self.pulsadas:
-                        self.pulsadas.remove(ev.key)
-                    self.pulsadas.append(ev.key)
-                    raise renpy.IgnoreEvent()
-                if ev.key in (pygame.K_RETURN, pygame.K_KP_ENTER, pygame.K_SPACE):
-                    if self.cerca and self.obligatorio:
-                        return self.llegar(self.cerca)
-                    if self.cerca:
-                        entrar_ubicacion(self.cerca)
-                    raise renpy.IgnoreEvent()
-                if ev.key == pygame.K_F9 and config.developer:
-                    self.depurar = not self.depurar
-                    raise renpy.IgnoreEvent()
-            elif ev.type == pygame.KEYUP and ev.key in self.TECLAS:
-                if ev.key in self.pulsadas:
-                    self.pulsadas.remove(ev.key)
+            direccion = direccion_evento(ev)
+            if direccion is not None:
+                nombre, vector, pulsada = direccion
+                self.pulsadas = [p for p in self.pulsadas if p[0] != nombre]
+                if pulsada:
+                    self.pulsadas.append((nombre, vector))
+                raise renpy.IgnoreEvent()
+            if renpy.map_event(ev, "civ_accion"):
+                if self.cerca and self.obligatorio:
+                    return self.llegar(self.cerca)
+                if self.cerca:
+                    entrar_ubicacion(self.cerca)
+                raise renpy.IgnoreEvent()
+            if ev.type == pygame.KEYDOWN and ev.key == pygame.K_F9 and config.developer:
+                self.depurar = not self.depurar
                 raise renpy.IgnoreEvent()
             if self.cerca != self.cerca_avisada:
                 self.cerca_avisada = self.cerca
@@ -268,7 +288,55 @@ screen mapa_viaje(destino):
     add vista
     use mapa_cuerpo(vista, True)
 
+default persistent.controles_tactiles = False
+
+screen mapa_tactil(vista, obligatorio):
+    ## Telefono o tableta: flechas (cada toque conduce un momento), entrar e ir directo.
+    fixed:
+        xpos 40
+        yalign 0.62
+        xysize (330, 330)
+        for giro, (dx, dy), posicion in ((0, (0, -1), (110, 0)), (180, (0, 1), (110, 220)),
+                                         (270, (-1, 0), (0, 110)), (90, (1, 0), (220, 110))):
+            button:
+                pos posicion
+                xysize (110, 110)
+                background Frame("gui/telefono_boton.png", 30, 30)
+                hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
+                action Function(vista.empujar, dx, dy)
+                add Transform("gui/flecha_tactil.png", rotate=giro, rotate_pad=False) align (0.5, 0.5)
+    vbox:
+        xalign 0.97
+        yalign 0.92
+        spacing 16
+        textbutton ("LLEGAR" if obligatorio else "ENTRAR"):
+            xsize 300
+            ysize 100
+            background Frame("gui/telefono_boton.png", 30, 30)
+            hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
+            text_size 34
+            text_bold True
+            text_color "#fbf6ee"
+            text_insensitive_color "#8b84a8"
+            text_xalign 0.5
+            text_yalign 0.5
+            sensitive vista.cerca is not None
+            action Function(vista.tocar_accion)
+        if obligatorio and vista.destino:
+            textbutton "Ir directo":
+                xsize 300
+                ysize 80
+                background Frame("gui/telefono_boton.png", 30, 30)
+                hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
+                text_size 26
+                text_color "#fbf6ee"
+                text_xalign 0.5
+                text_yalign 0.5
+                action [Function(mapa_llegar_directo, vista.destino), Return("llegada")]
+
 screen mapa_cuerpo(vista, obligatorio):
+    if renpy.variant("touch") or persistent.controles_tactiles:
+        use mapa_tactil(vista, obligatorio)
     ## Barra superior
     frame:
         xfill True
@@ -290,7 +358,7 @@ screen mapa_cuerpo(vista, obligatorio):
                     ysize 44
                     background Frame("gui/telefono_boton.png", 30, 30)
                     hover_background Frame("gui/telefono_boton_hover.png", 30, 30)
-                    hover_sound "assets/audio/sfx/ui_hover.wav"
+                    hover_sound "assets/audio/sfx/menu_hover.ogg"
                     activate_sound "assets/audio/sfx/ui_click.wav"
                     action Hide("mapa_ciudad")
                     text "Volver" size 16 bold True color "#fbf6ee" align (0.5, 0.5)
@@ -327,8 +395,8 @@ screen mapa_cuerpo(vista, obligatorio):
         vbox:
             spacing 6
             text "CONTROLES" size 14 color "#a7a5f2" kerning 3
-            text "Flechas o WASD: conducir" size 20 style "mapa_texto"
-            text ("Enter: llegar al destino" if obligatorio else "Enter: entrar al lugar") size 20 style "mapa_texto"
+            text "Flechas, WASD o cruceta: conducir" size 20 style "mapa_texto"
+            text ("Enter o A: llegar al destino" if obligatorio else "Enter o A: entrar al lugar") size 20 style "mapa_texto"
             text ("Esc: menú" if obligatorio else "Esc: volver") size 20 style "mapa_texto"
 
     ## Tarjeta del lugar cercano
@@ -349,11 +417,11 @@ screen mapa_cuerpo(vista, obligatorio):
                 text texto_lugar size 20 color "#c9b8d8" xalign 0.5
                 null height 6
                 if disponible and mision and mision["ubicacion"] == vista.cerca:
-                    text "Es el destino de tu misión · Pulsa Enter" size 20 bold True color "#facc15" xalign 0.5
+                    text "Es el destino de tu misión · Pulsa Enter o A" size 20 bold True color "#facc15" xalign 0.5
                 elif obligatorio:
                     text "Aquí no pasa nada por ahora" size 20 bold True color "#c9b8d8" xalign 0.5
                 elif disponible:
-                    text "Pulsa Enter para entrar" size 20 bold True color "#a7a5f2" xalign 0.5
+                    text "Pulsa Enter o A para entrar" size 20 bold True color "#a7a5f2" xalign 0.5
                 else:
                     text "No disponible en el Modo Feria" size 20 bold True color "#e86a7e" xalign 0.5
 

@@ -37,6 +37,24 @@ class GrafoSocial:
         self.adyacencia[origen][destino] = peso
         self.entrantes[destino][origen] = peso
 
+    def eliminar_conexion(self, origen, destino):
+        if destino not in self.adyacencia.get(origen, {}):
+            return False
+        del self.adyacencia[origen][destino]
+        del self.entrantes[destino][origen]
+        return True
+
+    def eliminar_usuario(self, nodo):
+        """Quita el nodo y todas sus aristas entrantes y salientes (p. ej. una cuenta suspendida)."""
+        if nodo not in self.adyacencia:
+            return False
+        for vecino in list(self.adyacencia[nodo]):
+            del self.entrantes[vecino][nodo]
+        for previo in list(self.entrantes[nodo]):
+            del self.adyacencia[previo][nodo]
+        del self.adyacencia[nodo], self.entrantes[nodo], self.datos[nodo]
+        return True
+
     # ===== CONSULTAS =====
 
     def existe(self, nodo):
@@ -164,6 +182,39 @@ class GrafoSocial:
                     padres[vecino] = nodo
                 cola.append((vecino, nivel + 1))
 
+        return niveles
+
+    def bfs_multifuente(self, origenes, semilla=None, factor=1.0, bloqueados=None, padres=None, factores=None):
+        """
+        BFS desde varias fuentes a la vez (todos los que comparten en la misma ronda).
+        factores: {fuente: multiplicador}; cada fuente propaga con su propia fuerza (un influencer
+        empuja mas que un ciudadano) y la fuerza la hereda cada nodo que alcanza.
+        Retorna los niveles [[fuentes], [nivel 1], ...].
+        """
+        bloqueados = bloqueados or set()
+        fuentes = [o for o in dict.fromkeys(origenes) if o in self.adyacencia and o not in bloqueados]
+        if not fuentes:
+            return []
+        fuerza = {o: factor * (factores or {}).get(o, 1.0) for o in fuentes}
+        visitados = set(fuentes)
+        niveles = [list(fuentes)]
+        frontera = list(fuentes)
+        while frontera:
+            siguiente = []
+            for nodo in frontera:
+                for vecino in self.adyacencia[nodo]:
+                    if vecino in visitados or vecino in bloqueados:
+                        continue
+                    if not self.se_propaga(nodo, vecino, semilla, fuerza[nodo]):
+                        continue
+                    visitados.add(vecino)
+                    fuerza[vecino] = fuerza[nodo]
+                    if padres is not None:
+                        padres[vecino] = nodo
+                    siguiente.append(vecino)
+            if siguiente:
+                niveles.append(siguiente)
+            frontera = siguiente
         return niveles
 
     def bfs_recorrido(self, origen):
