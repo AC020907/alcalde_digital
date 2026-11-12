@@ -179,11 +179,19 @@ DESPLIEGUE.md        # Proceso de publicación (revisar rama/servicio antes de u
 
 ## Equipo y créditos
 
-Proyecto académico del equipo de **Estructura de Datos II, Universidad del Norte (2026)**. Completar los nombres, roles y contribuciones de cada integrante **según el historial real de Git** antes de la entrega. No atribuir autoría a quien no haya participado.
+Proyecto académico de **Estructura de Datos II, Universidad del Norte (2026)**.
+
+**Integrantes del equipo:**
+
+- Alejandro Cotes
+- Juan Castillo
+- Gabriela Campo
+- Camilo Padilla
+
+Las responsabilidades y contribuciones específicas pueden documentarse conforme al trabajo realizado y al historial de Git; no se asignan roles sin confirmación.
 
 Arte y música: recursos del proyecto; los sprites oficiales de personajes se documentan en [docs/SPRITES.md](docs/SPRITES.md). **Duelo de Frecuencias** utiliza mecánicas del género de ritmo con recursos originales, sin afiliación con otros juegos.
 
 ---
 
 **Civitas propone aprender a reconocer desinformación experimentando sus consecuencias: una decisión individual puede modificar toda una ciudad.**
-
