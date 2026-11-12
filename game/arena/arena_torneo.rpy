@@ -182,7 +182,7 @@ screen arena_resumen_prueba(c):
                         text "%d pts" % f["total"] size 24 bold True color "#2b2440"
                 text "Consejo Cívico (0–2000) + cada prueba (0–1000)." style "arena_nota"
                 if c.soy_anfitrion():
-                    textbutton ("Ir al Duelo final ›" if r["indice"] == 3 else ("Ver la elección ›" if r["indice"] == 4 else "Siguiente prueba ›")) style "boton_vn_compacto" text_style "boton_vn_text" action Function(c.enviar, "continuar") default_focus True
+                    textbutton ("Ir al Duelo final ›" if r["indice"] == 3 else ("Ver la elección ›" if r["indice"] == 4 else "Siguiente prueba ›")) style "boton_vn_compacto" text_style "boton_vn_text" action Function(arena_enviar, "continuar") default_focus True
                 else:
                     text "El anfitrión abrirá la siguiente prueba." style "arena_nota"
 

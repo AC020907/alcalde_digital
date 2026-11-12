@@ -26,6 +26,12 @@ init -5 python:
         base = url_api()
         return (base + "/arena") if base else ""
 
+    def arena_enviar(tipo, **datos):
+        """Accion de boton: envia sin devolver nada. ClienteArena.enviar devuelve el id del mensaje y Ren'Py
+        termina la pantalla cuando una accion Function devuelve algo, lo que sacaba al jugador de la partida."""
+        if AS.cliente:
+            AS.cliente.enviar(tipo, **datos)
+
     def arena_error(texto):
         store.arena_mensaje = texto
         renpy.restart_interaction()
@@ -497,7 +503,7 @@ screen arena_sala(c):
                     if AS.servidor and len(est["jugadores"]) < 4:
                         textbutton "Añadir jugador automático" style "boton_vn_compacto" text_style "boton_vn_text" xsize 420 ysize 86 action Function(arena_agregar_bot)
                 elif yo:
-                    textbutton ("Listo (pulsa para cancelar)" if yo["id"] in est["listos"] else "Estoy listo") style "boton_vn" text_style "boton_vn_text" action Function(c.enviar, "listo", listo=yo["id"] not in est["listos"]) default_focus True
+                    textbutton ("Listo (pulsa para cancelar)" if yo["id"] in est["listos"] else "Estoy listo") style "boton_vn" text_style "boton_vn_text" action Function(arena_enviar, "listo", listo=yo["id"] not in est["listos"]) default_focus True
                 textbutton "Salir" style "boton_vn" text_style "boton_vn_text" action Return(False)
             if c.error:
                 text c.error style "arena_texto" color "#c0392b" xalign 0.5
@@ -573,7 +579,7 @@ screen arena_ronda(c):
                 if yo:
                     text "Tu rol: %s. %s" % (yo["rol_nombre"], AR.DESCRIPCION_ROL[yo["rol"]]) style "arena_nota"
                 if c.soy_anfitrion():
-                    textbutton ("Reanudar" if c.estado.get("pausado") else "Pausar ronda") style "arena_link" action Function(c.enviar, "pausa", pausar=not c.estado.get("pausado"))
+                    textbutton ("Reanudar" if c.estado.get("pausado") else "Pausar ronda") style "arena_link" action Function(arena_enviar, "pausa", pausar=not c.estado.get("pausado"))
         ## Ciudad: zona de la publicacion en el grafo de la ciudad + quien ya decidio.
         use arena_mapa(pub["zona"] if pub else None, {}, {}, pub["autor"] if pub else None, "La publicación aparece en %s. Así se conecta Ciudad Nova:" % (pub["zona_nombre"] if pub else ""))
 
@@ -628,7 +634,7 @@ screen arena_resultado(c):
                         for l in mio["logros_nuevos"]:
                             text "¡Logro desbloqueado: %s!" % l size 22 bold True color "#c58a1b"
             if c.soy_anfitrion():
-                textbutton "Siguiente ronda ›" style "boton_vn_compacto" text_style "boton_vn_text" action Function(c.enviar, "continuar") default_focus True
+                textbutton "Siguiente ronda ›" style "boton_vn_compacto" text_style "boton_vn_text" action Function(arena_enviar, "continuar") default_focus True
     use arena_mapa(pub["zona"], estados, resaltadas, pub["autor"], "Propagación por el grafo social (BFS desde el autor y quienes compartieron):")
     hbox:
         xpos 780

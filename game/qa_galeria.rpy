@@ -103,6 +103,8 @@ label qa_galeria:
         jump qa_gal_finales
     if etapa_gal == "arena_solo":
         jump qa_gal_arena_solo
+    if etapa_gal == "arena_solo_completa":
+        jump qa_gal_arena_solo_completa
     if etapa_gal in ("arena", "arena_cliente"):
         jump qa_gal_arena
     if etapa_gal == "dialogo":
@@ -535,6 +537,33 @@ label qa_gal_arena_solo:
     call screen arena_partida
     $ arena_salir()
     $ qa_gal_volcar(etapa="arena_solo", ok=True)
+    $ renpy.quit()
+
+
+## ---------------- Arena: anfitrion solo con jugadores automaticos, partida completa ----------------
+## Lo que hace una persona en su PC: «Crear sala» y «Jugar con jugadores automaticos» (bots en este mismo
+## proceso), decidir cada ronda con los botones y llegar al final y al menu.
+label qa_gal_arena_solo_completa:
+    $ qa_pad_limite = 900
+    $ qa_pad_vigilante_hilo(400)
+    $ qa_arena_torneo_auto = _qa_os.environ.get("ALCALDE_QA_PRUEBAS_REALES") != "1"
+    $ AS.modo = qa_gal_modo_arena()
+    $ ok_qa = arena_crear("Ana", "ciudadano")
+    $ qa_gal["eventos"].append(("conectado", ok_qa is True))
+    $ qa_pad_programar([(1.0, arena_empezar, None)])
+    show screen qa_arena_auto
+    $ arena_seguir = True
+    while arena_seguir:
+        call screen arena_partida
+        if _return == "prueba":
+            hide screen qa_arena_auto
+            call arena_jugar_prueba
+            show screen qa_arena_auto
+        else:
+            $ arena_seguir = False
+    hide screen qa_arena_auto
+    $ arena_salir()
+    $ qa_gal_volcar(etapa="arena_solo_completa", ok=True)
     $ renpy.quit()
 
 
