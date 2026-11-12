@@ -6,9 +6,12 @@
 
 **Alcalde Digital / Civitas** es un videojuego educativo desarrollado principalmente en **Python y Ren’Py 8.5** para la asignatura **Estructura de Datos II** de la Universidad del Norte, con proyección a la **VI Feria Gamer 2026**. Combina novela visual ramificada, investigación, simulación de desinformación, cinco minijuegos distintos y partidas multijugador de **2 a 4 personas**.
 
-[![Repositorio](https://img.shields.io/badge/GitHub-AC020907%2Falcalde__digital-181717?logo=github)](https://github.com/AC020907/alcalde_digital)
-![Python](https://img.shields.io/badge/lógica-Python-3776AB?logo=python&logoColor=white)
-![Ren'Py](https://img.shields.io/badge/motor-Ren'Py_8.5-FF7F8A)
+
+## Jugar en línea
+
+**[Jugar Civitas en el navegador](https://ac020907.github.io/pruebaslaboratorio/)** — versión web pública del videojuego.
+
+La modalidad Arena Online puede depender de un servicio multijugador independiente; su disponibilidad se comprueba por separado.
 
 ## La premisa
 
