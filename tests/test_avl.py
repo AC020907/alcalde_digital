@@ -76,6 +76,47 @@ class TestAVL(unittest.TestCase):
         self.assertEqual(riesgos, sorted(p["nivel_riesgo"] for p in PUBLICACIONES_HISTORIA))
         self.assertFalse(banco.hay_mas())
 
+    # ----- clave duplicada -------------------------------------------------
+    # La clave del AVL es nivel_riesgo y ArbolAVL.insertar descarta en silencio una
+    # clave repetida ("clave duplicada: no se inserta"). Estas pruebas FIJAN ese
+    # comportamiento tal como esta hoy: no lo juzgan ni lo cambian.
+
+    def test_clave_duplicada_se_descarta_y_conserva_la_primera(self):
+        avl = ArbolAVL()
+        for k in (50, 20, 80):
+            avl.agregar(Pub(k))
+        primera, segunda = Pub(40), Pub(40)
+        avl.agregar(primera)
+        avl.agregar(segunda)
+        self.assertIs(avl.buscar(avl.raiz, 40).get_publicacion(), primera)
+        self.assertEqual(claves_inorden(avl), [20, 40, 50, 80])   # una sola vez la clave 40
+        verificar_avl(self, avl, avl.raiz)
+        avl.borrar(40)
+        self.assertIsNone(avl.buscar(avl.raiz, 40))   # la segunda no quedo escondida detras
+
+    def test_duplicado_no_rompe_el_balanceo_ni_el_orden(self):
+        avl = ArbolAVL()
+        for k in list(range(1, 51)) * 2:              # cada clave dos veces, en orden
+            avl.agregar(Pub(k))
+        self.assertEqual(claves_inorden(avl), list(range(1, 51)))
+        verificar_avl(self, avl, avl.raiz)
+
+    def test_banco_pierde_la_publicacion_con_riesgo_repetido(self):
+        base = dict(PUBLICACIONES_HISTORIA[0])
+        gemela = dict(base, contenido="Otra publicacion con el mismo nivel de riesgo.")
+        banco = BancoPublicaciones([armar_publicacion(**base), armar_publicacion(**gemela)])
+        entregadas = []
+        while banco.hay_mas():
+            entregadas.append(banco.siguiente())
+        self.assertEqual(len(entregadas), 1)                       # limitacion conocida
+        self.assertEqual(entregadas[0].contenido, base["contenido"])
+
+    def test_publicaciones_de_la_historia_tienen_riesgos_unicos(self):
+        # Guarda: mientras esto se cumpla, la limitacion anterior no afecta al juego.
+        riesgos = [p["nivel_riesgo"] for p in PUBLICACIONES_HISTORIA]
+        self.assertEqual(len(riesgos), len(set(riesgos)),
+                         "dos publicaciones comparten nivel_riesgo: el AVL descartaria una")
+
 
 if __name__ == "__main__":
     unittest.main()

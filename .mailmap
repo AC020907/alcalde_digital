@@ -1,0 +1,9 @@
+# Une las identidades de git de cada integrante para que `git shortlog -sn`
+# y `git log` muestren una sola persona (no reescribe el historial).
+# Formato: Nombre real <correo real> Nombre en el commit <correo del commit>
+
+Alejandro Cotes <acotes950@gmail.com> AC020907 <acotes950@gmail.com>
+Gabriela Campo <glcampo@uninorte.edu.co> g4bblcs <glcampo@uninorte.edu.co>
+Gabriela Campo <glcampo@uninorte.edu.co> Gabb Campo <glcampo@uninorte.edu.co>
+Camilo Padilla <camilopadillan18@gmail.com>
+Juan Luis Castillo <juluc234@gmail.com> Luuizzz <juluc234@gmail.com>

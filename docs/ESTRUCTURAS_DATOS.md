@@ -62,7 +62,25 @@ python -m pytest -q tests/test_civitas_logica.py
   - 100 inserciones **en orden**, el peor caso para un ABB sin balanceo: sigue balanceado y con altura ≤ 8;
   - 200 inserciones y 120 borrados aleatorios: se balancea tras cada borrado;
   - búsqueda, mínimo y máximo;
-  - el banco real entrega las 10 publicaciones en orden de riesgo.
+  - el banco real entrega las 10 publicaciones en orden de riesgo;
+  - **clave duplicada** (ver abajo): se conserva la primera, el árbol sigue balanceado y ordenado, y una guarda comprueba que las publicaciones reales tengan riesgos distintos.
+
+### Las cinco preguntas del PDF aplicadas al AVL
+
+1. **¿Qué problema resuelve?** El teléfono de la historia debe entregar las publicaciones de menor a mayor riesgo, para que la dificultad crezca. El banco necesita sacar siempre la de menor riesgo sin reordenar toda la lista.
+2. **¿Por qué esta estructura?** Un ABB sin balanceo se degenera en una lista si las claves llegan casi ordenadas, y aquí lo hacen. El AVL mantiene la altura en O(log n) siempre, así que insertar, buscar y sacar el mínimo cuestan O(log n).
+3. **¿Qué variante?** **AVL** (árbol binario de búsqueda autobalanceado). La clave es `nivel_riesgo` y el valor es la `Publicacion`. Cada nodo (`NodoAVL`) guarda su altura.
+4. **¿Cómo se insertan y eliminan?**
+   - **Inserción** (`agregar` → `insertar`): baja por el ABB, actualiza alturas al volver y rebalancea con rotación simple (LL, RR) o doble (LR, RL) cuando el factor de equilibrio sale de [-1, 1].
+   - **Eliminación** (`borrar` → `eliminar`): hoja o un hijo se sustituye por su hijo; con dos hijos se copia el **sucesor en inorden** (mínimo del subárbol derecho) y se elimina ese. Luego se rebalancea igual.
+   - `BancoPublicaciones.siguiente()` usa `minimo_nodo` y `borrar`.
+5. **¿Cómo se recorre?** Preorden, inorden y posorden, recursivos e iterativos (con `Clase_pila`), más variantes `*_texto` que devuelven líneas para mostrar en pantalla. El **inorden** da las publicaciones ordenadas por riesgo.
+
+### Limitación conocida: claves duplicadas
+
+`ArbolAVL.insertar` **descarta en silencio** una publicación cuyo `nivel_riesgo` ya esté en el árbol: se conserva la primera y la segunda se pierde. Hoy no afecta al juego, porque las 10 publicaciones de `PUBLICACIONES_HISTORIA` tienen riesgos distintos (10, 15, 20, 30, 40, 55, 60, 75, 85, 90). Si se añade una publicación nueva, hay que darle un riesgo no usado. Las pruebas `test_clave_duplicada_*`, `test_banco_pierde_la_publicacion_con_riesgo_repetido` y `test_publicaciones_de_la_historia_tienen_riesgos_unicos` fijan este comportamiento y avisan si se rompe la regla.
+
+Si en el futuro hiciera falta admitir repetidos, bastaría con desempatar con una clave compuesta `(nivel_riesgo, orden_de_llegada)`.
 
 ## 2. Grafo social (dirigido y ponderado)
 
