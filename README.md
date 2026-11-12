@@ -1,216 +1,189 @@
-# Alcalde Digital — Civitas
+# Alcalde Digital · Civitas
 
-**Alcalde Digital** es una novela visual de investigación sobre desinformación, hecha en **Ren'Py 8.5**. Eres el alcalde de Ciudad Nova durante la semana anterior a las elecciones. Un lunes a las 6 de la mañana, un rumor dice que el agua de la ciudad está envenenada. Cada publicación que compartes, verificas o ignoras cambia la ciudad.
+**Una ciudad al borde de las elecciones. Una red social llena de rumores. Tus decisiones deciden qué información llega a quién.**
 
-> Los me gusta no son evidencia.
+> **«Los me gusta no son evidencia».**
 
-Proyecto para la **Feria Gamer 2026**.
+**Alcalde Digital / Civitas** es un videojuego educativo desarrollado principalmente en **Python y Ren’Py 8.5** para la asignatura **Estructura de Datos II** de la Universidad del Norte, con proyección a la **VI Feria Gamer 2026**. Combina novela visual ramificada, investigación, simulación de desinformación, cinco minijuegos distintos y partidas multijugador de **2 a 4 personas**.
 
----
+[![Repositorio](https://img.shields.io/badge/GitHub-AC020907%2Falcalde__digital-181717?logo=github)](https://github.com/AC020907/alcalde_digital)
+![Python](https://img.shields.io/badge/lógica-Python-3776AB?logo=python&logoColor=white)
+![Ren'Py](https://img.shields.io/badge/motor-Ren'Py_8.5-FF7F8A)
 
-## Características
+## La premisa
 
-- **Historia con decisiones**: prólogo, tres actos y un domingo de elecciones. Las elecciones tienen consecuencias inmediatas y diferidas.
-- **CivitasNet**: una red social ficticia que reacciona a lo que haces. Puedes inspeccionar cada publicación (fuente, contexto, estado de verificación) y guardar pistas.
-- **Expediente**: un cuaderno de investigación con hechos observados, hipótesis, conclusiones comprobadas e hipótesis refutadas.
-- **Cinco retos** integrados en la historia:
-  - **Moderación Express**: limpia los comentarios de Martina; borra bots y aprueba a las personas reales.
-  - **Caza-Rumores**: frena un rumor que se propaga en tiempo real por la red de la ciudad.
-  - **Rastreador**: un tablero de evidencias donde reconstruyes la cadena de difusión de un rumor hasta su origen.
-  - **Ruta de la Verdad** (plataformas): en la Gran Viralización, dos horas antes de abrir las urnas, entras al sistema de NOVA a rescatar la evidencia original. Sustituye al antiguo arcade, que repetía el de Caza-Rumores.
-  - **Duelo de Frecuencias** (nuevo): un duelo rítmico contra NOVA durante la transmisión del domingo. Cuatro carriles, ritmo original a 120 BPM, dificultad Normal, Fácil o Asistido.
-- **NOVA**: la red de cuentas automáticas detrás de los rumores, con un giro que depende de lo que hiciste.
-- **Personajes:** Claudia, Martina, Rodrigo, Tomás y NOVA usan los sprites oficiales en el estilo del equipo (ver [docs/SPRITES.md](docs/SPRITES.md)).
-- **Eventos variables**: cada partida es un poco distinta, sin bloquear el avance.
-- **Cinco finales** con escenas propias: Ciudad Informada, Ciudad Dividida, Caos Informativo, Mandato Prestado y el final secreto Fuente Abierta. Se coleccionan en el **Archivo de Destinos**.
-- **Rutas con consecuencias**: la oferta a Martina, el audio falso de Tomás y a quién visitas el sábado cambian quién te ayuda el domingo y qué final es posible.
-- **Voces y música**: diálogos doblados para Claudia, Martina, Rodrigo, Tomás y NOVA, y banda sonora original por estado de ánimo.
-- **Puntuación Cívica y clasificación online**: hasta 1000 puntos por verificar, decidir, investigar y cuidar la ciudad. Clasificación compartida entre PC y teléfono.
-- **PC, mando y teléfono**: control con ratón, teclado o gamepad, y versión web jugable en el móvil.
-- **Modo Feria** (unos 12 minutos): versión condensada con los cinco retos, pensada para exhibición.
-- **Arena Civitas (2–4 jugadores, red local)**: multijugador cliente-servidor por sockets TCP.
-  - Roles: Ciudadano, Periodista, Influencer y Candidato a alcalde.
-  - Rondas con tiempo límite; propagación de cada publicación por el grafo social.
-  - Puntuación individual, resultado de la ciudad y elección entre cuatro candidatos.
-- **AYUDA**: objetivo, reglas, roles, indicadores, botones y accesibilidad. Desde el menú principal, el menú del juego (Esc) y la Arena.
-- **Arte**: personajes con sprites transparentes y seis expresiones cada uno, fondos ilustrados y luz de escena según el lugar.
-- **Accesibilidad**:
-  - subtítulos siempre visibles y **avisos visuales de sonido**;
-  - reducir movimiento y velocidad de texto;
-  - volumen separado de voz, música y efectos, y música que baja cuando hablan;
-  - controles táctiles en el mapa;
-  - formas además de colores en el Duelo.
+En **Ciudad Nova**, cuatro candidaturas compiten por la alcaldía mientras la red ficticia **CivitasNet** amplifica noticias verdaderas, opiniones y desinformación. Una sospecha sobre el agua de la ciudad desencadena una investigación en la que aparecen **Claudia**, **Martina**, **Rodrigo**, **Tomás** y **NOVA**, una red de cuentas automatizadas.
 
----
+El jugador no responde un cuestionario tradicional: **comparte, verifica, ignora, reporta, investiga y actúa**, y ve cómo la información afecta la confianza, la convivencia, el bienestar, la participación, los rumores y los resultados electorales.
 
-## Cómo ejecutarlo
+## Modos de juego
 
-1. Descarga el **SDK de Ren'Py 8.5.x** desde <https://www.renpy.org/latest.html>.
-2. Clona este repositorio:
-   ```bash
-   git clone https://github.com/AC020907/pruebaslaboratorio.git
-   ```
-   Este es el repositorio de desarrollo y despliegue: la web, Render y las versiones de Windows salen de aquí. El repositorio académico del equipo es `AC020907/alcalde_digital`, donde cada integrante sube sus commits.
-3. Abre el lanzador de Ren'Py, en «Preferencias → Directorio de proyectos» elige la carpeta que contiene el proyecto y selecciónalo.
-4. Pulsa **Launch Project**.
+| Modo | Experiencia | Estado en el código |
+| --- | --- | --- |
+| **Historia** | Novela visual con decisiones, investigación, cinco retos y **cinco finales** | Implementado; recorridos automáticos documentados |
+| **Modo Feria** | Recorrido condensado de la historia y sus cinco retos | Implementado; duración con visitantes por medir |
+| **Arena Local (LAN)** | **2–4 jugadores**, roles diferenciados, servidor TCP autoritativo, Consejo Cívico y torneo de cinco pruebas | Implementado y probado en procesos locales; falta prueba con varios PC físicos |
+| **Arena Online** | Historia compartida con cuatro perspectivas, cinco minijuegos competitivos y decisiones posteriores a cada reto | Implementado y probado en navegadores locales; despliegue y pruebas físicas deben confirmarse |
 
-En el menú principal:
-- **Nueva partida**: la historia completa.
-- **Modo Feria (12 min)**: la versión corta para exhibición.
-- **Arena (2-4 jugadores)**: el multijugador local.
+### Los cinco minijuegos
 
-### Arena Civitas en la red local (sin internet)
+| Desafío | Mecánica | Objetivo |
+| --- | --- | --- |
+| **Moderación Express** | Clasificación bajo presión | Frenar bots y contenido dañino sin censurar críticas legítimas |
+| **Rastreador** | Tablero de evidencias; búsqueda y recorridos en grafos | Reconstruir la cadena de difusión hasta el origen |
+| **Caza-Rumores** | Arcade de precisión y contención | Interceptar focos de desinformación en la red |
+| **Ruta de la Verdad** | Plataformero 2D | Esquivar defensas de NOVA y recuperar documentos originales |
+| **Duelo de Frecuencias** | Juego rítmico original de cuatro carriles | Recuperar una transmisión alterada por NOVA |
 
-Cada jugador usa la versión de **escritorio**: los navegadores no permiten sockets TCP. Todos deben estar en la misma red (wifi o cable).
+La antigua **Gran Viralización** se conserva como acontecimiento narrativo, pero su reto jugable se transformó en **Ruta de la Verdad**, eliminando la redundancia con Caza-Rumores.
 
-1. **Anfitrión:** «Arena (2-4 jugadores)» → nombre y rol → **Crear sala**. La sala muestra la IP del equipo y el puerto (50777). Si Windows pregunta por el firewall, permite el acceso en redes privadas.
-2. **Resto de jugadores:** «Arena (2-4 jugadores)» → nombre y un rol libre → escribe la IP → **Unirse a esa sala** → **Estoy listo**.
-3. **Inicio:** el anfitrión pulsa **Empezar**. Si falta gente, puede **Añadir jugador automático**.
+### Cinco desenlaces
 
-Servidor dedicado sin interfaz (opcional; necesita Python 3):
+**Ciudad Informada**, **Ciudad Dividida**, **Caos Informativo**, **Mandato Prestado** y **Fuente Abierta** (secreto). Las decisiones de la historia, la investigación, las relaciones entre personajes y las actuaciones en los desafíos condicionan el desenlace. El juego incluye un **Archivo de Destinos**.
+
+## Arena Civitas: una ciudad, cuatro perspectivas
+
+En Arena, cada participante asume un rol: **Ciudadano, Periodista, Influencer o Candidato a alcalde**. Cada rol tiene habilidades y acceso a información diferentes. Los participantes viven **una misma crisis** desde perspectivas parciales, pero **todos juegan los cinco minijuegos**.
+
+**Arena Online** sigue este ciclo:
+
+`Escena compartida → pista privada del rol → minijuego competitivo → clasificación → decisión cívica → propagación y consecuencias → siguiente ronda → elecciones`.
+
+Rondas narrativas: Ciudadano / Moderación; Periodista / Rastreador; Candidato / Caza-Rumores; Influencer / Ruta de la Verdad; y **gran final de Duelo de Frecuencias** contra NOVA.
+
+**Arena Local** conserva un flujo propio: Consejo Cívico de decisiones con árbol y grafo → torneo de cinco pruebas → elección y resultados. Ofrece versiones **Completo**, **Feria** y **Solo Consejo**.
+
+**Dos resultados diferentes:** campeón individual por puntos y estado colectivo de Ciudad Nova. Ganar la competencia no significa necesariamente que la ciudad haya quedado bien informada.
+
+## Estructuras de datos — no son decorativas
+
+| Estructura / algoritmo | Uso real en Civitas | Referencia |
+| --- | --- | --- |
+| **Árbol n-ario de decisiones** | Define opciones encadenadas y consecuencias; cambia por rol; el servidor valida la ruta elegida | `game/clases/Tree.py`, `game/clases/arena/reglas.py` |
+| **Árbol AVL** | Ordena publicaciones por nivel de riesgo y permite extraer y eliminar manteniendo el balance | `game/clases/ArbolAVL.py`, `game/clases/Publicacion.py` |
+| **Grafo social dirigido y ponderado** | Modela seguidores, intensidad de conexiones y difusión de publicaciones | `game/clases/GrafoSocial.py` |
+| **BFS / BFS multifuente** | Calcula quién recibe la información, en qué saltos y qué nodos se protegen | `game/clases/GrafoSocial.py`, `game/clases/arena/reglas.py` |
+| **DFS** | Reconstruye y comprueba cadenas de evidencias | `game/clases/PuzzleEvidencias.py` |
+| **Grafo de Ciudad Nova** | Conecta Colegio, Barrio, Parque, Plaza y Alcaldía para simular distancias e influencia entre zonas | `game/clases/arena/reglas.py` |
+| **Cola FIFO** | Administra el flujo de comentarios de Moderación Express | `game/clases/Moderador.py` |
+
+El servidor aplica los efectos de la ruta del árbol a un grafo social. Esa propagación modifica los indicadores públicos y la confianza ciudadana, lo que influye en los resultados electorales. Consulta [Estructuras de datos](docs/ESTRUCTURAS_DATOS.md).
+
+## Cómo ejecutar la versión de escritorio
+
+**Requisitos:** SDK de **Ren’Py 8.5.x** y una copia del repositorio.
+
+```bash
+git clone https://github.com/AC020907/alcalde_digital.git
+```
+
+1. Descarga el SDK desde [renpy.org](https://www.renpy.org/).
+2. En el lanzador, selecciona como directorio de proyectos la carpeta que contiene `alcalde_digital`.
+3. Abre **Alcalde Digital** y pulsa **Launch Project**.
+4. Elige **Nueva partida**, **Modo Feria** o **Arena** en el menú.
+
+### Arena Local por TCP
+
+- Todos los clientes deben ejecutar la **versión de escritorio** y estar en la misma red privada.
+- El anfitrión elige **Arena → Crear sala**. El juego muestra una dirección IP y utiliza, por defecto, el puerto TCP **50777**.
+- Los demás seleccionan **Unirse**, escriben esa IP, escogen un rol disponible y marcan **Estoy listo**.
+- El anfitrión inicia la partida. El servidor sincroniza estado, tiempo, decisiones, indicadores, resultados y elecciones.
+
+También se puede ejecutar un servidor dedicado:
 
 ```bash
 python servidor_arena.py --rondas 5 --segundos 25
 ```
 
-Demostración en un solo PC, con 4 procesos independientes: dos Ren'Py y dos bots.
+> La prueba de varios procesos en `localhost` **no reemplaza** la validación entre 2–4 PC reales; consulta [Pruebas físicas](docs/PRUEBAS_FISICAS.md).
+
+### Arena Online y clasificación
+
+El código de Arena Online está bajo `leaderboard/app/arena_online.py` y `leaderboard/app/static/arena.html`; el backend comparte la aplicación **FastAPI** de la clasificación. Para probarlo **localmente**:
 
 ```bash
-python tests/qa_visual.py arena --salida demo_arena
+cd leaderboard
+python -m pip install -r requirements-dev.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8791
 ```
 
-### Arena Online (teléfonos o redes distintas)
+Abrir **http://127.0.0.1:8791/arena**. La disponibilidad pública de `/arena` depende del despliegue efectivo del servicio correspondiente; no se presupone que el último commit ya esté en producción. Consulta [Despliegue](DESPLIEGUE.md) y [Arquitectura multijugador](docs/ARQUITECTURA_MULTIJUGADOR.md).
 
-Abre `https://civitas-leaderboard.onrender.com/arena` cuando esté desplegada (ver `DESPLIEGUE.md` §6). Una persona crea la sala y comparte el código o el enlace, y las demás se unen desde su teléfono o computador. Es una historia compartida de 5 rondas con cuatro perspectivas: cada rol recibe pistas propias, todos juegan los cinco retos y después de cada uno se decide qué hacer en Civitas. Usa el mismo motor de reglas que la Arena local. Detalle: [docs/ARENA_NARRATIVA_MULTIPERSPECTIVA.md](docs/ARENA_NARRATIVA_MULTIPERSPECTIVA.md).
+## Controles principales
 
-Para probarla en local:
+| Acción | Controles habituales |
+| --- | --- |
+| Historia y decisiones | Ratón, Enter, espacio; Esc para menú |
+| Moderación | Flechas izquierda/derecha o A/D; mando donde esté disponible |
+| Rastreador | Arrastrar/seleccionar evidencias, conectar y comprobar; ayuda dentro del juego |
+| Caza-Rumores | Clic/toque sobre amenazas, controles de mando en escritorio |
+| Ruta de la Verdad | A/D o flechas para moverse; Espacio/W/arriba para saltar; botones táctiles en web |
+| Duelo de Frecuencias | Cuatro carriles; D/F/J/K u opciones configuradas; controles táctiles en web |
 
-```bash
-cd leaderboard && python -m uvicorn app.main:app --port 8791
-```
+El menú **AYUDA** explica reglas, roles, indicadores, objetivos y accesibilidad. Incluye subtítulos, avisos visuales de sonidos, reducción de movimiento y opciones separadas de audio.
 
-Después abre `http://localhost:8791/arena`.
-
-La arquitectura y el protocolo están en [docs/ARQUITECTURA_MULTIJUGADOR.md](docs/ARQUITECTURA_MULTIJUGADOR.md). Las pruebas con equipos reales, en [docs/PRUEBAS_FISICAS.md](docs/PRUEBAS_FISICAS.md).
-
-Para publicar la versión web, la clasificación online y el QR, sigue **[DESPLIEGUE.md](DESPLIEGUE.md)**.
-
-### Controles
-
-| Acción | Cómo |
-|---|---|
-| Avanzar el diálogo | Clic, Enter o espacio |
-| Elegir una opción | Clic, o flechas + Enter |
-| CivitasNet / Expediente | Botones bajo los indicadores, arriba a la derecha |
-| Historial, guardar, cargar, opciones | Barra inferior o Esc |
-| Moderación Express | Flecha izquierda / A / cruceta izq.: borrar · flecha derecha / D / cruceta der.: aprobar |
-| Rastreador | Arrastrar fichas, o teclas 1–6 + Z X C · H pista · Enter comprobar · Mando: cruceta mueve, A elige y coloca, Y pista |
-| Caza-Rumores | Clic sobre los rumores · Mando o flechas: mover la mira, A disparar, X onda |
-| Ruta de la Verdad (plataformas) | A/D o flechas: moverse · Espacio, W o flecha arriba: saltar (mantén para más altura) · Mando: cruceta y A · Táctil: botones en pantalla |
-| Mapa | Flechas, WASD o cruceta · Enter o A para entrar · En el teléfono, flechas táctiles |
-| Mando (general) | A aceptar · B menú · Start pausa |
-| Arena | Clic, o flechas + Enter / A, sobre las opciones del árbol · «« Volver» regresa · Esc: salir de la sala |
-| Ayuda | Botón «Ayuda» del menú principal, del menú del juego (Esc) o de la Arena |
-
----
-
-## Estructura del proyecto
-
-```
-game/
-├── clases/            Lógica en Python (sin dependencias de Ren'Py)
-│   ├── GrafoSocial.py        Grafo dirigido ponderado, BFS y DFS
-│   ├── RedCivitas.py         Las 28 cuentas de Ciudad Nova y sus conexiones
-│   ├── ArbolAVL.py           Banco de publicaciones ordenado por riesgo
-│   ├── Clase_pila.py         Pila para los recorridos iterativos del AVL
-│   ├── Tree.py               Árbol N-ario de decisiones de cada publicación
-│   ├── Moderador.py          Cola FIFO de comentarios
-│   ├── CazaRumores.py        Motor de los minijuegos en tiempo real
-│   ├── PuzzleEvidencias.py   Puzzle del Rastreador
-│   └── Investigacion.py      CivitasNet, expediente, eventos y final secreto
-├── minijuegos/        Pantallas y lógica de los cuatro minijuegos
-├── story/             Historia, personajes, CivitasNet, expediente, finales y modo feria
-├── images/            Fondos y sprites de personajes
-├── assets/            Audio, fondos de minijuegos e íconos
-├── gui/ · fonts/      Interfaz y tipografías
-└── screens.rpy · options.rpy · script.rpy
-tests/
-└── test_civitas_logica.py   Pruebas de la lógica pura
-```
-
----
-
-## Estructuras de datos
-
-| Estructura | Dónde se usa |
-|---|---|
-| **Grafo dirigido ponderado** | La red social de la ciudad: quién sigue a quién (`GrafoSocial`). |
-| **BFS por niveles** | La propagación de rumores en Caza-Rumores (también en la versión online, rejugada en el servidor); las horas del Rastreador. |
-| **DFS inverso** | La validación de la cadena del Rastreador y el cálculo de las pistas. |
-| **Árbol AVL** | El banco de publicaciones del teléfono, que se entregan de menor a mayor riesgo. |
-| **Pila** | Los recorridos iterativos del AVL (`Clase_pila`). |
-| **Árbol N-ario** | Las opciones de cada publicación: Compartir / Verificar (Sí, No) / Ignorar / Reportar. En la Arena el rol inserta o elimina ramas, y el servidor valida la ruta recorriendo el árbol. |
-| **Grafo social (Arena)** | Ciudadanos, candidatos y las cuentas de los jugadores. Un BFS multifuente decide quién recibe cada publicación, cuántos y en cuántos saltos. |
-| **Grafo de la ciudad** | Colegio, Barrio, Parque, Plaza y Alcaldía. Un BFS de distancias decide dónde empieza el boca a boca. |
-| **Cola FIFO** | Los comentarios de Moderación Express. |
-
-### Modo sustentación y laboratorio
-
-Al ejecutar desde el lanzador de Ren'Py, pulsa **Shift+L** en el menú principal para abrir el laboratorio. Desde ahí puedes:
-- lanzar cada minijuego por separado;
-- activar el modo sustentación, que muestra los recorridos BFS y DFS;
-- revisar CivitasNet, el expediente y los sprites.
-
----
-
-## Pruebas
-
-Las pruebas no necesitan Ren'Py:
+## Verificación técnica
 
 ```bash
 python -m pytest -q tests
 cd leaderboard && python -m pytest -q
 ```
 
-- **`tests`** (110 pruebas): lógica de la historia, finales, Duelo, y la Arena (motor y red con 2, 3 y 4 clientes reales en procesos independientes).
-- **`leaderboard`** (142 pruebas): el backend.
-
-Recorridos del guion real dentro de Ren'Py (5 perfiles y 5 finales) y capturas reales del motor:
+Otros controles disponibles:
 
 ```bash
 python tests/qa_recorridos.py
 python tests/qa_visual.py galeria --salida capturas
 python tests/qa_visual.py arena --salida capturas
+python tests/e2e_arena_online.py --jugadores 2,3,4
 ```
 
-Para revisar los scripts: en el lanzador de Ren'Py, **Check Script (Lint)**.
+Ejecutar **Check Script (Lint)** desde el lanzador de Ren’Py.
+
+**Estado documentado (11 de noviembre de 2026):** `docs/RELEASE_READINESS.md` registra 180 pruebas del juego, 165 del backend, lint sin errores, recorridos de 5 finales en Historia y Feria y pruebas E2E locales de Arena Online para 2, 3 y 4 navegadores. Un informe posterior de corrección local registra 182 pruebas del juego. **Estos resultados son registros del proyecto; deben volver a ejecutarse en el commit de entrega.** Aún están pendientes la LAN entre PC reales, sesiones con personas, pruebas de audio/mando/teléfonos y la confirmación del despliegue público vigente.
+
+## Mapa del repositorio
+
+```text
+game/
+  clases/            # Python: AVL, árboles, grafos, simulación, física y ritmo
+  clases/arena/      # Reglas, servidor TCP, cliente, campaña y torneo
+  arena/             # Pantallas Ren'Py para Arena Local y torneo
+  minijuegos/        # Moderación, Rastreador, Caza-Rumores, plataformas y ritmo
+  story/             # Historia, personajes, eventos, escrutinio y cinco finales
+  images/            # Ilustraciones y sprites de personajes
+  assets/            # Audio y recursos
+leaderboard/
+  app/               # FastAPI, leaderboard y Arena Online
+  app/static/        # Interfaz web y motores visuales de retos
+  tests/             # Tests del servicio
+  render.yaml        # Configuración de Render
+tests/               # Tests de motor, red, retos y recorridos
+docs/                # Sustentación, rúbrica, arquitectura y evidencias
+servidor_arena.py    # Servidor LAN independiente
+DESPLIEGUE.md        # Proceso de publicación (revisar rama/servicio antes de usar)
+```
+
+## Para la sustentación y la feria
+
+- [Guía de sustentación técnica](docs/GUIA_SUSTENTACION.md)
+- [Matriz de cumplimiento de la rúbrica](docs/RUBRICA_CUMPLIMIENTO.md)
+- [Árboles, AVL y grafos](docs/ESTRUCTURAS_DATOS.md)
+- [Arquitectura cliente-servidor](docs/ARQUITECTURA_MULTIJUGADOR.md)
+- [Historia online con perspectivas por rol](docs/ARENA_NARRATIVA_MULTIPERSPECTIVA.md)
+- [Torneo y sistema de puntuación](docs/ARENA_TORNEO.md)
+- [Plataformero: mecánicas y determinismo](docs/PLATAFORMERO_RUTA_VERDAD.md)
+- [Audio y sincronización del Duelo](docs/ARENA_RITMO_MULTIJUGADOR.md)
+- [Pruebas físicas pendientes](docs/PRUEBAS_FISICAS.md)
+- [Estado de release](docs/RELEASE_READINESS.md)
+
+## Equipo y créditos
+
+Proyecto académico del equipo de **Estructura de Datos II, Universidad del Norte (2026)**. Completar los nombres, roles y contribuciones de cada integrante **según el historial real de Git** antes de la entrega. No atribuir autoría a quien no haya participado.
+
+Arte y música: recursos del proyecto; los sprites oficiales de personajes se documentan en [docs/SPRITES.md](docs/SPRITES.md). **Duelo de Frecuencias** utiliza mecánicas del género de ritmo con recursos originales, sin afiliación con otros juegos.
 
 ---
 
-## Documentación
+**Civitas propone aprender a reconocer desinformación experimentando sus consecuencias: una decisión individual puede modificar toda una ciudad.**
 
-- `Guia_Alcalde_Digital.pdf` / `.docx`: guía completa del juego. Incluye una sección marcada como spoiler sobre el final secreto.
-- `GAME_AUDIT.md`: decisiones de diseño, sistemas y pendientes técnicos.
-- `PROTOCOLO_PRUEBAS_JUGADORES.md`: plantilla para probar el juego con jugadores.
-- `docs/RUBRICA_CUMPLIMIENTO.md`: cada requisito del PDF del laboratorio, con su estado y su evidencia.
-- `docs/ESTRUCTURAS_DATOS.md`: árboles y grafos (justificación, operaciones y complejidad).
-- `docs/ARQUITECTURA_MULTIJUGADOR.md`: cliente-servidor, protocolo y robustez.
-- `docs/GUIA_SUSTENTACION.md`: preguntas probables y guion de demostración de 3 a 5 minutos.
-- `docs/PLAN_DE_PRUEBAS_FERIA.md`: checklist del stand y contingencias.
-- `docs/RELEASE_READINESS.md`: estado de la versión y pendientes.
-
----
-
-## Equipo
-
-| Integrante | Rol |
-|---|---|
-| _Nombre_ | _Rol_ |
-| _Nombre_ | _Rol_ |
-| _Nombre_ | _Rol_ |
-
----
-
-## Contexto
-
-Proyecto académico para el curso de Estructuras de Datos, presentado en la Feria Gamer 2026.
