@@ -25,6 +25,12 @@
 /dialogue.txt
 /strings.json
 
-# Python cache files
+# Carpeta temporal de los recorridos de QA (tests/qa_recorridos.py la restaura sola).
+/game/saves.*/
+
+# Python y backend local.
 __pycache__/
 *.pyc
+/leaderboard/*.sqlite
+/leaderboard/*.db
+/leaderboard/.env

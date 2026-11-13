@@ -1,4 +1,4 @@
-## This file contains options that can be changed to customize your game.
+﻿## This file contains options that can be changed to customize your game.
 ##
 ## Lines beginning with two '#' marks are comments, and you shouldn't uncomment
 ## them. Lines beginning with a single '#' mark are commented-out code, and you
@@ -14,16 +14,21 @@
 
 define config.name = _("Alcalde Digital")
 
+## Interfaz del motor (guardar/cargar, ayuda, confirmaciones, fechas) en espanol: tl/spanish viene de la
+## traduccion oficial del SDK de Ren'Py. Los dialogos ya estan escritos en espanol y no cambian.
+define config.language = "spanish"
+define config.has_sync = False
+
 
 ## Determines if the title given above is shown on the main menu screen. Set
 ## this to False to hide the title.
 
-define gui.show_name = True
+define gui.show_name = False
 
 
 ## The version of the game.
 
-define config.version = "1.0"
+define config.version = "2.0"
 
 
 ## Text that is placed on the game's about screen. Place the text between the
@@ -84,12 +89,12 @@ define config.intra_transition = dissolve
 
 ## A transition that is used after a game has been loaded.
 
-define config.after_load_transition = None
+define config.after_load_transition = Dissolve(0.4)
 
 
 ## Used when entering the main menu after the game has ended.
 
-define config.end_game_transition = None
+define config.end_game_transition = Fade(0.5, 0.5, 0.5)
 
 
 ## A variable to set the transition used when the game starts does not exist.
@@ -120,7 +125,7 @@ define config.window_hide_transition = Dissolve(.2)
 ## Controls the default text speed. The default, 0, is infinite, while any other
 ## number is the number of characters per second to type out.
 
-default preferences.text_cps = 0
+default preferences.text_cps = 45
 
 
 ## The default auto-forward delay. Larger numbers lead to longer waits, with 0
@@ -183,6 +188,34 @@ init python:
     build.classify('**/.**', None)
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
+    build.classify('game/qa_*.rpy', None)
+    build.classify('game/qa_*.rpyc', None)
+    # Partidas guardadas y herramientas del equipo: nunca se publican.
+    build.classify('game/saves/**', None)
+    build.classify('game/saves.*/**', None)
+    build.classify('tools/**', None)
+    build.classify('tests/**', None)
+    build.classify('docs/**', None)
+    build.classify('leaderboard/**', None)
+    build.classify('revision_visual/**', None)
+    build.classify('demo_arena/**', None)
+    build.classify('qa_*/**', None)
+    build.classify('*.md', None)
+    build.classify('Guia_*', None)
+    build.classify('dialogue*.tab', None)
+    build.classify('traceback.txt', None)
+    build.classify('errors.txt', None)
+    build.classify('log.txt', None)
+    # Arte sin uso en tiempo de ejecucion: los paneles antiguos solo serian respaldo si faltara el sprite
+    # transparente (existen los 30), y los placeholders y el influencer son de la entrega 1.
+    for _expr in ('neutral', 'feliz', 'seria', 'enojada', 'triste', 'sorprendida'):
+        build.classify('game/images/personajes/*_%s.png' % _expr, None)
+    # Arte anterior de los personajes con sprites oficiales nuevos: solo seria respaldo y mezclaria estilos.
+    build.classify('game/images/personajes/lateral/**', None)
+    for _personaje_viejo in ('claudia', 'martina', 'rodrigo', 'nova', 'tomas'):
+        build.classify('game/images/personajes/%s_base.png' % _personaje_viejo, None)
+    build.classify('game/images/placeholder*.png', None)
+    build.classify('game/images/influencer/**', None)
 
     ## To archive files, classify them as 'archive'.
 
@@ -207,3 +240,20 @@ init python:
 ## by a slash.
 
 # define build.itch_project = "renpytom/test-project"
+
+
+## Audio, ritmo y presentacion.
+
+define config.main_menu_music = "assets/audio/music/menu.ogg"
+define config.fade_music = 1.0
+define config.has_autosave = True
+# Las clases del juego (Ciudad, Jugador, banco AVL) viven en modulos .py: Ren'Py no puede
+# revertir su estado, asi que el rollback produciria efectos duplicados.
+define config.rollback_enabled = False
+define config.autosave_on_choice = True
+define _game_menu_screen = "save"
+
+init python:
+    renpy.music.register_channel("ambiente", mixer="sfx", loop=True)
+
+default persistent.reducir_movimiento = False

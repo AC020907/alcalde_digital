@@ -1,4 +1,4 @@
-################################################################################
+﻿################################################################################
 ## Initialization
 ################################################################################
 
@@ -8,22 +8,154 @@ init offset = -1
 ################################################################################
 ## Styles
 ################################################################################
-screen civitas_notificacion():
-    modal True
-    frame:
-        at (tarjeta_entra if efectos_activos() else tarjeta_fade)
-        align (0.95, 0.14)
-        padding (20, 16)
-        background "#1e293bee"
-        vbox:
-            spacing 8
-            text "Nueva notificación de Civitas" size 22 color "#38bdf8"
-            textbutton "Abrir aplicación":
-                action Return()
-                hover_sound "assets/audio/sfx/hover_decision.wav"
-                activate_sound "assets/audio/sfx/click_compartir.wav"
+init python:
+
+    def estabilidad():
+        return (ciudad.get_convivencia() + (100 - ciudad.get_conflictos())) // 2
+
+    def indicadores_hud():
+        """(nombre, valor, color, critico) de los cuatro medidores visibles."""
+        confianza = ciudad.get_confianza()
+        desinformacion = ciudad.get_desinformacion()
+        credibilidad = jugador.get_reputacion()
+        estable = estabilidad()
+        return [
+            ("Confianza", confianza, "#7c7cf0", confianza <= 30),
+            ("Desinformación", desinformacion, "#f0667a", desinformacion >= 65),
+            ("Credibilidad", credibilidad, "#d6779a", credibilidad <= 25),
+            ("Estabilidad", estable, "#3fcf8e", estable <= 35),
+        ]
+
+    NOMBRES_INDICADOR = {
+        "confianza": "Confianza", "desinformacion": "Desinformación", "reputacion": "Credibilidad",
+        "conflictos": "Conflictos", "convivencia": "Convivencia", "bienestar": "Bienestar",
+        "info_verificada": "Info. verificada", "puntos": "Puntos",
+    }
+    INDICADOR_NEGATIVO = ("desinformacion", "conflictos")
+
+    def mostrar_cambios(consecuencia):
+        """Numeros flotantes (+3 Confianza / -2 Desinformacion) al aplicar una consecuencia."""
+        lineas = []
+        for clave, valor in (consecuencia or {}).items():
+            if not valor or clave not in NOMBRES_INDICADOR:
+                continue
+            bueno = (valor > 0) != (clave in INDICADOR_NEGATIVO)
+            lineas.append(("%+d %s" % (valor, NOMBRES_INDICADOR[clave]), bueno))
+        if lineas:
+            renpy.hide_screen("cambios_indicadores")
+            renpy.show_screen("cambios_indicadores", lineas=lineas[:5])
 
 
+transform hud_temblor:
+    xoffset 0
+    block:
+        linear 0.05 xoffset -3
+        linear 0.05 xoffset 3
+        linear 0.05 xoffset 0
+        pause 1.2
+        repeat
+
+transform cambio_flotante(retraso):
+    alpha 0.0 yoffset 16
+    pause retraso
+    easein 0.3 alpha 1.0 yoffset 0
+    pause 1.8
+    easeout 0.5 alpha 0.0 yoffset -24
+
+default panel_ciudad_abierto = False
+
+transform panel_lateral:
+    on show:
+        xoffset -380 alpha 0.0
+        easein 0.25 xoffset 0 alpha 1.0
+    on hide:
+        easeout 0.2 xoffset -380 alpha 0.0
+
+## El HUD son solo los accesos (sin barra de fondo) para que la escena se vea completa.
+## Las estadisticas de la ciudad viven en un panel lateral que se abre con el boton "Ciudad".
+screen hud_ciudad():
+    zorder 50
+    hbox:
+        xalign 1.0
+        xoffset -36
+        ypos 22
+        spacing 14
+        $ alerta = "!" if any(critico for _n, _v, _c, critico in indicadores_hud()) else 0
+        use hud_acceso("Ciudad", alerta, ToggleVariable("panel_ciudad_abierto"))
+        use hud_acceso("CivitasNet", feed_sin_ver(), Show("civitasnet"))
+        use hud_acceso("Expediente", pistas_sin_ver(), Show("expediente"))
+        use hud_acceso("Misiones", misiones_pendientes_hud(), Show("misiones_ciudad"))
+        use hud_acceso("Mapa", 0, Function(abrir_mapa_libre))
+
+    showif panel_ciudad_abierto:
+        frame at panel_lateral:
+            xpos 24
+            ypos 22
+            xsize 340
+            padding (28, 22, 28, 26)
+            background Frame(Fixed(Solid("#2b2440"), Solid("#120d1c", xysize=(334, 600), pos=(3, 3)), xysize=(340, 606)), 8, 8)
+            vbox:
+                spacing 18
+                hbox:
+                    xfill True
+                    text "ESTADO DE LA CIUDAD" size 16 color "#a7a5f2" kerning 3 yalign 0.5
+                    textbutton "×":
+                        xalign 1.0
+                        text_size 30
+                        text_color "#c9b8d8"
+                        text_hover_color "#fbf6ee"
+                        action SetVariable("panel_ciudad_abierto", False)
+                for nombre, valor, color, critico in indicadores_hud():
+                    fixed:
+                        xsize 284
+                        ysize 80
+                        if critico:
+                            at hud_temblor
+                        text nombre size 20 color ("#f0667a" if critico else "#c9b8d8")
+                        text "[valor]" size 34 bold True color color ypos 22
+                        bar:
+                            ypos 68
+                            value StaticValue(valor, 100)
+                            xsize 284
+                            ysize 6
+                            left_bar Solid(color)
+                            right_bar Solid("#2f2744")
+
+screen hud_acceso(etiqueta, pendientes, accion):
+    # Remaster: ficha de papel con contorno de tinta (mismo componente que CivitasNet y los resultados).
+    button:
+        xsize 142
+        ysize 46
+        background Frame(Fixed(Solid("#2b2440"), Solid("#fbf6ee", xysize=(136, 40), pos=(3, 3)), xysize=(142, 46)), 6, 6)
+        hover_background Frame(Fixed(Solid("#2b2440"), Solid("#efe8f5", xysize=(136, 40), pos=(3, 3)), Solid("#d1495b", xysize=(6, 40), pos=(3, 3)), xysize=(142, 46)), 10, 6)
+        hover_sound "assets/audio/sfx/menu_hover.ogg"
+        activate_sound "assets/audio/sfx/ui_click.wav"
+        action accion
+        text etiqueta size 17 bold True color "#2b2440" hover_color "#8c2f4b" align (0.5, 0.5)
+        if pendientes:
+            fixed:
+                xysize (30, 30)
+                xalign 1.0
+                yalign 0.0
+                xoffset 12
+                yoffset -12
+                add circulo("#d1495b", "#2b2440", 14) align (0.5, 0.5)
+                text "[pendientes]" size 14 bold True color "#ffffff" align (0.5, 0.5)
+
+screen cambios_indicadores(lineas):
+    zorder 60
+    vbox:
+        xalign 0.985
+        ypos 110
+        spacing 4
+        for i, (texto, bueno) in enumerate(lineas):
+            frame:
+                xalign 1.0
+                at cambio_flotante(i * 0.12)
+                background Frame("gui/frame.png", 30, 30)
+                padding (16, 6)
+                text texto size 20 bold True color ("#2f9e8f" if bueno else "#c0392b")
+    timer 3.2 action Hide("cambios_indicadores")
 
 transform normalImage(x,y):
     zoom 0.45
@@ -134,7 +266,7 @@ screen say(who, what):
     ## If there's a side image, display it above the text. Do not display on the
     ## phone variant - there's no room.
     if not renpy.variant("small"):
-        add SideImage() xalign 0.0 yalign 1.0
+        add SideImage() xpos 34 ypos 1066 yanchor 1.0
 
 
 ## Make the namebox available for styling through the Character object.
@@ -170,6 +302,9 @@ style namebox:
 
 style say_label:
     properties gui.text_properties("name", accent=True)
+    color "#fbf6ee"
+    bold True
+    outlines [(2, "#00000040", 0, 1)]
     xalign gui.name_xalign
     yalign 0.5
 
@@ -225,12 +360,22 @@ style input:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#choice
 
+transform opcion_entrada(retraso):
+    alpha 0.0 xoffset -60
+    pause retraso
+    easein 0.28 alpha 1.0 xoffset 0
+    on hover:
+        easein 0.12 zoom 1.03
+    on idle:
+        easein 0.12 zoom 1.0
+
 screen choice(items):
     style_prefix "choice"
 
     vbox:
-        for i in items:
-            textbutton i.caption action i.action
+        for i, item in enumerate(items):
+            # Foco inicial en la primera opcion: con mando o teclado se elige sin buscar el foco.
+            textbutton item.caption action item.action at opcion_entrada(i * 0.07) default_focus (i == 0)
 
 
 style choice_vbox is vbox
@@ -238,16 +383,16 @@ style choice_button is button
 style choice_button_text is button_text
 
 style choice_vbox:
-    xalign 0.30
-    ypos 405
+    xalign 0.5
+    ypos 430
     yanchor 0.5
 
     spacing gui.choice_spacing
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    hover_sound "assets/audio/sfx/hover_decision.wav"
-    activate_sound "assets/audio/sfx/click_compartir.wav"
+    hover_sound "assets/audio/sfx/menu_hover.ogg"
+    activate_sound "assets/audio/sfx/decision.ogg"
 
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
@@ -269,14 +414,13 @@ screen quick_menu():
             style_prefix "quick"
             style "quick_menu"
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Historial") action ShowMenu('history')
+            textbutton _("Saltar") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Guardar") action ShowMenu('save')
+            textbutton _("G. Rápido") action QuickSave()
+            textbutton _("C. Rápida") action QuickLoad()
+            textbutton _("Opciones") action ShowMenu('preferences')
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -322,38 +466,38 @@ screen navigation():
 
         if main_menu:
 
-            textbutton _("Start") action Start()
+            textbutton _("Nueva partida") action Start()
 
         else:
 
-            textbutton _("History") action ShowMenu("history")
+            textbutton _("Historial") action ShowMenu("history")
 
-            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Guardar") action ShowMenu("save")
 
-        textbutton _("Load") action ShowMenu("load")
+        textbutton _("Cargar") action ShowMenu("load")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+        textbutton _("Opciones") action ShowMenu("preferences")
 
         if _in_replay:
 
-            textbutton _("End Replay") action EndReplay(confirm=True)
+            textbutton _("Terminar repetición") action EndReplay(confirm=True)
 
         elif not main_menu:
 
-            textbutton _("Main Menu") action MainMenu()
+            textbutton _("Menú principal") action MainMenu()
 
-        textbutton _("About") action ShowMenu("about")
+        textbutton _("Créditos") action ShowMenu("about")
 
         if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
 
             ## Help isn't necessary or relevant to mobile devices.
-            textbutton _("Help") action ShowMenu("help")
+            textbutton _("Ayuda") action Show("ayuda_civitas")
 
         if renpy.variant("pc"):
 
             ## The quit button is banned on iOS and unnecessary on Android and
             ## Web.
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            textbutton _("Salir") action Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
@@ -373,60 +517,96 @@ style navigation_button_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
 
-screen main_menu():
+transform menu_fondo:
+    zoom 1.0
+    block:
+        ease 22.0 zoom 1.045 xoffset -20
+        ease 22.0 zoom 1.0 xoffset 0
+        repeat
 
-    ## This ensures that any other menu screen is replaced.
+transform menu_boton_entrada(retraso):
+    alpha 0.0 xoffset -80
+    pause retraso
+    easein 0.35 alpha 1.0 xoffset 0
+    on hover:
+        easein 0.12 xoffset 10
+    on idle:
+        easein 0.12 xoffset 0
+
+screen main_menu():
+    # La apertura usa imagenes grandes (mapa 3072 px): se decodifican mientras el jugador mira el menu.
+    on "show" action Function(renpy.start_predict, "images/bg/panorama.jpg", "images/bg/mapa.jpg", "images/bg/despacho.jpg", "images/bg/barrio_sur.jpg", "images/bg/barrio_centro.jpg")
     tag menu
 
-    add gui.main_menu_background
+    if persistent.reducir_movimiento:
+        add gui.main_menu_background
+    else:
+        add gui.main_menu_background at menu_fondo
 
-    ## This empty frame darkens the main menu.
-    frame:
-        style "main_menu_frame"
+    frame at menu_boton_entrada(0.1):
+        xpos 34
+        ypos 446
+        # 512 tambien en la web: el fondo trae un boton "Salir" dibujado que este marco tapa.
+        xysize (440, 512)
+        background Frame("gui/frame.png", 30, 30)
 
-    ## The use statement includes another screen inside this one. The actual
-    ## contents of the main menu are in the navigation screen.
-    use navigation
+    vbox:
+        xpos 50
+        ypos 462
+        spacing -6
+        for i, (etiqueta, accion, imagen) in enumerate([
+                (_("Nueva partida"), Start(), "gui/boton_menu_idle.png"),
+                (_("Modo Feria (12 min)"), Start("modo_feria"), "gui/boton_menu_feria.png"),
+                (_("Cargar partida"), ShowMenu("load"), "gui/boton_menu_idle.png"),
+                (_("Opciones"), ShowMenu("preferences"), "gui/boton_menu_idle.png"),
+                (_("Arena (2-4 jugadores)"), Start("arena"), "gui/boton_menu_idle.png"),
+                (_("Salir"), Quit(confirm=False), "gui/boton_menu_idle.png")][:5 if renpy.emscripten else 6]):
+            button:
+                xysize (406, 86)
+                background imagen
+                hover_background "gui/boton_menu_hover.png"
+                hover_sound "assets/audio/sfx/menu_hover.ogg"
+                activate_sound "assets/audio/sfx/menu_select.ogg"
+                action accion
+                at menu_boton_entrada(0.25 + i * 0.07)
+                text etiqueta:
+                    xpos 44
+                    yalign 0.42
+                    size 26
+                    color "#2b2440"
+                    bold True
 
-    if gui.show_name:
+    hbox:
+        xalign 0.985
+        yalign 0.93
+        spacing 18
+        at menu_boton_entrada(0.8)
+        textbutton _("Ayuda"):
+            style "boton_vn_compacto"
+            text_style "boton_vn_text"
+            ysize 86
+            xsize 230
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("ayuda_civitas")
+        textbutton _("Créditos"):
+            style "boton_vn_compacto"
+            text_style "boton_vn_text"
+            ysize 86
+            xsize 230
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action ShowMenu("about")
+        textbutton _("Archivo de Destinos"):
+            style "boton_vn"
+            text_style "boton_vn_text"
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("archivo_destinos")
+        textbutton _("Clasificación"):
+            style "boton_vn"
+            text_style "boton_vn_text"
+            hover_sound "assets/audio/sfx/menu_hover.ogg"
+            action Show("leaderboard_pantalla")
 
-        vbox:
-            style "main_menu_vbox"
-
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
-
-style main_menu_frame is empty
-style main_menu_vbox is vbox
-style main_menu_text is gui_text
-style main_menu_title is main_menu_text
-style main_menu_version is main_menu_text
-
-style main_menu_frame:
-    xsize 420
-    yfill True
-
-    background "gui/overlay/main_menu.png"
-
-style main_menu_vbox:
-    xalign 1.0
-    xoffset -30
-    xmaximum 1200
-    yalign 1.0
-    yoffset -30
-
-style main_menu_text:
-    properties gui.text_properties("main_menu", accent=True)
-
-style main_menu_title:
-    properties gui.text_properties("title")
-
-style main_menu_version:
-    properties gui.text_properties("version")
+    text "v[config.version]  -  Feria Gamer 2026" size 18 color "#fbf6ee" xalign 0.985 yalign 0.985 outlines [(2, "#2b244080", 0, 0)]
 
 
 ## Game Menu screen ############################################################
@@ -498,12 +678,13 @@ screen game_menu(title, scroll=None, yinitial=0.0, spacing=0):
 
     use navigation
 
-    textbutton _("Return"):
+    textbutton _("Volver"):
         style "return_button"
 
         action Return()
 
     label title
+    add Solid("#d1495b", xsize=120, ysize=4) xpos 474 ypos 158
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
@@ -547,12 +728,15 @@ style game_menu_side:
     spacing 15
 
 style game_menu_label:
-    xpos 75
-    ysize 180
+    xpos 470
+    ypos 56
+    ysize 110
 
 style game_menu_label_text:
-    size 75
-    color gui.accent_color
+    font "fonts/Roboto-Light.ttf"
+    size 64
+    kerning 6
+    color "#2b2440"
     yalign 0.5
 
 style return_button:
@@ -572,23 +756,22 @@ screen about():
 
     tag menu
 
-    ## This use statement includes the game_menu screen inside this one. The
-    ## vbox child is then included inside the viewport inside the game_menu
-    ## screen.
-    use game_menu(_("About"), scroll="viewport"):
+    use game_menu(_("Créditos"), scroll="viewport"):
 
         style_prefix "about"
 
         vbox:
-
-            label "[config.name!t]"
-            text _("Version [config.version!t]\n")
-
-            ## gui.about is usually set in options.rpy.
-            if gui.about:
-                text "[gui.about!t]\n"
-
-            text _("Made with {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]")
+            spacing 10
+            label "Alcalde Digital"
+            text "Una novela visual sobre la desinformación en Ciudad Nova."
+            text "Versión [config.version]\n"
+            label "Equipo"
+            text "Estructuras de Datos II - Universidad del Norte, 2026"
+            text "Desarrollo, narrativa, interfaz y arte: equipo Alcalde Digital\n"
+            label "Recursos"
+            text "Tipografía Roboto (Apache License 2.0)."
+            text "Música y efectos de sonido originales del proyecto."
+            text "Hecho con {a=https://www.renpy.org/}Ren'Py{/a} [renpy.version_only].\n\n[renpy.license!t]"
 
 
 style about_label is gui_label
@@ -612,14 +795,14 @@ screen save():
 
     tag menu
 
-    use file_slots(_("Save"))
+    use file_slots(_("Guardar"))
 
 
 screen load():
 
     tag menu
 
-    use file_slots(_("Load"))
+    use file_slots(_("Cargar"))
 
 
 screen file_slots(title):
@@ -757,7 +940,7 @@ screen preferences():
 
     tag menu
 
-    use game_menu(_("Preferences"), scroll="viewport"):
+    use game_menu(_("Opciones"), scroll="viewport"):
 
         vbox:
 
@@ -768,21 +951,25 @@ screen preferences():
 
                     vbox:
                         style_prefix "radio"
-                        label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                        label _("Pantalla")
+                        textbutton _("Ventana") action Preference("display", "window")
+                        textbutton _("Completa") action Preference("display", "fullscreen")
 
                 vbox:
                     style_prefix "check"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    label _("Saltar")
+                    textbutton _("Texto no leído") action Preference("skip", "toggle")
+                    textbutton _("Tras elecciones") action Preference("after choices", "toggle")
+                    textbutton _("Transiciones") action InvertSelected(Preference("transitions", "toggle"))
 
                 vbox:
                     style_prefix "check"
                     label _("Accesibilidad")
-                    textbutton _("Reducir efectos (sin temblor, parpadeo ni sacudidas)") action ToggleField(persistent, "efectos_reducidos")
+                    textbutton _("Reducir movimiento") action ToggleField(persistent, "reducir_movimiento")
+                    textbutton _("Controles táctiles en el mapa") action ToggleField(persistent, "controles_tactiles")
+                    textbutton _("Avisos visuales de sonido") action ToggleField(persistent, "avisos_sonido")
+
+                use ayuda_mando
 
                 ## Additional vboxes of type "radio_pref" or "check_pref" can be
                 ## added here, to add additional creator-defined preferences.
@@ -795,48 +982,53 @@ screen preferences():
 
                 vbox:
 
-                    label _("Text Speed")
+                    label _("Velocidad del texto")
 
                     bar value Preference("text speed")
 
-                    label _("Auto-Forward Time")
+                    label _("Avance automático")
 
                     bar value Preference("auto-forward time")
 
                 vbox:
 
                     if config.has_music:
-                        label _("Music Volume")
+                        label _("Música")
 
                         hbox:
                             bar value Preference("music volume")
 
                     if config.has_sound:
 
-                        label _("Sound Volume")
+                        label _("Efectos")
 
                         hbox:
                             bar value Preference("sound volume")
 
                             if config.sample_sound:
-                                textbutton _("Test") action Play("sound", config.sample_sound)
+                                textbutton _("Probar") action Play("sound", config.sample_sound)
 
 
                     if config.has_voice:
-                        label _("Voice Volume")
+                        label _("Voz")
 
                         hbox:
                             bar value Preference("voice volume")
 
                             if config.sample_voice:
-                                textbutton _("Test") action Play("voice", config.sample_voice)
+                                textbutton _("Probar") action Play("voice", config.sample_voice)
 
                     if config.has_music or config.has_sound or config.has_voice:
                         null height gui.pref_spacing
 
-                        textbutton _("Mute All"):
+                        textbutton _("Silenciar todo"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
+
+                        if config.has_voice:
+                            textbutton _("Bajar la música cuando hablan"):
+                                action Preference("emphasize audio", "toggle")
+                                style "mute_all_button"
 
 
 style pref_label is gui_label
@@ -925,7 +1117,7 @@ screen history():
     ## Avoid predicting this screen, as it can be very large.
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
+    use game_menu(_("Historial"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0, spacing=gui.history_spacing):
 
         style_prefix "history"
 
@@ -953,7 +1145,7 @@ screen history():
                     substitute False
 
         if not _history_list:
-            label _("The dialogue history is empty.")
+            label _("El historial está vacío.")
 
 
 ## This determines what tags are allowed to be displayed on the history screen.
@@ -1012,7 +1204,7 @@ screen help():
 
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport"):
+    use game_menu(_("Ayuda"), scroll="viewport"):
 
         style_prefix "help"
 
@@ -1200,7 +1392,7 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 150
 
-                textbutton _("Yes") action yes_action
+                textbutton _("Sí") action yes_action
                 textbutton _("No") action no_action
 
     ## Right-click and escape answer "no".
@@ -1558,8 +1750,7 @@ screen quick_menu():
             style "quick_menu"
             style_prefix "quick"
 
-            textbutton _("Back") action Rollback()
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Saltar") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
             textbutton _("Menu") action ShowMenu()
 

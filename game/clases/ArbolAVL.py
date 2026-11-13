@@ -366,3 +366,4 @@ class ArbolAVL:
             self.imprimir_texto(nodo.get_derecho(), nivel + 1, resultado)
             resultado.append("   " * nivel + str(nodo.get_clave()))
             self.imprimir_texto(nodo.get_izquierdo(), nivel + 1, resultado)
+

@@ -1,0 +1,9 @@
+numpy
+scipy
+soundfile
+pyloudnorm
+winrt-runtime
+winrt-Windows.Media.SpeechSynthesis
+winrt-Windows.Storage.Streams
+winrt-Windows.Foundation
+winrt-Windows.Foundation.Collections

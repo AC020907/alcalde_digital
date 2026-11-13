@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arena Civitas</title>
+<style>
+:root{--bg:#f6f1ea;--panel:#fffaf3;--fg:#2b2440;--suave:#6b6080;--borde:#e3d8cb;--acento:#8c2f4b;--acento2:#5b5bd6;
+--ok:#2f9e8f;--mal:#c0392b;--aviso:#c58a1b;--ciu:#2f9e8f;--per:#5b5bd6;--inf:#d6457a;--can:#c58a1b;--sombra:0 2px 10px #2b244014;
+--noche:#0d0a1a;--noche2:#1b1440;--neon:#5eead4;--neon2:#f0abfc;--crema:#fbf1dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#151020;--panel:#1f1830;--fg:#f1ecfa;--suave:#b3a8c9;
+--borde:#3a3150;--acento:#f08aa8;--acento2:#a7a5f2;--ok:#5eead4;--mal:#f4867a;--aviso:#f2c14e;--sombra:none;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#151020;--panel:#1f1830;--fg:#f1ecfa;--suave:#b3a8c9;--borde:#3a3150;--acento:#f08aa8;
+--acento2:#a7a5f2;--ok:#5eead4;--mal:#f4867a;--aviso:#f2c14e;--sombra:none;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{overscroll-behavior:none}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:820px;margin:0 auto;padding:16px 16px 40px}
+h1{font-size:1.6rem;margin:.2em 0;color:var(--acento);text-wrap:balance}
+h2{font-size:1.15rem;margin:1em 0 .4em;text-wrap:balance}
+p{margin:.4em 0}
+.marca{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.marca span{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)}
+.panel{background:var(--panel);border:1px solid var(--borde);border-radius:14px;padding:16px;box-shadow:var(--sombra);margin:12px 0}
+.suave{color:var(--suave);font-size:.92rem}
+label{display:block;font-weight:600;margin:.6em 0 .2em}
+input,select{width:100%;font:inherit;padding:12px;border-radius:10px;border:1px solid var(--borde);background:var(--bg);color:var(--fg)}
+input.codigo{text-transform:uppercase;letter-spacing:.3em;font-size:1.3rem;text-align:center}
+button{font:inherit;font-weight:700;border:0;border-radius:12px;padding:14px 16px;min-height:48px;cursor:pointer;
+background:var(--acento2);color:#fff;width:100%;touch-action:manipulation}
+button.sec{background:transparent;color:var(--fg);border:1.5px solid var(--borde)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible{outline:3px solid var(--aviso);outline-offset:2px}
+.fila{display:flex;gap:10px;flex-wrap:wrap}.fila>*{flex:1 1 180px;min-width:0}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:420px){.roles{grid-template-columns:1fr}}
+.rol{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;text-align:left;background:var(--bg);color:var(--fg);
+border:2px solid var(--borde);font-weight:400;padding:10px}
+.rol img{width:64px;height:64px;object-fit:cover;object-position:top;border-radius:50%;background:var(--borde)}
+.rol b{display:block;font-size:1.05rem}
+.rol[aria-pressed=true]{border-color:currentColor;background:var(--panel)}
+.c-ciudadano{color:var(--ciu)}.c-periodista{color:var(--per)}.c-influencer{color:var(--inf)}.c-candidato{color:var(--can)}
+.rol span{color:var(--fg);font-size:.88rem}
+.modos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.modos button{background:var(--bg);color:var(--fg);border:2px solid var(--borde);text-align:left;font-weight:400}
+.modos button[aria-pressed=true]{border-color:var(--acento);background:var(--panel)}
+.modos b{display:block}
+.plan{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
+.plan li{font-size:.8rem;padding:3px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--borde)}
+.plan li.hecho{opacity:.5}.plan li.ahora{border-color:var(--acento);color:var(--acento);font-weight:700}
+.error{color:var(--mal);font-weight:600;min-height:1.4em}
+.codigo-grande{font-size:2.2rem;letter-spacing:.25em;font-weight:800;text-align:center;color:var(--acento)}
+ul.jug{list-style:none;padding:0;margin:0}
+ul.jug li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--borde);flex-wrap:wrap}
+.punto{width:12px;height:12px;border-radius:50%;flex:none}
+.etq{font-size:.82rem;padding:2px 8px;border-radius:99px;border:1px solid var(--borde);white-space:nowrap}
+.indicadores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;font-size:.85rem}
+.ind{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px}
+.barra{grid-column:1/-1;height:6px;background:var(--borde);border-radius:6px;overflow:hidden}
+.barra i{display:block;height:100%;background:var(--ok)}.barra.neg i{background:var(--mal)}
+.delta{font-weight:700}.delta.bien{color:var(--ok)}.delta.mal{color:var(--mal)}
+.pub{border-left:5px solid var(--acento);padding:10px 14px;background:var(--bg);border-radius:8px}
+.pub .autor{font-weight:700;color:var(--suave)}
+.pub .texto{font-size:1.25rem;font-weight:700;margin:.2em 0}
+.reloj{height:10px;background:var(--borde);border-radius:8px;overflow:hidden;margin:6px 0}
+.reloj i{display:block;height:100%;background:var(--acento2);transition:width .9s linear}
+.reloj.urgente i{background:var(--mal)}
+.opciones{display:grid;gap:10px;margin-top:8px}
+.opciones button{background:var(--panel);color:var(--fg);border:1.5px solid var(--borde);text-align:left}
+.opciones button:hover,.opciones button:focus-visible{border-color:var(--acento2)}
+.tag{font-weight:800;letter-spacing:.06em;font-size:.8rem;text-transform:uppercase;color:var(--acento)}
+.res-tipo{font-size:1.4rem;font-weight:800}
+.acc{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--borde);font-size:.92rem}
+.acc b{white-space:nowrap}.pos{color:var(--ok)}.neg{color:var(--mal)}
+svg{width:100%;height:auto;display:block}
+.leyenda{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;color:var(--suave)}
+.leyenda span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;background:var(--c)}
+.votos .v{display:grid;grid-template-columns:8.5em 1fr 3em;gap:8px;align-items:center;margin:6px 0;font-size:.95rem}
+.votos .v div{height:16px;background:var(--borde);border-radius:6px;overflow:hidden}.votos .v div i{display:block;height:100%;background:var(--acento2)}
+.votos .v.gana div i{background:var(--acento)}
+.aviso{background:var(--bg);border:1px dashed var(--borde);border-radius:10px;padding:10px;font-size:.92rem}
+.oculto{display:none!important}
+/* ---- Novela visual: escena compartida + pista privada ---- */
+.vn{position:relative;min-height:min(78vh,640px);border-radius:16px;overflow:hidden;background:#1b1440 center/cover no-repeat;
+color:var(--fg);box-shadow:0 8px 30px #0005}
+.vn::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0d0a1a40 0%,#0d0a1a10 40%,#0d0a1acc 100%)}
+.vn .titulo{position:absolute;left:14px;top:12px;right:14px;color:#fbf1dc;font-weight:800;letter-spacing:.04em;text-shadow:0 2px 6px #000a;font-size:.95rem}
+.vn .titulo small{display:block;font-weight:600;opacity:.8;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+.vn .retrato{position:absolute;bottom:0;right:4%;height:68%;max-width:60%;object-fit:contain;object-position:bottom;
+filter:drop-shadow(0 6px 18px #0008)}
+.vn .retrato.entra{animation:entra .35s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.vn .caja{position:absolute;left:12px;right:12px;bottom:12px;background:#fffaf3f2;color:#2b2440;border-radius:14px;padding:16px 16px 12px;
+border:2px solid #8c2f4b33;min-height:120px}
+.vn .nombre{position:absolute;top:-16px;left:14px;padding:3px 14px;border-radius:10px;font-weight:800;color:#fff;background:var(--c,#8c2f4b);font-size:.95rem}
+.vn .linea{font-size:1.08rem;min-height:3.2em}
+.vn .controles{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+.vn .controles button{width:auto;min-height:44px;padding:8px 16px}
+.vn .controles button.sec{color:#2b2440;border-color:#d8cbbd}
+.vn .privada{border:2px dashed #c58a1b;background:#fff7e6}
+.vn .sello{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.12em;color:#8c2f4b;text-transform:uppercase;margin-bottom:4px}
+.vn .suave{color:#6b6080}
+@media (prefers-reduced-motion:reduce){.vn .retrato.entra{animation:none}}
+@media (max-width:640px){.vn .retrato{bottom:170px;height:46%;right:50%;transform:translateX(50%);max-width:80%}.vn .retrato.entra{animation:none}}
+/* ---- Capa de reto (pantalla completa, interfaz de CivitasNet / NOVA) ---- */
+#capa{position:fixed;inset:0;z-index:50;background:var(--noche);color:#fbf6ee;display:flex;flex-direction:column;
+padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+#capa .hud{display:flex;align-items:center;gap:12px;padding:8px 14px;background:#0d0a1ae6;border-bottom:2px solid #3b2f6b;flex-wrap:wrap}
+#capa .hud .nom{font-weight:900;color:var(--neon2);letter-spacing:.04em}
+#capa .hud .t{font-weight:900;font-variant-numeric:tabular-nums}
+#capa .hud .rivales{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;font-size:.8rem}
+#capa .hud .rivales span{background:#ffffff14;border-radius:99px;padding:2px 9px}
+#capa .hud .rivales span.ok{background:#5eead433}
+#capa .cuerpo{position:relative;flex:1;min-height:0;overflow:auto}
+#capa canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;user-select:none;-webkit-user-select:none}
+.tarjeta{pointer-events:auto;background:#1f1830f2;border:1px solid #3a3150;border-radius:16px;padding:18px;text-align:center;color:#fbf6ee}
+.tarjeta h2{margin:.2em 0;color:#facc15;letter-spacing:.05em}.tarjeta .suave{color:#c9b8d8}
+.tarjeta .grande{font-size:2.4rem;font-weight:900;color:#5eead4;margin:.1em 0}
+.flotante{position:absolute;left:50%;top:14%;transform:translateX(-50%);width:min(92vw,560px);z-index:3}
+.cuenta{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;font-weight:900;color:#facc15;
+text-shadow:0 4px 20px #000;pointer-events:none;z-index:4}
+/* Moderacion */
+.feed{max-width:640px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px;min-height:100%;justify-content:center}
+.feed .intro{text-align:center;color:#c9b8d8}
+.comentario{background:#fffaf3;color:#2b2440;border-radius:16px;padding:16px;box-shadow:0 8px 24px #0006;animation:entra .25s ease-out}
+.comentario .cab{display:flex;gap:10px;align-items:center;font-size:.9rem;color:#6b6080}
+.comentario .ava{width:40px;height:40px;border-radius:50%;background:#e3d8cb;display:grid;place-items:center;font-weight:900;color:#8c2f4b;flex:none}
+.comentario .txt{font-size:1.2rem;font-weight:700;margin:.5em 0}
+.comentario .tiempo{height:6px;border-radius:6px;background:#e3d8cb;overflow:hidden}.comentario .tiempo i{display:block;height:100%;background:#5b5bd6}
+.botones2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.botones2 button{min-height:64px;font-size:1.1rem}
+.b-borrar{background:#c0392b}.b-dejar{background:#2f9e8f}
+.feedback{text-align:center;font-weight:800;min-height:1.6em}
+.feedback.bien{color:#5eead4}.feedback.mal{color:#fb7185}
+/* Rastreador */
+.tablero{max-width:900px;margin:0 auto;padding:14px;display:grid;gap:12px}
+.cadena{display:grid;gap:8px}
+.ficha{background:#fffaf3;color:#2b2440;border-radius:12px;padding:10px 12px;border:2px solid transparent;text-align:left;font-weight:400;
+display:grid;grid-template-columns:1fr auto;gap:2px 10px;min-height:0;width:100%}
+.ficha b{font-size:1rem}.ficha .h{font-weight:900;color:#5b5bd6;font-variant-numeric:tabular-nums}
+.ficha small{grid-column:1/-1;color:#6b6080}
+.ficha.sel{border-color:#facc15;box-shadow:0 0 0 3px #facc1555}
+.ficha.pista{border-color:#5eead4}
+.ficha.viral{background:#2a1f5c;color:#fbf1dc}.ficha.viral small{color:#c9b8d8}
+.hueco{border:2px dashed #6b5b95;border-radius:12px;padding:10px;min-height:58px;background:#ffffff0d;color:#c9b8d8;text-align:left;font-weight:400;width:100%}
+.hueco.ok{border-color:#5eead4;border-style:solid}.hueco.mal{border-color:#fb7185;border-style:solid}
+.mesa{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.conclusiones{display:grid;gap:8px}
+.conclusiones button{background:#2a1f5c;border:2px solid transparent}.conclusiones button[aria-pressed=true]{border-color:#facc15}
+.explic{background:#fb718522;border-radius:10px;padding:8px 12px;font-size:.92rem}
+/* Plataformas: controles tactiles */
+.tactil{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:12px;pointer-events:none;z-index:2}
+.tactil div{display:flex;gap:12px}
+.tactil button{pointer-events:auto;width:84px;height:84px;border-radius:50%;background:#ffffff26;border:2px solid #ffffff55;font-size:1.6rem;
+color:#fbf6ee;padding:0;min-height:0;user-select:none;-webkit-user-select:none}
+.tactil button.salto{width:104px;height:104px;background:#facc1533;border-color:#facc15;font-size:1rem}
+@media (hover:hover) and (pointer:fine){.tactil{display:none}}
+/* Resultados */
+.ganador h2.gana{font-size:1.6rem;color:var(--acento);animation:gana .9s ease-out}
+@keyframes gana{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.ganador h2.gana{animation:none}}
+.fres{display:grid;grid-template-columns:minmax(0,9em) 1fr 3em;gap:4px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--borde)}
+.fres .suave{grid-column:1/-1;font-size:.82rem}.fres.top b:first-child::after{content:" \2605";color:var(--aviso)}
+.tabla{width:100%;border-collapse:collapse;font-size:.88rem;font-variant-numeric:tabular-nums}
+.tabla th,.tabla td{padding:6px 4px;border-bottom:1px solid var(--borde);text-align:right}
+.tabla th:first-child,.tabla td:first-child{text-align:left}
+.tabla-wrap{overflow-x:auto}
+.tres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+@media (max-width:640px){.tres{grid-template-columns:1fr}}
+.tres .panel{margin:0;text-align:center}.tres .valor{font-size:1.4rem;font-weight:900;color:var(--acento)}
+/* Duelo */
+.duelInfo{position:absolute;left:50%;top:18%;transform:translateX(-50%);width:min(92vw,520px);pointer-events:none;z-index:3}
+.duelCard{pointer-events:auto;background:#1f1830ee;border:1px solid #3a3150;border-radius:16px;padding:18px;text-align:center}
+.duelCard h2{margin:.2em 0;color:#facc15;letter-spacing:.05em}.duelCard .suave{color:#c9b8d8}.duelCard.mini{padding:10px}
+.duelCard .grande{font-size:2.4rem;font-weight:900;color:#5eead4;margin:.1em 0}.duelCard .tag{color:#f4b6c2}
+/* Espectadores */
+.espect{max-width:1200px}
+.gigante{font-size:2rem;font-weight:900;color:var(--acento)}
+</style>
+</head>
+<body>
+<main id="main">
+  <div class="marca"><h1>Arena Civitas</h1><span>Ciudad Nova · 2–4 jugadores</span></div>
+  <div id="vistas"></div>
+  <p class="error" id="error" role="alert"></p>
+</main>
+<script src="/static/ritmo_motor.js"></script>
+<script src="/static/plat_motor.js"></script>
+<script src="/static/caza_motor.js"></script>
+<script>
+"use strict";
+const API = "/api/arena";
+const ROLES = [
+  ["ciudadano","Ciudadano","Alerta vecinal: cuando reporta, protege a toda su zona.","rodrigo"],
+  ["periodista","Periodista","Al verificar ve la fuente real; su desmentido protege a quienes la siguen.","claudia"],
+  ["influencer","Influencer","Lo que comparte llega el doble de lejos: aciertos y errores pesan x2.","martina"],
+  ["candidato","Candidato a alcalde","Si un rumor es sobre su campaña, responde con datos; no puede reportar críticas propias.","tomas"]];
+const COLOR = {ciudadano:"var(--ciu)",periodista:"var(--per)",influencer:"var(--inf)",candidato:"var(--can)"};
+const PERS = {rodrigo:["Rodrigo","#2f9e8f"],claudia:["Claudia Reyes","#5b5bd6"],martina:["Martina Sol","#d6457a"],tomas:["Tomás Vega","#c58a1b"],
+  nova:["NOVA","#e11d74"],civitas:["CivitasNet","#6d5bd0"],narrador:["",""]};
+const RETRATO = {rodrigo:1,claudia:1,martina:1,tomas:1,nova:1};
+const FONDO_RETO = {moderador:"operaciones",rastreador:"evidencias",contencion:"red",plataformas:"viral",ritmo:"viral"};
+const NOMBRE_RETO = {moderador:"Moderación Express",rastreador:"Rastreador",contencion:"Caza-Rumores",plataformas:"Ruta de la Verdad",ritmo:"Duelo de Frecuencias"};
+const CORTO = {moderador:"Moder.",rastreador:"Rastr.",contencion:"Caza",plataformas:"Ruta",ritmo:"Duelo"};
+const IND = {info_verificada:"Información verificada",confianza:"Confianza",convivencia:"Convivencia",bienestar:"Bienestar digital",
+  participacion:"Participación",desinformacion:"Desinformación",conflictos:"Conflictos",rumores:"Rumores"};
+const NEG = ["desinformacion","conflictos","rumores"];
+const ZONAS = {colegio:[500,80],barrio:[500,250],parque:[250,420],plaza:[750,420],alcaldia:[750,600]};
+const CALLES = [["colegio","barrio"],["barrio","parque"],["barrio","plaza"],["plaza","alcaldia"]];
+const ACCION = {compartir:"compartió sin verificar",compartir_verificada:"verificó y compartió con la fuente",ignorar:"la ignoró",
+  reportar:"la reportó",reportar_falsa:"la verificó y la reportó como falsa",responder:"respondió con datos",sin_respuesta:"no alcanzó a decidir"};
+const URLP = new URL(location.href).searchParams;
+const AUTO = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && URLP.get("autoplay") === "1";   // solo pruebas locales
+
+let S = {codigo:null, token:null, rol:"ciudadano", modo:"feria", campana:true, ruta:[], estado:null, grafo:null, version:-1,
+  ronda:null, timer:null, fallos:0, vn:null};
+const $ = s => document.querySelector(s);
+const esc = t => String(t ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function guardar(){ try{ localStorage.setItem("arena_"+S.codigo, S.token); localStorage.setItem("arena_ultima", S.codigo);}catch(e){} }
+function leer(c){ try{ return localStorage.getItem("arena_"+c); }catch(e){ return null; } }
+function error(m){ $("#error").textContent = m || ""; }
+function retrato(p, e){ return RETRATO[p] ? `/static/arena/${p}_${e||"seria"}.webp` : ""; }
+function nombreJ(d, id){ const j = d.jugadores.find(x => x.id === id); return j ? j.nombre : id; }
+function rolJ(d, id){ const j = d.jugadores.find(x => x.id === id); return j ? j.rol : ""; }
+
+async function llamar(metodo, ruta, cuerpo){
+  const r = await fetch(API + ruta, {method:metodo, headers: cuerpo ? {"Content-Type":"application/json"} : {},
+    body: cuerpo ? JSON.stringify(cuerpo) : undefined});
+  let d = {}; try { d = await r.json(); } catch(e) {}
+  if (!r.ok) { const e = new Error(d.detail || "Error de conexión ("+r.status+")"); e.status = r.status; e.codigo = d.error; throw e; }
+  return d;
+}
+async function orden(nombre, datos){
+  try { await llamar("POST", `/salas/${S.codigo}/${nombre}`, Object.assign({token:S.token}, datos||{})); error(""); await refrescar(); }
+  catch(e){ error(e.message); }
+}
+
+/* ================= Inicio y lobby ================= */
+function pintarInicio(){
+  cerrarCapa();
+  const sala = (URLP.get("sala")||"").toUpperCase();
+  $("#vistas").innerHTML = `
+  <section class="panel">
+    <p>Una misma crisis en Ciudad Nova vista desde cuatro perspectivas. Cada uno recibe pistas que los demás no ven,
+       todos compiten en cinco retos y, después de cada uno, deciden qué hacer con lo que circula en Civitas.</p>
+    <label for="nombre">Tu nombre</label><input id="nombre" maxlength="20" autocomplete="nickname" placeholder="Ej. Ana">
+    <h2>Elige tu perspectiva</h2><p class="suave">Cada rol solo puede elegirlo una persona por sala.</p>
+    <div class="roles">${ROLES.map(([id,n,d,m]) => `<button class="rol c-${id}" data-rol="${id}" aria-pressed="${id===S.rol}">
+      <img src="${retrato(m)}" alt=""><div><b>${n}</b><span>${d}</span></div></button>`).join("")}</div>
+  </section>
+  <section class="panel">
+    <h2>Unirse a una sala</h2>
+    <label for="codigo">Código de la sala</label><input id="codigo" class="codigo" maxlength="5" value="${esc(sala)}" placeholder="ABCDE" autocapitalize="characters">
+    <div class="fila" style="margin-top:10px"><button id="btnUnir">Unirse</button></div>
+  </section>
+  <section class="panel">
+    <h2>…o crear una nueva</h2>
+    <div class="modos">
+      <button data-modo="feria" aria-pressed="${S.modo==="feria"}"><b>Feria</b><span class="suave">5 retos cortos y escenas breves.</span></button>
+      <button data-modo="completo" aria-pressed="${S.modo==="completo"}"><b>Completa</b><span class="suave">5 retos largos, con más pruebas.</span></button>
+    </div>
+    <label class="suave" style="display:flex;gap:8px;align-items:center;font-weight:400;margin-top:10px">
+      <input type="checkbox" id="conCampana" ${S.campana?"checked":""} style="width:auto">
+      <span>Historia con 5 retos (si lo desmarcas: solo el Consejo Cívico clásico)</span></label>
+    <ul class="plan">${Object.values(NOMBRE_RETO).map(n => `<li>${n}</li>`).join("")}</ul>
+    <p class="suave">Si estás solo, podrás completar la sala con jugadores automáticos. El último reto necesita sonido.</p>
+    <button id="btnCrear" class="sec">Crear sala</button>
+  </section>`;
+  document.querySelectorAll(".rol").forEach(b => b.onclick = () => { S.rol = b.dataset.rol;
+    document.querySelectorAll(".rol").forEach(x => x.setAttribute("aria-pressed", x.dataset.rol===S.rol)); });
+  document.querySelectorAll("[data-modo]").forEach(b => b.onclick = () => { S.modo = b.dataset.modo;
+    document.querySelectorAll("[data-modo]").forEach(x => x.setAttribute("aria-pressed", x.dataset.modo===S.modo)); });
+  $("#btnCrear").onclick = () => entrar(null);
+  $("#btnUnir").onclick = () => entrar($("#codigo").value.trim().toUpperCase());
+}
+async function entrar(codigo){
+  const nombre = $("#nombre").value.trim();
+  if (codigo !== null && !/^[A-Z0-9]{5}$/.test(codigo)) return error("El código tiene 5 letras o números.");
+  try {
+    const d = codigo ? await llamar("POST", `/salas/${codigo}/unir`, {nombre, rol:S.rol})
+                     : await llamar("POST", "/salas", {nombre, rol:S.rol, duelo: $("#conCampana").checked, modo:S.modo});
+    S.codigo = d.codigo; S.token = d.token; guardar(); error("");
+    history.replaceState(null, "", "?sala=" + S.codigo + (AUTO ? location.search.replace(/^\?/, "&").replace(/&sala=[^&]*/, "") : ""));
+    iniciarSondeo();
+  } catch(e){
+    error(e.codigo === "rol" ? "Ese rol ya está ocupado en la sala: elige otro." :
+          e.codigo === "llena" ? "La sala está llena (4 jugadores)." :
+          e.codigo === "empezada" ? "Esa partida ya empezó." :
+          e.codigo === "sala_no_existe" ? "No existe ninguna sala con ese código (o ya terminó)." : e.message);
+  }
+}
+
+/* ================= Sondeo: el servidor manda; aqui solo se dibuja ================= */
+function iniciarSondeo(){ clearInterval(S.timer); refrescar(); S.timer = setInterval(refrescar, 1000); }
+async function refrescar(){
+  if (!S.codigo) return;
+  try {
+    const t0 = performance.now();
+    const d = await llamar("GET", `/salas/${S.codigo}?token=${encodeURIComponent(S.token)}&grafo=${S.grafo ? 0 : 1}`);
+    const t1 = performance.now();
+    if (d.grafo) S.grafo = d.grafo;
+    if (S.fallos >= 3) error("");
+    S.fallos = 0;
+    const cambio = d.version !== S.version || d.fase !== (S.estado && S.estado.fase);
+    S.estado = d;
+    if (d.fase === "ronda" && S.ronda !== d.ronda) { S.ronda = d.ronda; S.ruta = []; }
+    if (d.fase === "reto") { if (R && R.indice === d.reto.indice) R.sync.agregar(t0, t1, d.reto.inicio_en_ms); S.version = d.version; return pintarReto(d, t0, t1); }
+    if (d.fase === "escena") return pintarEscena(d, cambio);
+    if (cambio) { S.version = d.version; pintar(); } else { pintarReloj(); }
+  } catch(e){
+    if (e.status === 403 || e.status === 404) { clearInterval(S.timer); try{ localStorage.removeItem("arena_"+S.codigo);}catch(x){}
+      S.codigo = null; pintarInicio(); return error(e.status === 404 ? "La sala ya no existe." : "Ya no perteneces a esa sala."); }
+    if (++S.fallos >= 3) error("Sin conexión con el servidor. Reintentando…");
+  }
+}
+function pintar(){
+  const d = S.estado; if (!d) return;
+  cerrarCapa();
+  if (d.fase === "lobby") return pintarSala(d);
+  if (d.fase === "final") return pintarFinal(d);
+  if (d.fase === "reto_resultado") return pintarResultadoReto(d);
+  $("#vistas").innerHTML = cabecera(d) + (d.fase === "ronda" ? ronda(d) : resultado(d)) + marcador(d);
+  enlazar();
+}
+function planHTML(d){
+  if (!d.plan) return "";
+  const actual = d.fase === "final" ? d.plan.length : (d.ronda_campana || 0) - 1;
+  return `<ul class="plan">${d.plan.map((p,i) => `<li class="${i<actual?"hecho":i===actual?"ahora":""}">${i+1}. ${esc(p.nombre)}</li>`).join("")}</ul>`;
+}
+function cabecera(d){
+  const delta = (d.fase === "resultado" && d.resultado) ? d.resultado.delta_indicadores : {};
+  const titulo = d.campana ? `Ronda ${d.ronda_campana || d.ronda} de ${d.total_rondas} · ${esc(d.titulo_ronda || "")}` : `Ronda ${d.ronda} de ${d.total_rondas}`;
+  return `<section class="panel"><b>Sala ${esc(d.codigo)} · ${titulo}</b>${planHTML(d)}
+  <div class="indicadores" style="margin-top:10px">${Object.keys(IND).map(k => { const v = d.indicadores[k], x = delta[k] || 0, neg = NEG.includes(k);
+    return `<div class="ind"><span>${IND[k]}</span><span>${v}${x ? ` <span class="delta ${(x>0)!==neg?"bien":"mal"}">${x>0?"+":""}${x}</span>` : ""}</span>
+    <div class="barra ${neg?"neg":""}"><i style="width:${v}%"></i></div></div>`; }).join("")}</div></section>`;
+}
+function marcador(d){
+  const tabla = d.clasificacion ? Object.fromEntries(d.clasificacion.map(f => [f.id, f])) : {};
+  return `<section class="panel"><h2>Jugadores</h2><ul class="jug">${d.jugadores.map(j => `<li>
+    <span class="punto" style="background:${j.conectado?COLOR[j.rol]:"var(--borde)"}"></span>
+    <span style="flex:1;min-width:0"><b>${esc(j.nombre)}</b> <span class="suave">${j.rol_nombre}</span></span>
+    ${tabla[j.id] ? `<span class="etq">${tabla[j.id].total} pts torneo</span>` : ""}
+    <span class="etq">${j.puntos} cívicos · rep ${j.reputacion}</span>${d.fase==="ronda" && d.decidieron.includes(j.id)?'<span class="etq">decidió</span>':""}</li>`).join("")}</ul></section>`;
+}
+function pintarSala(d){
+  const soyAnf = d.yo === d.anfitrion, n = d.jugadores.length;
+  const faltan = d.jugadores.filter(j => j.id !== d.anfitrion && !d.listos.includes(j.id)).map(j => j.nombre);
+  const yoListo = d.listos.includes(d.yo);
+  const enlace = location.origin + location.pathname + "?sala=" + d.codigo;
+  const espect = location.origin + location.pathname + "?ver=" + d.codigo;
+  let estado = n < 2 ? "Falta al menos 1 jugador para empezar." : faltan.length ? "Esperando a: " + faltan.join(", ") : (soyAnf ? "Todo listo: pulsa Empezar." : "Esperando a que el anfitrión empiece.");
+  $("#vistas").innerHTML = `<section class="panel"><p class="suave">Código de la sala</p><div class="codigo-grande">${esc(d.codigo)}</div>
+    <div class="fila"><button class="sec" id="copiar">Copiar enlace de invitación</button></div>
+    <p class="suave" id="enlace" style="word-break:break-all">${esc(enlace)}</p>
+    <p class="suave">Pantalla para el público (sin pistas privadas): <span style="word-break:break-all">${esc(espect)}</span></p></section>
+  <section class="panel"><h2>Sala (${n}/4) · ${d.campana ? (d.modo === "completo" ? "Historia completa" : "Historia · Feria") : "Consejo clásico"}</h2>
+    ${planHTML(d)}
+    <ul class="jug">${d.jugadores.map(j => `<li><span class="punto" style="background:${COLOR[j.rol]}"></span>
+    <span style="flex:1;min-width:0"><b>${esc(j.nombre)}</b> <span class="suave">${j.rol_nombre}</span></span>
+    <span class="etq">${j.id===d.anfitrion?"Anfitrión":(d.listos.includes(j.id)?"Listo":"Esperando")}</span></li>`).join("")}</ul>
+    <p class="aviso" style="margin-top:12px"><b>${esc(estado)}</b></p>
+    <div class="fila" style="margin-top:12px">
+      ${soyAnf ? `<button id="empezar" ${n<2||faltan.length?"disabled":""}>Empezar</button>${n<4?'<button class="sec" id="bots">Completar con jugadores automáticos</button>':""}`
+               : `<button id="listo">${yoListo?"Listo (pulsa para cancelar)":"Estoy listo"}</button>`}
+    </div></section>`;
+  $("#copiar").onclick = async () => { try { await navigator.clipboard.writeText(enlace); $("#copiar").textContent = "Enlace copiado"; }
+    catch(e){ const r = document.createRange(); r.selectNodeContents($("#enlace")); getSelection().removeAllRanges(); getSelection().addRange(r); } };
+  if (soyAnf){ $("#empezar").onclick = () => orden("empezar"); if ($("#bots")) $("#bots").onclick = () => orden("bots"); }
+  else $("#listo").onclick = () => orden("listo", {listo: !yoListo});
+}
+
+/* ================= Escena: historia compartida + pista privada ================= */
+function lineasEscena(e){
+  const l = e.comun.map(x => ({...x, tipo:"comun"}));
+  if (e.ausente) l.push({...e.ausente, tipo:"ausente"});
+  l.push({...e.privada, tipo:"privada"});
+  return l;
+}
+function pintarEscena(d, cambio){
+  cerrarCapa();
+  const e = d.escena;
+  if (!S.vn || S.vn.ronda !== e.ronda) S.vn = {ronda:e.ronda, paso:0, auto:false};
+  const lineas = lineasEscena(e), paso = Math.min(S.vn.paso, lineas.length - 1), l = lineas[paso];
+  const fin = paso === lineas.length - 1;
+  const [nom, col] = PERS[l.quien] || ["",""];
+  const humanos = d.jugadores.filter(j => !d.bots.includes(j.id)).length;
+  const restante = `${Math.ceil(e.restante || 0)} s · listos ${e.listos.length}/${humanos}`;
+  const vn = $("#vn");
+  if (vn && vn.dataset.paso == String(paso) && vn.dataset.ronda == String(e.ronda) && vn.dataset.listo == String(e.listo)) {
+    const r = $("#vnRest"); if (r) r.textContent = restante;
+    return;
+  }
+  S.version = d.version;
+  const fondo = FONDO_RETO[e.reto] || "operaciones";
+  const sello = l.tipo === "privada" ? `<span class="sello">Solo tú lo ves · pista de tu perspectiva</span>` :
+                l.tipo === "ausente" ? `<span class="sello">Nadie juega este rol: lo cuenta ${esc(nom)}</span>` : "";
+  $("#vistas").innerHTML = `${planHTML(d)}
+  <section class="vn" id="vn" data-paso="${paso}" data-ronda="${e.ronda}" data-listo="${e.listo}" style="background-image:url('/static/arena/fondo_${fondo}.webp')">
+    <div class="titulo"><small>Ronda ${e.ronda} de ${e.total}</small>${esc(e.titulo)}</div>
+    ${RETRATO[l.quien] ? `<img class="retrato entra" src="${retrato(l.quien, l.quien==="nova"?"feliz":"seria")}" alt="${esc(nom)}">` : ""}
+    <div class="caja ${l.tipo==="privada"?"privada":""}">
+      ${nom ? `<span class="nombre" style="--c:${col}">${esc(nom)}</span>` : ""}
+      ${sello}<div class="linea">${l.quien==="civitas"?"<b>CivitasNet ·</b> ":""}${esc(l.texto)}</div>
+      ${fin ? `<p class="suave" style="margin:.4em 0 0"><b>Reto:</b> ${esc(e.reto_intro)}</p>` : ""}
+      <div class="controles">
+        <span class="suave" id="vnRest" style="margin-right:auto;align-self:center">${restante}</span>
+        ${!fin ? '<button class="sec" id="vnSaltar">Saltar</button><button id="vnSig" style="width:auto">Siguiente</button>'
+               : `<button id="vnListo" style="width:auto" ${e.listo?"disabled":""}>${e.listo?"Esperando al resto…":"Listo para el reto"}</button>`}
+      </div>
+    </div>
+  </section>`;
+  if ($("#vnSig")) { $("#vnSig").onclick = () => { S.vn.paso++; pintarEscena(S.estado, true); }; $("#vnSig").focus(); }
+  if ($("#vnSaltar")) $("#vnSaltar").onclick = () => { S.vn.paso = lineas.length - 1; pintarEscena(S.estado, true); };
+  if ($("#vnListo")) { $("#vnListo").onclick = () => orden("escena"); $("#vnListo").focus(); }
+  if (AUTO && !e.listo && !S.vn.auto) { S.vn.auto = true; setTimeout(() => { S.vn.paso = lineas.length - 1; orden("escena"); }, 2500); }
+}
+
+/* ================= Retos: capa comun ================= */
+let R = null;              // reto en curso en este cliente
+function cerrarCapa(){
+  if (R && R.cerrar) try { R.cerrar(); } catch(e) {}
+  if (R && R.clave === "ritmo") detenerAudioDuelo();
+  R = null;
+  const c = $("#capa"); if (c) c.remove();
+  document.body.style.overflow = "";
+}
+function inicioLocal(){ return R ? R.sync.inicioLocal : null; }
+function crearCapa(d, t0, t1){
+  cerrarCapa();
+  const r = d.reto;
+  R = {indice:r.indice, clave:r.clave, sync:new RitmoCivitas.SyncReloj(), entregado:!!r.ya_entregaste, resultado:r.mi_resultado,
+       cfg:r.config, id:S.codigo + "-" + r.indice + "-" + S.token.slice(0, 8), ultimoProg:0};
+  R.sync.agregar(t0, t1, r.inicio_en_ms);
+  const c = document.createElement("div"); c.id = "capa";
+  c.innerHTML = `<div class="hud"><span class="nom">${esc(r.nombre).toUpperCase()}</span><span class="t" id="hudT"></span>
+    <div class="rivales" id="hudRiv"></div></div><div class="cuerpo" id="cuerpo"></div>`;
+  document.body.appendChild(c);
+  document.body.style.overflow = "hidden";
+  $("#vistas").innerHTML = "";
+  return $("#cuerpo");
+}
+function pintarReto(d, t0, t1){
+  const r = d.reto;
+  if (r.clave === "ritmo") return pintarRitmo(d, t0, t1);
+  if (!R || R.indice !== r.indice) {
+    const cuerpo = crearCapa(d, t0, t1);
+    if (R.entregado) tarjetaEspera(cuerpo, "Ya entregaste este reto", R.resultado);
+    else ({moderador:iniciarModeracion, rastreador:iniciarRastreador, contencion:iniciarCaza, plataformas:iniciarPlataformas})[r.clave](d, cuerpo);
+  }
+  hud(d);
+  if (R.actualizar) R.actualizar(d);
+  else if (R.entregado) tarjetaEspera($("#cuerpo"), "Reto entregado", R.resultado);
+}
+function hud(d){
+  const r = d.reto, ini = inicioLocal(), falta = ini !== null ? (ini - performance.now()) / 1000 : r.inicio_en_ms / 1000;
+  const fin = falta + r.duracion_ms / 1000;
+  $("#hudT").textContent = falta > 0 ? `Empieza en ${Math.ceil(falta)} s` : R.entregado ? "Entregado" : `${Math.max(0, Math.ceil(fin))} s`;
+  $("#hudRiv").innerHTML = d.jugadores.filter(j => j.id !== d.yo).map(j => {
+    const p = r.progreso[j.id], ok = r.entregaron.includes(j.id);
+    return `<span class="${ok?"ok":""}">${esc(j.nombre)}${ok ? " · terminó" : p ? " · " + p.puntos : ""}</span>`; }).join("");
+}
+function cuentaAtras(cuerpo){
+  let el = cuerpo.querySelector(".cuenta");
+  const ini = inicioLocal(), falta = ini !== null ? (ini - performance.now()) / 1000 : 0;
+  if (falta > 0) { if (!el) { el = document.createElement("div"); el.className = "cuenta"; cuerpo.appendChild(el); } el.textContent = Math.ceil(falta); }
+  else if (el) el.remove();
+  return falta;
+}
+function tarjetaEspera(cuerpo, titulo, res){
+  let f = cuerpo.querySelector(".flotante.fin");
+  if (!f) { f = document.createElement("div"); f.className = "flotante fin"; cuerpo.appendChild(f); }
+  const d = S.estado, n = d && d.reto ? d.reto.entregaron.length : "?";
+  const html = `<div class="tarjeta"><h2>${esc(titulo)}</h2>${res ? `<p class="grande">${res.normalizado} / 1000</p><p>${esc(res.resumen)}</p>` : "<p>Enviando tu resultado…</p>"}
+    <p class="suave">Esperando a los demás: ${n} de ${d ? d.jugadores.length : "?"} terminaron.</p></div>`;
+  if (f.innerHTML !== html) f.innerHTML = html;
+}
+async function entregar(datos){
+  if (R.entregado || R.enviando) return;
+  R.enviando = true;
+  const yo = R;
+  for (let i = 0; i < 15 && R === yo && !yo.entregado; i++) {
+    try { const r = await llamar("POST", `/salas/${S.codigo}/reto`, {token:S.token, id:yo.id, datos}); yo.entregado = true; yo.resultado = r.resultado; }
+    catch(e){
+      if (e.status && e.status < 500 && e.codigo !== "rate_limited") { yo.entregado = true; error("El servidor rechazó el resultado: " + e.message); }
+      else await new Promise(ok => setTimeout(ok, 1500));
+    }
+  }
+  yo.enviando = false;
+}
+function progreso(puntos, combo, avance){
+  if (!R || R.entregado || performance.now() - R.ultimoProg < 1500) return;
+  if (R.sync.inicioLocal !== null && performance.now() < R.sync.inicioLocal) return;     // antes de la salida no hay marcador
+  R.ultimoProg = performance.now();
+  llamar("POST", `/salas/${S.codigo}/progreso`, {token:S.token, puntos:Math.round(puntos), combo:combo||0, avance:avance||0}).catch(() => {});
+}
+function lienzo(cuerpo){ const cv = document.createElement("canvas"); cuerpo.appendChild(cv); return cv; }
+function ajustar(cv){
+  const dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== Math.round(W*dpr) || cv.height !== Math.round(H*dpr)) { cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); }
+  const g = cv.getContext("2d"); g.setTransform(dpr,0,0,dpr,0,0);
+  return [g, W, H];
+}
+function cargarImg(src){ return new Promise(ok => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src; }); }
+
+/* ---------------- Reto 1: Moderación Express ---------------- */
+function iniciarModeracion(d, cuerpo){
+  const r = d.reto, coms = R.cfg.comentarios, seg = R.cfg.segundos_comentario * 1000;
+  Object.assign(R, {k: r.decididos || 0, aciertos:0, racha:0, ocupado:false, inicioCarta:null});
+  cuerpo.innerHTML = `<div class="feed"><p class="intro">${esc(r.intro)} Fíjate en cuándo se creó cada cuenta.</p>
+    <div id="carta"></div><div class="feedback" id="fb" aria-live="polite"></div>
+    <div class="botones2"><button class="b-borrar" id="bBorrar">Borrar (←)</button><button class="b-dejar" id="bDejar">Dejar (→)</button></div></div>`;
+  const yo = R;
+  const dibujarCarta = () => {
+    if (yo.entregado || yo.k >= coms.length) {
+      $("#carta").innerHTML = ""; const b = cuerpo.querySelector(".botones2"); if (b) b.classList.add("oculto");
+      return tarjetaEspera(cuerpo, "Muro moderado", yo.resultado);
+    }
+    const c = coms[yo.k];
+    $("#carta").innerHTML = `<article class="comentario"><div class="cab"><span class="ava">${esc(c.autor.replace("@","")[0].toUpperCase())}</span>
+      <span><b>${esc(c.autor)}</b><br>cuenta creada: ${esc(c.creada)}</span><span style="margin-left:auto">${yo.k+1} / ${coms.length}</span></div>
+      <p class="txt">${esc(c.texto)}</p><div class="tiempo"><i id="tBar"></i></div></article>`;
+  };
+  const decidir = async eliminar => {
+    if (yo.ocupado || yo.entregado || yo.k >= coms.length || cuentaAtras(cuerpo) > 0) return;
+    yo.ocupado = true;
+    const k = yo.k;
+    try {
+      const res = await llamar("POST", `/salas/${S.codigo}/moderar`, {token:S.token, indice:k, eliminar, id:yo.id + "-m" + k});
+      yo.k = res.decididos;
+      if (!res.repetido) {
+        yo.racha = res.racha; if (res.correcto) yo.aciertos++;
+        $("#fb").className = "feedback " + (res.correcto ? "bien" : "mal");
+        $("#fb").textContent = res.correcto ? (res.era_bot ? "Bien: era un bot." : "Bien: es una persona real opinando.")
+                                            : (res.era_bot ? "Se coló un bot." : "Ojo: borraste a una persona real.");
+        if (res.terminado) { yo.entregado = true; yo.resultado = res.resultado; }
+      }
+    } catch(e) { if (e.status === 409) yo.k = k + 1; error(e.message); }
+    yo.inicioCarta = null; yo.ocupado = false; if (R === yo) dibujarCarta();
+  };
+  $("#bBorrar").onclick = () => decidir(true);
+  $("#bDejar").onclick = () => decidir(false);
+  R.tecla = (ev, abajo) => { if (!abajo || ev.repeat) return; if (ev.code === "ArrowLeft" || ev.code === "KeyA") decidir(true); if (ev.code === "ArrowRight" || ev.code === "KeyD") decidir(false); };
+  dibujarCarta();
+  const bucle = () => {
+    if (R !== yo) return;
+    const falta = cuentaAtras(cuerpo);
+    if (falta <= 0 && !yo.entregado && yo.k < coms.length && !yo.ocupado) {
+      if (yo.inicioCarta === null) yo.inicioCarta = performance.now();
+      const p = (performance.now() - yo.inicioCarta) / seg, bar = $("#tBar");
+      if (bar) bar.style.width = Math.max(0, 100 - p * 100) + "%";
+      if (p >= 1) decidir(false);                          // se acaba el tiempo de la tarjeta: pasa sin borrar
+      else if (AUTO && p > 0.12) decidir(/hoy|hace/.test(coms[yo.k].creada));
+    }
+    progreso(yo.aciertos * 1000 / coms.length, yo.racha, yo.k / coms.length);
+    yo.raf = requestAnimationFrame(bucle);
+  };
+  R.cerrar = () => cancelAnimationFrame(yo.raf);
+  R.actualizar = () => { if (yo.entregado && !yo.ocupado) dibujarCarta(); };
+  bucle();
+}
+
+/* ---------------- Reto 2: Rastreador ---------------- */
+function iniciarRastreador(d, cuerpo){
+  const yo = R;
+  Object.assign(R, {t: d.reto.tablero, sel:null, conclusion:null, ocupado:false, n:0, recibido:performance.now(), firma:""});
+  R.slots = (R.t.ultimo.slots || []).map(x => x || null);
+  if (R.slots.length !== R.t.eslabones) R.slots = Array(R.t.eslabones).fill(null);
+  R.conclusion = R.t.ultimo.conclusion || null;
+  const accion = async (acc, extra) => {
+    if (yo.ocupado || yo.entregado || cuentaAtras(cuerpo) > 0) return;
+    yo.ocupado = true;
+    try {
+      const t = await llamar("POST", `/salas/${S.codigo}/rastrear`, Object.assign({token:S.token, accion:acc, id:yo.id + "-r" + (yo.n++)}, extra || {}));
+      yo.t = t; yo.recibido = performance.now();
+      if (t.resultado) { yo.entregado = true; yo.resultado = t.resultado; }
+    } catch(e) { error(e.message); }
+    yo.ocupado = false; if (R === yo) dibujar();
+  };
+  const ficha = (c, extra) => `<b>${esc(c.nombre)}</b><span class="h">${esc(c.hora)}</span>
+     <small>${c.verificada ? "verificada · " : ""}creada ${esc(c.creada)} · ${Number(c.seguidores).toLocaleString("es")} seguidores${extra||""}</small>`;
+  const dibujar = () => {
+    const t = yo.t, porId = Object.fromEntries(t.cartas.map(c => [c.id, c]));
+    if (yo.entregado || t.estado !== "jugando") { cuerpo.innerHTML = ""; return tarjetaEspera(cuerpo, t.estado === "victoria" ? "Origen encontrado" : "Se acabó el tablero", yo.resultado); }
+    const pista = t.pista || {};
+    cuerpo.innerHTML = `<div class="tablero">
+      <p class="suave" style="color:#c9b8d8;margin:0">${esc(S.estado.reto.intro)} Toca una cuenta y después un hueco. Nadie reenvía algo antes de recibirlo, y solo te llega lo que publican las cuentas que sigues.</p>
+      <div class="ficha viral">${ficha(t.inicio, " · publicó el rumor viral")}<small>«${esc(t.rumor)}»</small></div>
+      <div class="cadena">${yo.slots.map((c, i) => `<button class="hueco ${t.revision[i]===true?"ok":t.revision[i]===false?"mal":""}" data-hueco="${i}">
+        ${i === t.eslabones - 1 ? "<b>Origen</b> · " : ""}${i===0 ? "¿De quién lo recibió?" : "¿Y esa cuenta, de quién lo recibió?"}
+        ${c ? `<div class="ficha" style="margin-top:6px">${ficha(porId[c])}</div>` : ""}</button>`).join("")}</div>
+      <div class="mesa">${t.cartas.filter(c => !yo.slots.includes(c.id)).map(c => `<button class="ficha ${yo.sel===c.id?"sel":""} ${(pista.candidatos||[]).includes(c.id)||pista.carta===c.id?"pista":""}" data-carta="${c.id}">${ficha(c)}</button>`).join("")}</div>
+      <p style="margin:0"><b>¿Quién creó el rumor?</b></p>
+      <div class="conclusiones">${t.opciones.map(o => `<button data-concl="${o.clave}" aria-pressed="${yo.conclusion===o.clave}">${esc(o.texto)}</button>`).join("")}</div>
+      ${t.explicaciones.length ? `<div class="explic">${t.explicaciones.map(esc).join("<br>")}</div>` : ""}
+      <div class="fila"><button id="bComprobar" ${yo.slots.includes(null)||!yo.conclusion?"disabled":""}>Comprobar (${t.comprobaciones} restantes)</button>
+        <button class="sec" id="bPista" style="color:#fbf6ee">Pista (cuesta tiempo)</button></div>
+      <p class="suave" style="color:#c9b8d8" id="rRest"></p></div>`;
+    cuerpo.querySelectorAll("[data-carta]").forEach(b => b.onclick = () => { yo.sel = b.dataset.carta; dibujar(); });
+    cuerpo.querySelectorAll("[data-hueco]").forEach(b => b.onclick = () => {
+      const i = +b.dataset.hueco;
+      if (yo.sel) { const prev = yo.slots.indexOf(yo.sel); if (prev >= 0) yo.slots[prev] = null; yo.slots[i] = yo.sel; yo.sel = null; }
+      else if (yo.slots[i]) yo.slots[i] = null;
+      dibujar(); });
+    cuerpo.querySelectorAll("[data-concl]").forEach(b => b.onclick = () => { yo.conclusion = b.dataset.concl; dibujar(); });
+    $("#bComprobar").onclick = () => accion("comprobar", {slots:yo.slots, conclusion:yo.conclusion});
+    $("#bPista").onclick = () => accion("pista", {slots:yo.slots.map(c => c || "")});
+  };
+  R.actualizar = () => {
+    if (yo.entregado) return tarjetaEspera(cuerpo, "Origen encontrado", yo.resultado);
+    if (cuentaAtras(cuerpo) > 0) return;
+    const rest = $("#rRest"); if (rest) rest.textContent = `Tiempo: ${Math.max(0, Math.ceil(yo.t.restante - (performance.now() - yo.recibido) / 1000))} s`;
+    progreso(yo.t.revision.filter(x => x).length * 1000 / yo.t.eslabones, 0, 0);
+    if (AUTO && !yo.ocupado) autoRastreo(yo, accion, dibujar);
+  };
+  dibujar();
+}
+function autoRastreo(yo, accion, dibujar){   /* pruebas: juega pidiendo pistas, como podria hacerlo una persona */
+  const t = yo.t, p = t.pista || {};
+  if (p.carta && !yo.slots.includes(p.carta)) {
+    let i = yo.slots.findIndex((c, k) => t.revision[k] === false); if (i < 0) i = yo.slots.indexOf(null);
+    yo.slots[i < 0 ? 0 : i] = p.carta; return dibujar(); }
+  if (yo.slots.includes(null) || (t.revision.includes(false) && !p.carta)) return accion("pista", {slots:yo.slots.map(c => c || "")});
+  yo.probadas = yo.probadas || [];
+  if (!yo.conclusion || t.conclusion_ok === false) { if (yo.conclusion) yo.probadas.push(yo.conclusion);
+    yo.conclusion = (t.opciones.find(o => !yo.probadas.includes(o.clave)) || t.opciones[0]).clave; }
+  accion("comprobar", {slots:yo.slots, conclusion:yo.conclusion});
+}
+
+/* ---------------- Reto 3: Caza-Rumores ---------------- */
+function iniciarCaza(d, cuerpo){
+  const yo = R, cfg = R.cfg, motor = new CazaCivitas.Caza(cfg);
+  Object.assign(R, {motor, toques:[], fallos:0, anillos:[], fin:false});
+  const cv = lienzo(cuerpo);
+  cuerpo.insertAdjacentHTML("beforeend", `<div class="flotante" id="cazaInfo"><div class="tarjeta" style="padding:10px"><p style="margin:0">${esc(d.reto.intro)}</p>
+    <p class="suave" style="margin:.3em 0 0">Toca o haz clic sobre cada rumor rojo mientras viaja. Tocar donde no hay nada cuenta como fallo.</p></div></div>`);
+  setTimeout(() => { const i = $("#cazaInfo"); if (i) i.remove(); }, 6500);
+  const escala = () => { const W = cv.clientWidth, H = cv.clientHeight, s = Math.min(W / cfg.ancho, H / cfg.alto);
+    return [s, (W - cfg.ancho * s) / 2, (H - cfg.alto * s) / 2]; };
+  const tocar = (x, y) => {
+    const pid = motor.buscar(x, y, cfg.radio_toque);
+    if (pid >= 0) { yo.toques.push([motor.tick + 1, pid, x, y]); motor.interceptar(pid); yo.anillos.push({x, y, t:performance.now(), ok:true}); }
+    else { yo.fallos++; yo.anillos.push({x, y, t:performance.now(), ok:false}); }
+  };
+  cv.addEventListener("pointerdown", ev => {
+    ev.preventDefault();
+    if (yo.fin || cuentaAtras(cuerpo) > 0) return;
+    const rc = cv.getBoundingClientRect(), [s, ox, oy] = escala();
+    tocar(Math.round((ev.clientX - rc.left - ox) / s), Math.round((ev.clientY - rc.top - oy) / s));
+  }, {passive:false});
+  const pos = Object.fromEntries(cfg.nodos.map(n => [n.id, n]));
+  const bucle = () => {
+    if (R !== yo) return;
+    const falta = cuentaAtras(cuerpo);
+    if (falta <= 0 && !yo.fin) {
+      const objetivo = Math.min(motor.totalTicks, Math.floor((performance.now() - inicioLocal()) / cfg.tick_ms));
+      let n = 0;
+      while (motor.tick < objetivo && n++ < 10) {
+        if (AUTO) for (const p of motor.paquetes) if (p.estado === "vuelo" && motor.tick * cfg.tick_ms - p.sale > 450 && Math.random() < 0.1) {
+          const q = motor.posicion(p.id, motor.tick * cfg.tick_ms); tocar(q[0] + 4, q[1] - 4); }
+        motor.avanzar();
+      }
+      if (motor.terminado()) { yo.fin = true; entregar({toques:yo.toques, fallos:yo.fallos}); }
+    }
+    dibujarCaza(cv, yo, cfg, pos, escala);
+    progreso((cfg.nodos.length - motor.nContagiados()) * 1000 / cfg.nodos.length, motor.interceptados, motor.tick / motor.totalTicks);
+    if (yo.fin) tarjetaEspera(cuerpo, "Contención terminada", yo.resultado);
+    yo.raf = requestAnimationFrame(bucle);
+  };
+  R.cerrar = () => cancelAnimationFrame(yo.raf);
+  bucle();
+}
+function dibujarCaza(cv, yo, cfg, pos, escala){
+  const motor = yo.motor, [g, W, H] = ajustar(cv), [s, ox, oy] = escala(), ahora = performance.now(), t = motor.tick * cfg.tick_ms;
+  const fondo = g.createRadialGradient(W/2, H/2, 50, W/2, H/2, Math.max(W, H)); fondo.addColorStop(0, "#1b1440"); fondo.addColorStop(1, "#08050f");
+  g.fillStyle = fondo; g.fillRect(0, 0, W, H);
+  g.save(); g.translate(ox, oy); g.scale(s, s);
+  for (const [z, [cx, cy]] of Object.entries(cfg.centros)) {
+    g.fillStyle = "#0f172a99"; g.beginPath(); g.arc(cx, cy, 92, 0, 7); g.fill();
+    g.strokeStyle = "#38bdf844"; g.lineWidth = 2; g.stroke();
+    g.fillStyle = "#94a3b8"; g.font = "800 17px system-ui"; g.textAlign = "center"; g.fillText(z === "alcaldia" ? "ALCALDÍA" : z.toUpperCase(), cx, cy - 74);
+  }
+  g.lineWidth = 2; g.strokeStyle = "#94a3b833";
+  for (const [a, b] of cfg.aristas) { g.beginPath(); g.moveTo(pos[a].x, pos[a].y); g.lineTo(pos[b].x, pos[b].y); g.stroke(); }
+  for (const p of motor.paquetes) if (p.estado === "vuelo") {
+    const [x, y] = motor.posicion(p.id, t);
+    g.strokeStyle = "#fb718566"; g.lineWidth = 3; g.beginPath(); g.moveTo(pos[p.a].x, pos[p.a].y); g.lineTo(x, y); g.stroke();
+    const pulso = 16 + Math.sin(ahora / 120) * 3;
+    g.fillStyle = "#fb718544"; g.beginPath(); g.arc(x, y, pulso + 10, 0, 7); g.fill();
+    g.fillStyle = "#ef4444"; g.beginPath(); g.arc(x, y, pulso, 0, 7); g.fill();
+    g.fillStyle = "#fff"; g.font = "900 16px system-ui"; g.textAlign = "center"; g.fillText("!", x, y + 6);
+  }
+  for (const n of cfg.nodos) {
+    const c = n.id in motor.contagiados, foco = cfg.focos.includes(n.id);
+    g.fillStyle = foco ? "#9333ea" : c ? "#dc2626" : "#334155"; g.strokeStyle = c ? "#fecaca" : "#5eead4"; g.lineWidth = 3;
+    g.beginPath(); g.arc(n.x, n.y, 22, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = "#fff"; g.font = "800 16px system-ui"; g.textAlign = "center"; g.fillText(n.nombre[0], n.x, n.y + 6);
+    g.fillStyle = "#cbd5e1"; g.font = "600 13px system-ui"; g.fillText(n.nombre, n.x, n.y + 40);
+  }
+  yo.anillos = yo.anillos.filter(a => ahora - a.t < 450);
+  for (const a of yo.anillos) { const p = (ahora - a.t) / 450; g.strokeStyle = a.ok ? "#5eead4" : "#fb7185"; g.globalAlpha = 1 - p; g.lineWidth = 4;
+    g.beginPath(); g.arc(a.x, a.y, 20 + p * 40, 0, 7); g.stroke(); g.globalAlpha = 1; }
+  g.restore();
+  g.fillStyle = "#fbf6ee"; g.font = "800 16px system-ui"; g.textAlign = "left";
+  g.fillText(`A salvo: ${cfg.nodos.length - motor.nContagiados()} / ${cfg.nodos.length} · interceptados ${motor.interceptados} · fallos ${yo.fallos}`, 14, H - 16);
+}
+
+/* ---------------- Reto 4: Ruta de la Verdad (plataformas) ---------------- */
+const MOV_REDUCIDO = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+const PLAT_IMGS = [   /* arte v2: el mismo que Ren'Py (tools/arte/plataformas_arte.py -> exportar_plataformas_web.py) */
+  ...Array.from({length:32}, (_, k) => "solido_" + (k >> 1) + "_" + (k & 1)),
+  "barrera_0","barrera_1","barrera_2","inestable_on","inestable_aviso","inestable_off","documento","antena_off","antena_on","archivo",
+  "av_idle_0","av_idle_1","av_corre_0","av_corre_1","av_corre_2","av_corre_3","av_corre_4","av_corre_5",
+  "av_salto","av_cae","av_recoge","av_dano","av_victoria","fondo_lejos","fondo_medio","primer_plano"];
+function iniciarPlataformas(d, cuerpo){
+  const yo = R, cfg = R.cfg, p = new PlatCivitas.Partida(cfg);
+  Object.assign(R, {p, imgs:{}, teclas:new Set(), tactil:{}, acum:0, ultimo:null, fin:false, cam:0, vistos:0, aviso:null, part:[], finT:null});
+  const cv = lienzo(cuerpo);
+  cuerpo.insertAdjacentHTML("beforeend", `<div class="tactil" aria-hidden="true"><div><button data-b="1">&#9664;</button><button data-b="2">&#9654;</button></div>
+    <div><button class="salto" data-b="4">SALTO</button></div></div>
+    <div class="flotante" id="platInfo"><div class="tarjeta" style="padding:10px"><p style="margin:0">${esc(d.reto.intro)}</p>
+    <p class="suave" style="margin:.3em 0 0">Teclado: A/D o flechas para moverte · Espacio, W o flecha arriba para saltar (mantén para saltar más alto).</p></div></div>`);
+  setTimeout(() => { const i = $("#platInfo"); if (i) i.remove(); }, 7000);
+  cuerpo.querySelectorAll("[data-b]").forEach(b => {
+    const v = +b.dataset.b;
+    b.addEventListener("pointerdown", ev => { ev.preventDefault(); yo.tactil[v] = true; try { b.setPointerCapture(ev.pointerId); } catch(e) {} });
+    const suelta = ev => { yo.tactil[v] = false; };
+    b.addEventListener("pointerup", suelta); b.addEventListener("pointercancel", suelta); b.addEventListener("lostpointercapture", suelta);
+  });
+  R.tecla = (ev, abajo) => {
+    const m = {ArrowLeft:1, KeyA:1, ArrowRight:2, KeyD:2, Space:4, ArrowUp:4, KeyW:4, KeyZ:4}[ev.code];
+    if (m) { ev.preventDefault(); (abajo ? yo.teclas.add(m) : yo.teclas.delete(m)); }
+  };
+  PLAT_IMGS.forEach(n => cargarImg(`/static/plataformas/v2/${n}.webp`).then(i => { yo.imgs[n] = i; }));
+  Object.assign(yo, {aterrizoT:-9e9, recogeT:-9e9, danoT:-9e9, controlT:-9e9});
+  const piloto = AUTO ? pilotoJS(p) : null;
+  const mascara = () => { let m = 0; for (const k of yo.teclas) m |= k; for (const k in yo.tactil) if (yo.tactil[k]) m |= +k; return m; };
+  const bucle = () => {
+    if (R !== yo) return;
+    const falta = cuentaAtras(cuerpo);
+    const ahora = performance.now();
+    if (yo.ultimo === null) yo.ultimo = ahora;
+    const dt = Math.min(100, ahora - yo.ultimo); yo.ultimo = ahora;     // tras un tiron no se "teletransporta"
+    if (falta <= 0 && !yo.fin) {
+      yo.acum += dt;
+      const paso = 1000 / cfg.ticks_s;
+      while (yo.acum >= paso && p.jugando()) { yo.acum -= paso; p.avanzar(piloto ? piloto() : mascara()); }
+      for (const e of p.eventos.slice(yo.vistos)) {
+        const PC = {evidencia:["#e8b04b",18,420], dano:["#d1495b",22,380], aterriza:["#c9b8d8",6,160], salto:["#c9b8d8",4,120], control:["#2f9e8f",14,300], meta:["#fbf6ee",36,520]}[e[1]];
+        if (e[1] === "aterriza") yo.aterrizoT = ahora; else if (e[1] === "evidencia") yo.recogeT = ahora;
+        else if (e[1] === "dano") yo.danoT = ahora; else if (e[1] === "control") yo.controlT = ahora;
+        if (PC) { const suelo = e[1] === "aterriza" || e[1] === "salto";
+          const cx = (p.x + p.c.ANCHO / 2) / cfg.sub, cy = (p.y + (suelo ? p.c.ALTO : p.c.ALTO / 2)) / cfg.sub;
+          for (let k = 0; k < PC[1]; k++) { const a = suelo ? Math.PI + Math.random() * Math.PI : Math.random() * 2 * Math.PI, v = (0.4 + Math.random() * 0.6) * PC[2] / 72;
+            yo.part.push({x:cx, y:cy, vx:Math.cos(a) * v, vy:Math.sin(a) * v, vida:0.35 + Math.random() * 0.45, c:PC[0], t:4 + Math.floor(Math.random() * 3) * 2}); } }
+        if (e[1] === "evidencia") yo.aviso = [cfg.fragmentos[e[2] % cfg.fragmentos.length], "#facc15", ahora];
+        else if (e[1] === "dano") yo.aviso = ["NOVA te detectó: vuelves al punto de control", "#fb7185", ahora];
+        else if (e[1] === "control") yo.aviso = ["Punto de control", "#5eead4", ahora];
+      }
+      yo.vistos = p.eventos.length;
+      if (!p.jugando()) { yo.fin = true; yo.finT = ahora; entregar({traza:p.traza}); }
+    }
+    for (const q of yo.part) { q.x += q.vx * dt / 16; q.y += q.vy * dt / 16; q.vy += 0.9 * dt / 16; q.vida -= dt / 1000; }
+    yo.part = yo.part.filter(q => q.vida > 0);
+    dibujarPlat(cv, yo, cfg, ahora);
+    progreso(p.puntuacion(), p.recogidas.length, Math.min(1, p.x / cfg.constantes.T / p.meta[0]));
+    if (yo.fin && ahora - yo.finT > 1100) tarjetaEspera(cuerpo, p.completado() ? "Archivo recuperado" : "Sesión cerrada", yo.resultado);
+    yo.raf = requestAnimationFrame(bucle);
+  };
+  R.cerrar = () => cancelAnimationFrame(yo.raf);
+  yo.raf = requestAnimationFrame(bucle);
+}
+function pilotoJS(p){   /* pruebas automaticas: el mismo piloto que Plataformas.Piloto (Python), por el mismo camino de entrada */
+  let mantener = 0;
+  return () => {
+    const c = p.c, T = c.T, frente = p.x + c.ANCHO - 1, ft = Math.floor(frente / T), fy = Math.floor((p.y + c.ALTO - 1) / T);
+    const falta = (ft + 1) * T - frente; let m = 2;
+    if (mantener > 0) { mantener--; m |= 4; }
+    else if (p.enSuelo && p.respawn === 0) {
+      const abajo = p.tile(ft + 1, fy + 1), delante = p.tile(ft + 1, fy);
+      const foso = ".^EC".includes(abajo) || (abajo === "~" && !p.activo(p.tick + 40));
+      const arriba = [1, 2].some(k => p.tile(ft + k, fy - 2) === "E" || p.tile(ft + k, fy - 1) === "#");
+      if ((foso && falta <= 12 * 16) || delante === "#" || (arriba && Math.random() < 0.45)) { m |= 4; mantener = 22; }
+    }
+    return m;
+  };
+}
+function dibujarPlat(cv, yo, cfg, ahora){
+  /* Remaster: misma presentacion que Ren'Py (autotiling, parallax en 3 planos, avatar con poses, HUD en fichas). */
+  const p = yo.p, [g, W, H] = ajustar(cv), I = yo.imgs, filas = p.alto, quieto = MOV_REDUCIDO;
+  const lado = Math.max(24, Math.min(64, Math.floor(H / (filas + 0.6)))), e = lado / cfg.tile;
+  const px = p.x / cfg.sub * e, py = p.y / cfg.sub * e, anchoMundo = p.ancho * lado;
+  const objetivo = Math.max(0, Math.min(anchoMundo - W, px - W * 0.38 + p.mira * W * 0.12));
+  yo.cam += (objetivo - yo.cam) * (quieto ? 1 : 0.2);
+  const sac = (!quieto && ahora - yo.danoT < 280) ? Math.round(6 * Math.sin((ahora - yo.danoT) / 14) * (1 - (ahora - yo.danoT) / 280)) : 0;
+  const cam = yo.cam + sac, y0 = H - filas * lado;
+  g.fillStyle = "#120d1c"; g.fillRect(0, 0, W, H);
+  for (const [img, f] of [[I.fondo_lejos, 0.12], [I.fondo_medio, 0.35]]) if (img) {
+    const h = H, w = img.width * h / img.height, x = -((cam * f) % w);
+    for (let k = -1; k < W / w + 1; k++) g.drawImage(img, x + k * w, 0, w, h);
+  }
+  const activo = p.activo(p.tick), falta = cfg.constantes.PARPADEO - p.tick % cfg.constantes.PARPADEO;
+  const es = (fx, fy) => fy >= 0 && fy < filas && fx >= 0 && fx < p.ancho && p.filas[fy][fx] === "#";
+  const fx0 = Math.max(0, Math.floor(cam / lado));
+  for (let fy = 0; fy < filas; fy++) for (let fx = fx0; fx < Math.min(p.ancho, fx0 + Math.ceil(W / lado) + 2); fx++) {
+    const ch = p.filas[fy][fx]; if (ch === ".") continue;
+    const x = fx * lado - cam, y = y0 + fy * lado;
+    let img = null;
+    if (ch === "#") {
+      const m = (!es(fx, fy - 1) ? 1 : 0) | (!es(fx - 1, fy) ? 2 : 0) | (!es(fx + 1, fy) ? 4 : 0) | ((fy + 1 < filas && !es(fx, fy + 1)) ? 8 : 0);
+      img = I["solido_" + m + "_" + ((fx + fy) % 2)];
+    }
+    else if (ch === "^") img = I["barrera_" + (Math.floor(ahora / 110 + fx) % 3)];
+    else if (ch === "~") {
+      const est = (falta < 30 && activo) ? "aviso" : (activo ? "on" : "off");
+      const t = (est === "aviso" && !quieto) ? (Math.floor(ahora / 33) % 2 ? 2 : -2) : 0;
+      if (I["inestable_" + est]) g.drawImage(I["inestable_" + est], x + t, y, lado, lado);
+      continue;
+    }
+    else if (ch === "E") { const i = p.evidencias.findIndex(v => v[0] === fx && v[1] === fy);
+      if (!p.recogidas.includes(i) && I.documento) { g.save(); g.translate(x + lado / 2, y + lado / 2 + (quieto ? 0 : Math.sin(ahora / 330 + fx) * 4));
+        g.rotate(quieto ? 0 : Math.sin(ahora / 500 + fx) * 0.1); g.drawImage(I.documento, -lado * 0.62, -lado * 0.62, lado * 1.24, lado * 1.24); g.restore(); } continue; }
+    else if (ch === "C") { const on = p.control[0] === fx && p.control[1] === fy; img = on ? I.antena_on : I.antena_off;
+      if (on && ahora - yo.controlT < 800) { const k = (ahora - yo.controlT) / 800; g.strokeStyle = "#2f9e8f"; g.lineWidth = 3; g.beginPath(); g.arc(x + lado / 2, y + lado * 0.25, lado * (0.3 + 1.2 * k), 0, 7); g.stroke(); } }
+    else if (ch === "M") { if (I.archivo) g.drawImage(I.archivo, x - lado * 0.25, y - lado, lado * 1.5, lado * 2); continue; }
+    if (img) g.drawImage(img, x, y, lado, lado);
+  }
+  const cuadro = p.respawn > 0 ? "dano" : p.completado() ? "victoria" : (ahora - yo.recogeT < 350) ? "recoge"
+    : !p.enSuelo ? (p.vy < 0 ? "salto" : "cae") : Math.abs(p.vx) > 12 ? "corre_" + (Math.floor(ahora / 71) % 6) : "idle_" + (Math.floor(ahora / 500) % 2);
+  const spr = I["av_" + cuadro];
+  if (spr && !(p.respawn > 0 && Math.floor(ahora / 70) % 2)) {
+    const squash = (!quieto && ahora - yo.aterrizoT < 140);
+    const sxk = squash ? 1.12 : 1, syk = squash ? 0.86 : 1;
+    const sw = 224 * e * 1.7 / 4 * sxk, sh = 256 * e * 1.7 / 4 * syk;
+    const bx = px - cam + p.c.ANCHO / cfg.sub * e / 2 - sw / 2, by = y0 + py + p.c.ALTO / cfg.sub * e - sh + 3;
+    g.save();
+    if (p.mira < 0) { g.translate(bx + sw, by); g.scale(-1, 1); g.drawImage(spr, 0, 0, sw, sh); } else g.drawImage(spr, bx, by, sw, sh);
+    g.restore();
+  }
+  for (const q of yo.part) { g.globalAlpha = Math.min(1, q.vida * 2); const r = Math.max(1.5, q.t / 2);
+    g.fillStyle = "#2b2440"; g.beginPath(); g.arc(q.x * e - cam, y0 + q.y * e, r + 1.5, 0, 7); g.fill();
+    g.fillStyle = q.c; g.beginPath(); g.arc(q.x * e - cam, y0 + q.y * e, r, 0, 7); g.fill(); }
+  g.globalAlpha = 1;
+  if (I.primer_plano) { const img = I.primer_plano, h = Math.min(H * 0.24, img.height * W / 1920), w = img.width * h / img.height, x = -((cam * 1.25) % w);
+    for (let k = -1; k < W / w + 1; k++) g.drawImage(img, x + k * w, 0, w, h); }
+  if (!quieto && ahora - yo.danoT < 220) { g.fillStyle = "rgba(209,73,91,0.35)"; for (const yy of [0.18, 0.42, 0.68, 0.86]) g.fillRect(0, H * yy, W, 5); }
+  if (yo.finT && p.completado() && ahora - yo.finT < 1100) {
+    g.fillStyle = "rgba(18,13,28," + Math.min(0.55, (ahora - yo.finT) / 900) + ")"; g.fillRect(0, 0, W, H);
+    g.textAlign = "center"; g.font = "900 40px system-ui"; g.fillStyle = "#fbf6ee"; g.fillText("ARCHIVO RECUPERADO", W / 2, H * 0.42);
+  }
+  /* HUD: fichas de papel con contorno de tinta */
+  const rest = Math.max(0, Math.floor((p.limite - p.tick) / cfg.ticks_s));
+  const fichas = [[`${p.recogidas.length}/${p.evidencias.length}`, "evidencias"], [`${Math.floor(rest/60)}:${String(rest%60).padStart(2,"0")}`, "tiempo"],
+                  [`${p.muertes}`, "detecciones"], [`${p.puntuacion()}`, "pts"]];
+  let fxh = 10; g.textAlign = "left";
+  for (const [v, t] of fichas) { g.font = "900 17px system-ui"; const w1 = g.measureText(v).width; g.font = "500 12px system-ui"; const w = w1 + g.measureText(t).width + 28;
+    g.fillStyle = "#2b2440"; g.fillRect(fxh - 3, 7, w + 6, 34); g.fillStyle = "#fbf6ee"; g.fillRect(fxh, 10, w, 28);
+    g.fillStyle = (t === "tiempo" && rest <= 10) ? "#d1495b" : "#2b2440"; g.font = "900 17px system-ui"; g.fillText(v, fxh + 9, 30);
+    g.fillStyle = "#8b84a8"; g.font = "500 12px system-ui"; g.fillText(t, fxh + 15 + w1, 30); fxh += w + 14; }
+  if (yo.aviso && ahora - yo.aviso[2] < 2400) { g.textAlign = "center"; g.font = "800 18px system-ui"; g.lineWidth = 4; g.strokeStyle = "#2b2440";
+    g.strokeText(yo.aviso[0], W/2, 72); g.fillStyle = yo.aviso[1]; g.fillText(yo.aviso[0], W/2, 72); }
+}
+
+/* ---------------- Reto 5: Duelo de Frecuencias (gran final) ---------------- */
+const RECORRIDO_MS = 1500;                   // mismo recorrido de las notas que en Ren'Py (RITMO_RECORRIDO_MS)
+const TXT_JUICIO = {perfect:"PERFECT", good:"GREAT", bad:"GOOD", miss:"MISS"};
+const COL_JUICIO = {perfect:"#facc15", good:"#5eead4", bad:"#f4b6c2", miss:"#8b84a8"};
+const COL_CARRIL = ["#c084fc","#38bdf8","#4ade80","#fb7185"];
+const TECLAS = {KeyD:0, ArrowLeft:0, KeyF:1, ArrowDown:1, KeyJ:2, ArrowUp:2, KeyK:3, ArrowRight:3};
+const D = {cfg:null, ctx:null, buffer:null, fuente:null, inicioCtx:null, motor:null, activo:false, entrado:false, enviado:false, enviando:false,
+  id:null, imgs:{}, pulsos:[0,0,0,0], efectos:[], juicio:null, calib:0, raf:null, ultimoProg:0, finLocal:null, modo:null, cargando:null};
+try { D.calib = +(localStorage.getItem("ritmo_calib") || 0) || 0; } catch(e) {}
+D.autoSigma = +(URLP.get("sigma") || 0);     // pruebas: error humano (ms) y notas olvidadas
+D.autoFallo = +(URLP.get("fallo") || 0);
+
+async function prepararDuelo(modo){
+  if (D.cargando && D.modo === modo) return D.cargando;
+  D.modo = modo;
+  D.cargando = (async () => {
+    D.cfg = await llamar("GET", "/ritmo/" + modo);
+    const nombres = [0,1,2,3].flatMap(k => ["nota_"+k, "receptor_"+k, "receptor_on_"+k]).concat(["nova_seria","nova_feliz","nova_enojada"]);
+    await Promise.all(nombres.map(async n => { D.imgs[n] = await cargarImg("/static/ritmo/" + n + (n.startsWith("nova") ? ".webp" : ".png")); }));
+  })();
+  return D.cargando;
+}
+async function cargarAudio(){       /* Safari (iPhone) no decodifica OGG: se prueba AAC y, si falla, OGG */
+  for (const url of D.cfg.audio) {
+    try { const r = await fetch(url); if (!r.ok) continue; return await D.ctx.decodeAudioData(await r.arrayBuffer()); } catch(e) {}
+  }
+  throw new Error("Este navegador no pudo reproducir la canción.");
+}
+async function entrarDuelo(){
+  if (D.entrado || !R) return;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  D.ctx = new AC({latencyHint:"interactive"});
+  try { await D.ctx.resume(); } catch(e) {}
+  D.entrado = true; pintarRitmo(S.estado);
+  try {
+    await prepararDuelo(R.cfg.modo);
+    D.buffer = await cargarAudio();
+    D.motor = new RitmoCivitas.MotorDuelo(D.cfg.chart, D.cfg.ventanas, D.cfg.valores, D.cfg.combo_rompe);
+    D.id = R.id;
+    programarInicio();
+  } catch(e) { D.entrado = false; error(e.message); }
+  if (S.estado && S.estado.fase === "reto") pintarRitmo(S.estado);
+}
+/* El inicio estimado (reloj performance.now) se pasa al reloj del audio. Quien entra tarde empieza en la posicion actual. */
+function programarInicio(){
+  if (!R || R.clave !== "ritmo" || D.fuente || !D.buffer || R.sync.inicioLocal === null) return;
+  const faltan = (R.sync.inicioLocal - performance.now()) / 1000;
+  if (faltan > 2.5) { clearTimeout(D.timerInicio); D.timerInicio = setTimeout(programarInicio, (faltan - 2.4) * 1000); return; }
+  D.inicioCtx = D.ctx.currentTime + faltan;
+  D.fuente = D.ctx.createBufferSource(); D.fuente.buffer = D.buffer; D.fuente.connect(D.ctx.destination);
+  if (faltan >= 0) D.fuente.start(D.inicioCtx);
+  else if (-faltan < D.buffer.duration) D.fuente.start(0, -faltan);
+  D.motor.empezar();
+  D.finLocal = R.sync.inicioLocal + D.cfg.chart.duration_ms + 800;
+  D.activo = true;
+  if (!D.raf) D.raf = requestAnimationFrame(cuadroDuelo);
+}
+function tiempoCancion(){       /* reloj de audio menos la latencia de salida del dispositivo y la calibracion del jugador */
+  if (!D.ctx || D.inicioCtx === null) return -1e9;
+  const lat = (D.ctx.outputLatency || D.ctx.baseLatency || 0) * 1000;
+  return (D.ctx.currentTime - D.inicioCtx) * 1000 - lat - D.calib;
+}
+function pulsar(carril){
+  if (!D.activo || !D.motor) return;
+  const t = tiempoCancion();
+  D.motor.actualizar(t);
+  D.pulsos[carril] = performance.now();
+  const j = D.motor.pulsar(carril, t);
+  if (j) { D.juicio = {j, t0: performance.now()}; D.efectos.push({carril, j, t0: performance.now()}); }
+}
+function cuadroDuelo(){
+  D.raf = null;
+  const cv = document.getElementById("lienzo");
+  if (!cv || !D.motor) return;
+  const t = tiempoCancion();
+  if (D.activo) {
+    D.motor.actualizar(t);
+    if (AUTO) autojugar(t);
+    if (D.motor.estado === "results" || performance.now() > D.finLocal) terminarDuelo();
+    if (performance.now() - D.ultimoProg > 1500) { D.ultimoProg = performance.now(); progresoDuelo(); }
+  }
+  dibujarDuelo(cv, t);
+  if (D.activo || D.efectos.length) D.raf = requestAnimationFrame(cuadroDuelo);
+}
+function autojugar(t){   /* solo en localhost (?autoplay=1): pulsa por el mismo camino que un dedo */
+  for (const n of D.motor.notas) {
+    if (n.estado !== null || n.auto) continue;
+    if (n.objetivo === undefined) {
+      const g = Math.sqrt(-2 * Math.log(Math.random() || 1e-9)) * Math.cos(2 * Math.PI * Math.random());
+      n.objetivo = Math.random() < D.autoFallo ? null : n.time_ms + n.lane * 7 - 12 + g * D.autoSigma;
+    }
+    if (n.objetivo !== null && t >= n.objetivo) { n.auto = true; pulsar(n.lane); }
+  }
+}
+function progresoDuelo(){
+  const m = D.motor;
+  llamar("POST", `/salas/${S.codigo}/progreso`, {token:S.token, puntos:m.puntos(), combo:m.combo, avance:m.juzgadas()/m.notas.length}).catch(() => {});
+}
+async function terminarDuelo(){
+  if (D.enviado || D.enviando) return;
+  D.activo = false;
+  if (D.motor.estado !== "results") D.motor.cerrar(tiempoCancion());
+  D.enviando = true;
+  const cuerpo = Object.assign({token:S.token, id:D.id, calibracion_ms:D.calib, latencia_ms:R ? R.sync.rtt : null}, D.motor.resultado());
+  for (let intento = 0; intento < 15 && !D.enviado; intento++) {
+    try { const r = await llamar("POST", `/salas/${S.codigo}/duelo`, cuerpo); D.enviado = true; D.miResultado = r.resultado; }
+    catch(e) {
+      if (e.status && e.status < 500 && e.codigo !== "rate_limited") { D.enviado = true; error("El servidor rechazó el resultado: " + e.message); }
+      else await new Promise(ok => setTimeout(ok, 2000));    // misma id: si llego dos veces, cuenta una
+    }
+  }
+  D.enviando = false;
+  if (S.estado && S.estado.fase === "reto") pintarRitmo(S.estado);
+}
+function detenerAudioDuelo(){
+  try { if (D.fuente) D.fuente.stop(); } catch(e) {}
+  try { if (D.ctx) D.ctx.close(); } catch(e) {}
+  clearTimeout(D.timerInicio);
+  Object.assign(D, {ctx:null, buffer:null, fuente:null, inicioCtx:null, motor:null, activo:false, entrado:false, enviado:false,
+    enviando:false, efectos:[], juicio:null, missVistos:0, miResultado:null});
+}
+function expresionNova(){
+  const m = D.motor; if (!m) return "nova_seria";
+  if (m.combo >= 10) return "nova_enojada";
+  if (m.ultimos.length && m.ultimos[m.ultimos.length - 1][2] === "miss") return "nova_feliz";
+  return "nova_seria";
+}
+function dibujarDuelo(cv, t){   /* el tiempo de cancion decide donde va cada nota; los frames solo pintan (igual que en Ren'Py) */
+  const [g, W, H] = ajustar(cv);
+  const m = D.motor, chart = D.cfg.chart, ahora = performance.now();
+  const beat = 60000 / chart.bpm, fase = t > 0 ? ((t - chart.offset_ms) % beat) / beat : 0;
+  const pulso = t > 0 && t < chart.duration_ms ? Math.pow(1 - fase, 3) : 0;
+  const fondo = g.createLinearGradient(0, 0, 0, H);
+  fondo.addColorStop(0, `rgb(${18+pulso*30},${12+pulso*8},${30+pulso*40})`); fondo.addColorStop(1, "#08050f");
+  g.fillStyle = fondo; g.fillRect(0, 0, W, H);
+  const ancho = Math.min(W * 0.92, 520), carril = ancho / 4, x0 = (W - ancho) / 2;
+  const recY = H - Math.max(96, H * 0.16), naceY = Math.max(110, H * 0.17), tam = Math.min(carril * 0.86, 96);
+  const nova = D.imgs[expresionNova()];
+  if (nova) {
+    const h = W > 900 ? H * 0.62 : H * 0.2, w = h * nova.width / nova.height, rebote = Math.sin(t / beat * Math.PI) * 6;
+    g.globalAlpha = W > 900 ? 0.95 : 0.5;
+    g.drawImage(nova, W > 900 ? x0 - w - 30 : W - w - 4, (W > 900 ? H - h : naceY - 20) + rebote, w, h);
+    g.globalAlpha = 1;
+  }
+  for (let k = 0; k < 4; k++) {
+    g.fillStyle = k % 2 ? "rgba(27,20,38,.55)" : "rgba(27,20,38,.7)";
+    g.fillRect(x0 + k*carril + 3, 0, carril - 6, H);
+    const brillo = Math.max(0, 1 - (ahora - D.pulsos[k]) / 160);
+    if (brillo > 0) { g.fillStyle = COL_CARRIL[k] + Math.round(brillo * 60).toString(16).padStart(2, "0"); g.fillRect(x0 + k*carril + 3, 0, carril - 6, H); }
+    const rec = D.imgs[(brillo > 0.3 ? "receptor_on_" : "receptor_") + k], cx = x0 + k*carril + carril/2, s = tam * (1 + pulso * 0.06);
+    if (rec) g.drawImage(rec, cx - s/2, recY - s/2, s, s);
+  }
+  for (let i = m.siguiente; i < m.notas.length; i++) {
+    const n = m.notas[i]; if (n.estado !== null) continue;
+    const dt = n.time_ms - t; if (dt > RECORRIDO_MS) break;
+    const y = recY - dt / RECORRIDO_MS * (recY - naceY), img = D.imgs["nota_" + n.lane];
+    g.globalAlpha = Math.max(0, Math.min(1, (y - naceY + 80) / 120));
+    if (img) g.drawImage(img, x0 + n.lane*carril + carril/2 - tam/2, y - tam/2, tam, tam);
+    g.globalAlpha = 1;
+  }
+  D.efectos = D.efectos.filter(e => ahora - e.t0 < 380);
+  for (const e of D.efectos) {
+    const p = (ahora - e.t0) / 380, cx = x0 + e.carril*carril + carril/2;
+    g.strokeStyle = COL_JUICIO[e.j]; g.globalAlpha = 1 - p; g.lineWidth = 6 * (1 - p) + 1;
+    g.beginPath(); g.arc(cx, recY, tam * (0.45 + p * 0.6), 0, 2 * Math.PI); g.stroke(); g.globalAlpha = 1;
+  }
+  g.textAlign = "center"; g.lineJoin = "round";
+  if (m.conteo.miss > (D.missVistos || 0)) { D.missVistos = m.conteo.miss; D.juicio = {j:"miss", t0: ahora}; }
+  if (D.juicio && ahora - D.juicio.t0 < 600) {
+    const p = (ahora - D.juicio.t0) / 600, e = 1.25 - Math.min(0.25, p * 1.5);
+    g.font = `900 ${Math.round(34 * e)}px system-ui,sans-serif`; g.globalAlpha = 1 - p * p;
+    g.strokeStyle = "#1b1426"; g.lineWidth = 6; g.strokeText(TXT_JUICIO[D.juicio.j], W/2, recY - tam * 1.6);
+    g.fillStyle = COL_JUICIO[D.juicio.j]; g.fillText(TXT_JUICIO[D.juicio.j], W/2, recY - tam * 1.6); g.globalAlpha = 1;
+  }
+  if (m.combo >= 3) {
+    g.font = `900 ${Math.round(26 + Math.min(14, m.combo / 4))}px system-ui,sans-serif`; g.strokeStyle = "#1b1426"; g.lineWidth = 5;
+    g.strokeText("x" + m.combo, W/2, recY - tam * 2.25); g.fillStyle = "#fbf6ee"; g.fillText("x" + m.combo, W/2, recY - tam * 2.25);
+  }
+  g.font = "900 28px system-ui,sans-serif"; g.fillStyle = "#fbf6ee"; g.textAlign = "left"; g.fillText(String(m.puntos()).padStart(4, "0"), 14, 38);
+  const senal = m.senal(), bw = Math.min(260, W - 28);
+  g.fillStyle = "#e86a7e"; g.fillRect(14, 50, bw, 10); g.fillStyle = "#5eead4"; g.fillRect(14, 50, bw * senal, 10);
+  g.font = "700 12px system-ui,sans-serif"; g.fillStyle = "#c9b8d8";
+  g.fillText(`SEÑAL ${Math.round(senal*100)}%  ·  combo máx. x${m.maxCombo}`, 14, 76);
+  if (t < 0 && t > -4000) {
+    g.textAlign = "center"; g.font = "900 72px system-ui,sans-serif"; g.fillStyle = "#facc15";
+    g.fillText(String(Math.ceil(-t / 1000)), W/2, H * 0.45);
+  }
+}
+function pintarRitmo(d, t0, t1){
+  if (!R || R.indice !== d.reto.indice) {
+    const cuerpo = crearCapa(d, t0 ?? performance.now() - 1, t1 ?? performance.now());
+    cuerpo.innerHTML = `<canvas id="lienzo" aria-label="Duelo de Frecuencias: 4 carriles"></canvas><div id="duelInfo" class="duelInfo"></div>`;
+    const cv = $("#lienzo");
+    cv.addEventListener("pointerdown", ev => { ev.preventDefault(); const r = cv.getBoundingClientRect();
+      const ancho = Math.min(r.width * 0.92, 520), x0 = (r.width - ancho) / 2;
+      pulsar(Math.max(0, Math.min(3, Math.floor((ev.clientX - r.left - x0) / (ancho / 4))))); }, {passive:false});
+    R.tecla = (ev, abajo) => { if (abajo && ev.code in TECLAS && !ev.repeat) { ev.preventDefault(); pulsar(TECLAS[ev.code]); } };
+    prepararDuelo(R.cfg.modo).catch(() => {});
+    if (d.reto.ya_entregaste) { D.enviado = true; D.miResultado = d.reto.mi_resultado; }
+  }
+  hud(d);
+  if (D.motor) programarInicio();
+  const info = $("#duelInfo"), faltan = R.sync.inicioLocal !== null ? Math.ceil((R.sync.inicioLocal - performance.now()) / 1000) : null;
+  if (D.enviado || D.enviando) {
+    const r = D.miResultado;
+    info.innerHTML = `<div class="duelCard"><h2>${D.enviando ? "Enviando tu resultado…" : "¡Canción terminada!"}</h2>
+      ${r ? `<p class="grande">${r.normalizado} / 1000</p><p>${esc(r.resumen)}</p>
+        ${r.detalle && r.detalle.conteo ? `<p class="suave">PERFECT ${r.detalle.conteo.perfect} · GREAT ${r.detalle.conteo.good} · GOOD ${r.detalle.conteo.bad} · MISS ${r.detalle.conteo.miss}</p>` : ""}` : ""}
+      <p class="suave">Esperando a los demás: ${d.reto.entregaron.length} de ${d.jugadores.length} terminaron.</p></div>`;
+  } else if (!D.entrado) {
+    info.innerHTML = `<div class="duelCard"><p class="tag">Gran final · Ronda ${d.ronda_campana} de ${d.total_rondas}</p>
+      <h2>DUELO DE FRECUENCIAS</h2><p>${esc(d.reto.contexto)}</p>
+      <p class="suave">Toca los 4 carriles (o D F J K / flechas) cuando cada nota llegue a su receptor. PERFECT · GREAT · GOOD · MISS. El combo se rompe con GOOD o MISS. Necesita sonido.</p>
+      <button id="btnEntrar">${faltan !== null && faltan < 0 ? "¡Ya empezó! Entrar ahora" : "Entrar al duelo (activa el sonido)"}</button>
+      <p class="suave">${faltan !== null && faltan > 0 ? "Empieza en " + faltan + " s" : ""}</p></div>`;
+    $("#btnEntrar").onclick = entrarDuelo;
+    if (AUTO) entrarDuelo();
+  } else if (!D.motor) {
+    info.innerHTML = `<div class="duelCard"><h2>Cargando la canción…</h2></div>`;
+  } else if (!D.activo || tiempoCancion() < 0) {
+    info.innerHTML = `<div class="duelCard mini"><p>Calibración: <b>${D.calib > 0 ? "+" : ""}${D.calib} ms</b> <span class="suave">(si las notas suenan tarde, sube)</span></p>
+      <div class="fila"><button class="sec" id="calMenos" style="color:#fbf6ee">−10 ms</button><button class="sec" id="calMas" style="color:#fbf6ee">+10 ms</button></div></div>`;
+    const cal = v => { D.calib = Math.max(-D.cfg.calibracion_max_ms, Math.min(D.cfg.calibracion_max_ms, D.calib + v));
+      try { localStorage.setItem("ritmo_calib", D.calib); } catch(e) {} pintarRitmo(S.estado); };
+    $("#calMenos").onclick = () => cal(-10); $("#calMas").onclick = () => cal(10);
+  } else info.innerHTML = "";
+  if (D.motor && !D.raf) D.raf = requestAnimationFrame(cuadroDuelo);
+}
+
+/* Teclado comun a todos los retos */
+addEventListener("keydown", ev => { if (R && R.tecla) R.tecla(ev, true); });
+addEventListener("keyup", ev => { if (R && R.tecla) R.tecla(ev, false); });
+addEventListener("blur", () => { if (R && R.teclas) R.teclas.clear(); });
+
+/* ================= Resultado de un reto ================= */
+function tablaTorneo(t, retos){
+  const cols = retos || ["moderador","rastreador","contencion","plataformas","ritmo"];
+  return `<div class="tabla-wrap"><table class="tabla"><thead><tr><th>Jugador</th><th>Consejo</th>${cols.map(c => `<th>${CORTO[c]}</th>`).join("")}<th>Total</th></tr></thead>
+    <tbody>${t.map(f => `<tr><td><b class="c-${f.rol}">${f.posicion}. ${esc(f.nombre)}</b></td><td>${f.consejo}</td>${cols.map(c => `<td>${f.pruebas[c] ?? "–"}</td>`).join("")}<td><b>${f.total}</b></td></tr>`).join("")}</tbody></table></div>`;
+}
+function pintarResultadoReto(d){
+  const r = d.reto_resumen, filas = Object.entries(r.resultados).sort((a, b) => b[1].normalizado - a[1].normalizado || (a[0] === r.ganador ? -1 : b[0] === r.ganador ? 1 : a[0].localeCompare(b[0])));
+  $("#vistas").innerHTML = cabecera(d) + `<section class="panel ganador"><p class="tag">Ronda ${d.ronda_campana} · ${esc(r.nombre)}</p>
+    <h2 class="gana">¡${esc(r.ganador_nombre)} gana el reto!</h2>
+    ${filas.map(([id, x], i) => `<div class="fres ${id === r.ganador ? "top" : ""}"><b class="c-${rolJ(d, id)}">${i+1}. ${esc(nombreJ(d, id))}</b>
+      <div class="barra"><i style="width:${x.normalizado/10}%"></i></div><b>${x.normalizado}</b>
+      <span class="suave">${esc(x.resumen)}</span></div>`).join("")}
+    <p>Ciudad Nova (media del grupo ${r.media}/100): ${Object.keys(r.delta_ciudad).length ? Object.entries(r.delta_ciudad).map(([k,v]) => `${IND[k]} ${v>0?"+":""}${v}`).join(", ") : "sin cambios"}.</p>
+    <h2>Clasificación del torneo</h2>${tablaTorneo(r.clasificacion, d.plan ? d.plan.map(p => p.reto) : null)}
+    <p class="suave">Ahora toca decidir qué hacer con lo que circula en Civitas: esa decisión mueve la ciudad y la elección.</p>
+    ${d.yo === d.anfitrion ? '<button id="seguir">Ir a la decisión cívica ›</button>' : '<p class="suave">La decisión empieza en unos segundos.</p>'}</section>`;
+  enlazar();
+}
+
+/* ================= Decision civica (arbol) y consecuencia (grafo) ================= */
+function nodoActual(){ let n = S.estado.arbol; for (const i of S.ruta) n = n && n.hijos[i]; return n; }
+function ronda(d){
+  const r = d.ronda_info, p = r.publicacion, n = nodoActual();
+  const ops = d.ya_decidiste || !n ? `<p class="aviso">Decisión enviada. Esperando al resto de la sala…</p>` :
+    `<p><b>${esc(n.texto)}</b></p><div class="opciones">${n.hijos.map((h,i) => `<button data-op="${i}">${esc(h.hijos.length ? h.etiqueta[0].toUpperCase()+h.etiqueta.slice(1) : h.texto)}</button>`).join("")}</div>
+     ${S.ruta.length ? '<button class="sec" id="volver" style="margin-top:10px">« Volver a las opciones</button>' : ""}`;
+  const yo = d.jugadores.find(j => j.id === d.yo);
+  if (AUTO && !d.ya_decidiste && n) setTimeout(() => { const b = document.querySelector("[data-op]"); if (b) b.click(); }, 500);
+  return `<section class="panel"><p class="tag">Decisión cívica · ${esc(r.evento)}</p>
+    ${d.decision_intro ? `<p>${esc(d.decision_intro)}</p>` : ""}
+    <div class="pub"><div class="autor">${esc(p.autor)}</div><div class="texto">${esc(p.texto)}</div>
+    <div class="suave">Zona: ${esc(p.zona_nombre)}${p.candidato?" · Sobre: "+esc(p.candidato):""}</div></div>
+    <p id="txtReloj" style="margin:.6em 0 0"></p><div class="reloj" id="reloj"><i></i></div>
+    ${ops}
+    ${yo ? `<p class="suave">Tu rol: <b class="c-${yo.rol}">${yo.rol_nombre}</b>. ${ROLES.find(x=>x[0]===yo.rol)[2]}</p>` : ""}
+    ${d.yo===d.anfitrion ? `<button class="sec" id="pausa">${d.pausado?"Reanudar":"Pausar ronda"}</button>` : ""}</section>`;
+}
+function pintarReloj(){
+  const d = S.estado; if (!d || d.fase !== "ronda" || !$("#reloj")) return;
+  const total = d.ronda_info.segundos, r = d.restante ?? 0;
+  $("#txtReloj").innerHTML = d.pausado ? "<b>En pausa</b>" : `<b>Tiempo restante: ${Math.ceil(r)} s</b>`;
+  $("#reloj i").style.width = Math.max(0, Math.min(100, r/total*100)) + "%";
+  $("#reloj").classList.toggle("urgente", r <= 5);
+}
+function enlazar(){
+  document.querySelectorAll("[data-op]").forEach(b => b.onclick = async () => {
+    const i = +b.dataset.op, h = nodoActual().hijos[i];
+    if (h.hijos.length) { S.ruta.push(i); return pintar(); }
+    document.querySelectorAll("[data-op]").forEach(x => x.disabled = true);
+    await orden("accion", {ronda: S.estado.ronda, ruta: S.ruta.concat(i), id: S.codigo + "-" + S.estado.ronda + "-" + Date.now()});
+  });
+  if ($("#volver")) $("#volver").onclick = () => { S.ruta.pop(); pintar(); };
+  if ($("#pausa")) $("#pausa").onclick = () => orden("pausa", {pausar: !S.estado.pausado});
+  if ($("#seguir")) { $("#seguir").onclick = () => orden("continuar"); if (AUTO) setTimeout(() => $("#seguir") && $("#seguir").click(), 1500); }
+  pintarReloj();
+}
+function resultado(d){
+  const r = d.resultado, p = r.publicacion, mio = r.acciones.find(a => a.jugador === d.yo);
+  const tipo = {falsa:["ERA FALSA","var(--mal)"],verdadera:["ERA VERDADERA","var(--ok)"],opinion:["ERA UNA OPINIÓN","var(--aviso)"]}[p.tipo];
+  return `<section class="panel"><p class="tag">Consecuencia</p><div class="res-tipo" style="color:${tipo[1]}">${tipo[0]}</div><p><b>${esc(p.texto)}</b></p>
+    <p class="suave">${esc(p.fuente)}</p>
+    <p>Llegó a <b>${r.n_alcanzados}</b> de 16 ciudadanos en <b>${r.saltos}</b> ${r.saltos === 1 ? "salto" : "saltos"}${r.protegidos.length?`; <b>${r.protegidos.length}</b> quedaron protegidos por reportes`:""}.
+    ${r.desmentida?'<br><b class="pos">Rumor desmentido a tiempo.</b>':""}${r.retirada?'<br><b class="pos">Civitas retiró la publicación.</b>':""}</p>
+    ${grafo(r, p)}
+    <div class="leyenda"><span style="--c:#9333ea">Fuente</span><span style="--c:#dc2626">Recibió el rumor</span><span style="--c:#16a34a">Información verificada</span><span style="--c:#f97316">Opinión</span><span style="--c:#0284c7">Protegido</span></div>
+    <h2>Qué hizo cada uno</h2>${r.acciones.map(a => `<div class="acc"><span><b>${esc(a.nombre)}</b> ${ACCION[a.accion]}</span><b class="${a.puntos>0?"pos":"neg"}">${a.puntos>0?"+":""}${a.puntos}</b></div>`).join("")}
+    ${mio ? `<p class="aviso" style="margin-top:12px"><b>${esc(mio.nota)}</b>${mio.logros_nuevos.map(l => `<br>¡Logro: ${esc(l)}!`).join("")}</p>` : ""}
+    ${d.yo===d.anfitrion ? `<button id="seguir" style="margin-top:12px">${d.ronda >= d.total_rondas ? "Ver la elección ›" : "Siguiente ronda ›"}</button>` : '<p class="suave">La siguiente ronda empieza en unos segundos.</p>'}</section>`;
+}
+function grafo(r, p){
+  if (!S.grafo) return "";
+  const pos = {}, porZona = {};
+  S.grafo.nodos.filter(n => n.tipo === "ciudadano").forEach(n => (porZona[n.zona] = porZona[n.zona] || []).push(n));
+  for (const [z, ns] of Object.entries(porZona)) ns.forEach((n, k) => { const a = 2*Math.PI*k/ns.length - Math.PI/2;
+    pos[n.id] = [ZONAS[z][0] + 95*Math.cos(a), ZONAS[z][1] + 62*Math.sin(a)]; });
+  const color = n => r.niveles[0] && r.niveles[0].includes(n) ? "#9333ea" : r.protegidos.includes(n) ? "#0284c7" :
+    r.alcanzados.includes(n) ? ({falsa:"#dc2626",verdadera:"#16a34a",opinion:"#f97316"}[p.tipo]) : "#64748b";
+  let s = `<svg viewBox="80 20 840 650" role="img" aria-label="Propagación de la publicación entre los ciudadanos de Ciudad Nova"><defs>
+    <marker id="fl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#16a34a"/></marker></defs>`;
+  CALLES.forEach(([a,b]) => s += `<line x1="${ZONAS[a][0]}" y1="${ZONAS[a][1]}" x2="${ZONAS[b][0]}" y2="${ZONAS[b][1]}" stroke="currentColor" stroke-opacity=".15" stroke-width="22" stroke-linecap="round"/>`);
+  for (const [z,[x,y]] of Object.entries(ZONAS)) s += `<text x="${x}" y="${y+5}" text-anchor="middle" font-size="22" font-weight="800" fill="currentColor" fill-opacity="${z===p.zona?1:.35}">${z==="alcaldia"?"ALCALDÍA":z.toUpperCase()}</text>`;
+  for (const [h, pa] of Object.entries(r.padres)) if (pos[h] && pos[pa]) {
+    const [x1,y1] = pos[pa], [x2,y2] = pos[h], dx = x2-x1, dy = y2-y1, l = Math.hypot(dx,dy) || 1;
+    s += `<line x1="${x1+dx/l*16}" y1="${y1+dy/l*16}" x2="${x2-dx/l*18}" y2="${y2-dy/l*18}" stroke="#16a34a" stroke-width="3" marker-end="url(#fl)"/>`; }
+  S.grafo.nodos.filter(n => pos[n.id]).forEach(n => { const [x,y] = pos[n.id];
+    s += `<circle cx="${x}" cy="${y}" r="15" fill="${color(n.id)}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y+33}" text-anchor="middle" font-size="16" fill="currentColor">${esc(n.nombre)}</text>`; });
+  return s + "</svg>";
+}
+
+/* ================= Final: tres resultados distintos ================= */
+function pintarFinal(d){
+  clearInterval(S.timer);
+  const f = d.final, total = Math.max(1, ...Object.values(f.votos));
+  const nombres = {vega:"Tomás Vega",ortega:"Juan Ortega",prado:"Inés Prado",ruiz:"Elena Ruiz"};
+  const tor = f.torneo;
+  $("#vistas").innerHTML = (tor ? `<section class="tres">
+      <div class="panel ganador"><p class="tag">Campeón del torneo</p><h2 class="gana">${esc(tor.campeon_nombre)}</h2><p class="suave">Puntos individuales</p></div>
+      <div class="panel"><p class="tag">Ganador electoral</p><p class="valor">${esc(f.ganador_nombre)}</p><p class="suave">Lo que votó Ciudad Nova</p></div>
+      <div class="panel"><p class="tag">Estado de Ciudad Nova</p><p class="valor">${esc(f.ciudad.titulo)}</p><p class="suave">${f.ciudad.indice}/100 · resultado colectivo</p></div></section>
+    <section class="panel"><p>${esc(tor.mensaje)}</p>${tablaTorneo(tor.clasificacion, d.plan ? d.plan.map(p => p.reto) : null)}
+      <p class="suave">Ganadores por reto: ${tor.pruebas.map(p => `${esc(p.nombre)}: ${esc(p.ganador_nombre)}`).join(" · ")}</p></section>` : "") +
+  `<section class="panel"><h2>Elección de alcalde</h2><p style="font-size:1.4rem;font-weight:800;color:var(--acento)">Gana ${esc(f.ganador_nombre)}</p>
+    <div class="votos">${Object.keys(nombres).map(c => `<div class="v ${c===f.ganador?"gana":""}"><span>${nombres[c]}</span><div><i style="width:${f.votos[c]/total*100}%"></i></div><b>${f.votos[c]}</b></div>`).join("")}</div>
+    <p class="suave">Abstención: ${f.abstencion} ciudadanos</p><h2>¿Por qué ganó?</h2><ul>${f.explicacion.map(e => `<li>${esc(e)}</li>`).join("")}</ul></section>
+  <section class="panel"><h2>Resultado de la ciudad</h2><p style="font-size:1.2rem;font-weight:800;color:var(--ok)">${esc(f.ciudad.titulo)} (${f.ciudad.indice}/100)</p><p>${esc(f.ciudad.texto)}</p></section>
+  <section class="panel"><h2>Decisiones cívicas</h2><ol>${f.ranking.map(j => `<li><b class="c-${j.rol}">${esc(j.nombre)}</b> (${j.rol_nombre}): ${j.puntos} puntos, reputación ${j.reputacion}${j.logros.length?`<br><span class="suave">Logros: ${j.logros.map(esc).join(", ")}</span>`:""}</li>`).join("")}</ol>
+    <div class="fila"><button id="otra">Jugar otra partida</button></div></section>`;
+  $("#otra").onclick = () => { history.replaceState(null, "", location.pathname); S = Object.assign(S, {codigo:null, token:null, estado:null, version:-1, ronda:null, vn:null}); pintarInicio(); };
+}
+
+/* ================= Pantalla de espectadores (stand de la feria) ================= */
+function espectadores(codigo){
+  document.getElementById("main").classList.add("espect");
+  const pintarE = async () => {
+    try {
+      const d = await llamar("GET", `/salas/${codigo}/publico`);
+      const fase = {lobby:"Sala de espera", escena:"Escena", reto:"Reto en curso", reto_resultado:"Resultados del reto", ronda:"Decisión cívica", resultado:"Consecuencias", final:"Final"}[d.fase] || d.fase;
+      $("#vistas").innerHTML = `<section class="panel"><p class="tag">Sala ${esc(d.codigo)} · ${esc(fase)}</p>
+        <p class="gigante">${esc(d.titulo_ronda || (d.fase === "final" ? "¡Partida terminada!" : "Arena Civitas"))}</p>${planHTML(d)}
+        ${d.reto ? `<p><b>${esc(d.reto.nombre)}</b> · terminaron ${d.reto.entregaron.length} de ${d.jugadores.length}</p>
+          <ul class="jug">${d.jugadores.map(j => { const p = d.reto.progreso[j.id]; return `<li><span class="punto" style="background:${COLOR[j.rol]}"></span><b style="flex:1">${esc(j.nombre)}</b>
+          <span class="etq">${d.reto.entregaron.includes(j.id) ? "terminó" : p ? p.puntos + " pts" : "jugando…"}</span></li>`; }).join("")}</ul>` : ""}
+        ${d.final ? `<div class="tres"><div class="panel"><p class="tag">Campeón</p><p class="valor">${esc(d.final.torneo ? d.final.torneo.campeon_nombre : "—")}</p></div>
+          <div class="panel"><p class="tag">Alcalde</p><p class="valor">${esc(d.final.ganador_nombre)}</p></div>
+          <div class="panel"><p class="tag">Ciudad</p><p class="valor">${esc(d.final.ciudad.titulo)}</p></div></div>` : ""}</section>
+        ${d.clasificacion ? `<section class="panel"><h2>Clasificación</h2>${tablaTorneo(d.clasificacion, d.plan ? d.plan.map(p => p.reto) : null)}</section>` : ""}
+        ${cabecera(Object.assign({}, d, {fase:"publico"}))}`;
+      error("");
+    } catch(e) { error(e.message); }
+  };
+  pintarE(); setInterval(pintarE, 2000);
+}
+
+/* ================= Arranque: reconexion automatica ================= */
+(function(){
+  const ver = (URLP.get("ver") || "").toUpperCase();
+  if (ver) return espectadores(ver);
+  const sala = (URLP.get("sala") || "").toUpperCase();
+  const token = sala && leer(sala);
+  if (sala && token) { S.codigo = sala; S.token = token; iniciarSondeo(); } else pintarInicio();
+})();
+</script>
+</body>
+</html>

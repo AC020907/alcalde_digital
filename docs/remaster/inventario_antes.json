@@ -1,0 +1,3307 @@
+{
+ "arte": {
+  "game/images/personajes/claudia_base.png": "186065d4ba8271ae607f6833b06b9d9e0650cd83af59f4cbff4b4dc8ac8650af",
+  "game/images/personajes/claudia_enojada.png": "17ce367da1d8c093fa4dbff3f51ea55cac41044fc667b9cac0e4b9f3b9665cec",
+  "game/images/personajes/claudia_feliz.png": "3704b54f9de740c9eae04dbf00246a195378f5e0bfaae75fc3cabce742f7fa19",
+  "game/images/personajes/claudia_neutral.png": "067cdf94d3a7bca574afb3c8ed59c37ce38ac53da0be26d7d5cfb33868daea7c",
+  "game/images/personajes/claudia_seria.png": "6256343322e23f829f066f85c1d796cced67304526b1930b98ecf7b4413d7b64",
+  "game/images/personajes/claudia_sorprendida.png": "d26854738deb15f8643af99e76ad560be52b58024f2476087f5fa227b8dc9521",
+  "game/images/personajes/claudia_triste.png": "1de8417ce79c9600ed6a18696b6b84623fb745cc3399c38f99670372699058f5",
+  "game/images/personajes/martina_base.png": "b21fc864865436a5c69c9b196c62935f76b83266c536859c82fb6ed28b610199",
+  "game/images/personajes/martina_enojada.png": "5cd3063f703e79e023b7a75c3fc5aeefd5ae069aa322c6bd50cbe5f4271ac6eb",
+  "game/images/personajes/martina_feliz.png": "228505e6a3add54e703a5130553b0f3ca8db89cd22216f15108dfb16d8155245",
+  "game/images/personajes/martina_neutral.png": "89ebb6cdde2655018b5a6acbef619f1342a972770b751050d40f82aef327afb6",
+  "game/images/personajes/martina_seria.png": "dc5dbc7667493e61816f620cc47802cd4b8b342a61a8fc24110d3037b6d76d00",
+  "game/images/personajes/martina_sorprendida.png": "cf7def20646c03a739986b52168f59e79ec9c97285e72cb6300ca7593187775b",
+  "game/images/personajes/martina_triste.png": "a845868fbcb6fc05ae912519eddcae4d2c8f016edb091f276b751808982ab1ff",
+  "game/images/personajes/nova_base.png": "f0d8d0cb7a81ac405b0547139899c7874f27756054c2b6e2a6b0219716669b96",
+  "game/images/personajes/nova_enojada.png": "eccaac251540bf66c4715abeac71ddf67fdc243d35337fade7a6a25c95b15bf0",
+  "game/images/personajes/nova_feliz.png": "725b292442fd4b73c87a7a85fc5b203f91fdbc1c13f6c31814e32c7436f7e1a2",
+  "game/images/personajes/nova_neutral.png": "a50ea9b3c5f1ca50677c8d955f2805955ad3bc68330d1aa111fedd8241837e68",
+  "game/images/personajes/nova_seria.png": "9b2454ac7c78c33869ec47904e56e721f3115f490e13a58f4fb254ecedbac0de",
+  "game/images/personajes/nova_sorprendida.png": "ac15dac483b5e0ebc7044eb68919d116a30fbb882435a38c17522bc4426fa500",
+  "game/images/personajes/nova_triste.png": "23eade3e144115f749db845780a67c05f65aedb74b276e78bdd7f90b2fbc79f1",
+  "game/images/personajes/rodrigo_base.png": "cf1a0a6787802b6d80e24d7709eaba871f53a0faf5e45cb83ded1cf8d6600462",
+  "game/images/personajes/rodrigo_enojada.png": "84d8ee103d3f17a92909b42713b4d5e3d8f4d50e4d1585f28b948eeed8f0db65",
+  "game/images/personajes/rodrigo_feliz.png": "6e80832b023ce55fe8d5a720a20c31525edb13465de4d98b7a417fd6005d9277",
+  "game/images/personajes/rodrigo_neutral.png": "72454dc7666a9ad6b4767c642224b787e92ef0f543d3379be6478df7e4f3c9ca",
+  "game/images/personajes/rodrigo_seria.png": "6869e41760c011bc59cafc1cf6f94cef0d8821ee50bc35c010d7105ab1ba2df6",
+  "game/images/personajes/rodrigo_sorprendida.png": "7bfda995663580ce44215be798a7ca4cff69362f7506caec4cc07ab43b4bfb42",
+  "game/images/personajes/rodrigo_triste.png": "a953ded838b41b388e5949f450c7c32c47cb1e3ce61967dcedfcf013f7a01076",
+  "game/images/personajes/tomas_base.png": "d2f6c7ad7818c0faa280bb5bb5aa1a1c2914da18f23b8e71e1868a7958a1ac32",
+  "game/images/personajes/tomas_enojada.png": "0079515373851922f8764c9e0d0729b9799101400321e13074a1befa10246702",
+  "game/images/personajes/tomas_feliz.png": "6eb2dbcf181be40f903eeef3705f361bfa8123afef94704409e2e64841738dbb",
+  "game/images/personajes/tomas_neutral.png": "617956dbace05d921fd59f26b665ea4478e3b590a713ad154ffd88b928bc441f",
+  "game/images/personajes/tomas_seria.png": "be953dc98923fa26376ae0b3a03fa05912114de98638a152fd8c7c3702188ca4",
+  "game/images/personajes/tomas_sorprendida.png": "f2b6d0f444cba09bac248649a5969e21f29a111a1f25694efa48300489c18414",
+  "game/images/personajes/tomas_triste.png": "396c62b63d2818770dd819a372099c740f73d3bcc6732d764d0ca943adb821e3",
+  "game/images/personajes/lateral/claudia_enojada_lado.png": "37aa3050b65eaaa37e8cfb04c760a90b1058cb9f2d637ffd553a7e8819b20e31",
+  "game/images/personajes/lateral/claudia_feliz_lado.png": "ffa2546234afc5a6a9fd6e8d557148db12872031ec6ae056eb4127177e4e5270",
+  "game/images/personajes/lateral/claudia_neutral_lado.png": "c6f22ebce73ae77baccd1ca2bfd458e3354145377fb7395e257b5131ce2ffc6a",
+  "game/images/personajes/lateral/claudia_seria_lado.png": "382bd6cbb52812d74501f89cbe5c1547cbcc94609556b29a8be7182ba969cc24",
+  "game/images/personajes/lateral/claudia_sorprendida_lado.png": "aab1a7e1e43fb93e740757134c02bf77758019f006e47c3df826fe90bbe3e433",
+  "game/images/personajes/lateral/claudia_triste_lado.png": "12d621c21e9993024bb2976eb561994d8fd792b26ffdb8bacbf62ec95cb27c23",
+  "game/images/personajes/lateral/martina_enojada_lado.png": "3c9b71252e9a714d62db69db2d2625dcfeb01aa8454cb750ecb0610887311367",
+  "game/images/personajes/lateral/martina_feliz_lado.png": "4cb66fa1160e47bede842ed89602d1f340476f74c39f8a65e599dfcfd0fa4214",
+  "game/images/personajes/lateral/martina_neutral_lado.png": "0b32522af2b7bb9b3b907949651aea12190510839c3b2602b9206d33abe91747",
+  "game/images/personajes/lateral/martina_seria_lado.png": "e8bbae9af685542dd1b018efb6ad35e8912f6a89ad065cba1411c9e1d8af594d",
+  "game/images/personajes/lateral/martina_sorprendida_lado.png": "89f86384caeb5f0d3c4e7eae759f277367ea72127e50e0cf91d05627d43f2441",
+  "game/images/personajes/lateral/martina_triste_lado.png": "27a59d15c177f752627edd5813db51b17109d9546b14862ef40ebe28dde11038",
+  "game/images/personajes/lateral/nova_enojada_lado.png": "2cfee8b0a09c69fded1eb395a18bc612cbf4490e4e663d60317023c36c43c448",
+  "game/images/personajes/lateral/nova_feliz_lado.png": "088197c58b83aa0039c28330ff6dd800cc06aff340fbef19d4df280f46d0d6d7",
+  "game/images/personajes/lateral/nova_neutral_lado.png": "c64cfb1f1efdacd06d7d8543ef874f2941a089e2fd15b98fb7bd7f4cb2e33562",
+  "game/images/personajes/lateral/nova_seria_lado.png": "e29df6dd4279e465f5f38dc41e0debb5a3e74a96939700fb8d30f10fd55f5ac7",
+  "game/images/personajes/lateral/nova_sorprendida_lado.png": "a69d440d7db42ba8ecabdfdd4eba57583df11a2a03618b6186d1cfb811a60555",
+  "game/images/personajes/lateral/nova_triste_lado.png": "9d7fc182ad599fda5bf0063034e46bdabfda5f1b09c728cb8bc30e094a7187cc",
+  "game/images/personajes/lateral/rodrigo_enojada_lado.png": "f18e4bd40efd97071e5402fcbbff211ca0e222aa5c568dd0c51878dc6f6b3bf5",
+  "game/images/personajes/lateral/rodrigo_feliz_lado.png": "2e3a0400f1746178961be8bf9c933faa8f8712f53a0ddcf19dfe3331e8f65142",
+  "game/images/personajes/lateral/rodrigo_neutral_lado.png": "f9c4ee7b4dd5245291a22aca552ed25491fc6b70883c32b549160f7f865dbb32",
+  "game/images/personajes/lateral/rodrigo_seria_lado.png": "83b17fa68c49719a2d6bac391a8400c26a97f0778c96e0f022321e2887796053",
+  "game/images/personajes/lateral/rodrigo_sorprendida_lado.png": "2f7877853f249e3d6a3da411e64b01cd94dd53b85cfdd335ecf5754631e4694a",
+  "game/images/personajes/lateral/rodrigo_triste_lado.png": "d706a4c09383a7f3b619151d57fe375c1aad43ac8f24a0b544e6dfe72a52ad20",
+  "game/images/personajes/lateral/tomas_enojada_lado.png": "dc76085294324bf3c261c40872cf1b6683b9dc68815795f06dfefc39bb09b2e4",
+  "game/images/personajes/lateral/tomas_feliz_lado.png": "253a9205ec188356b23a66805b8ed0d22347c1c502180b75af1e576cd1cc8aa0",
+  "game/images/personajes/lateral/tomas_neutral_lado.png": "abb5c21e9a94338fb1745181161d1fc1390505694de7832114c4c3d950ae27f9",
+  "game/images/personajes/lateral/tomas_seria_lado.png": "7928b395ceff03deec4760241f2e36eb4527612735f6e312cf69c0f3a9e2dae8",
+  "game/images/personajes/lateral/tomas_sorprendida_lado.png": "0c1d138eae941e3a759291246d63e528e90109a9cdbeaacfe507812da3462e7e",
+  "game/images/personajes/lateral/tomas_triste_lado.png": "51546cbd7dc329cf2dbdecc2613c15bd82a1df1011f71b1d2a02b3b8280606d5",
+  "game/images/personajes/sprites/claudia_enojada.png": "12a488260a8b0e2df1db8bc856ea098ad74f38fb1e0b985deca024e8b8abb9c8",
+  "game/images/personajes/sprites/claudia_feliz.png": "4f901423c7f5a200adffc49b8304d0a6b3d9aca48fad237e0139c80b0dd7d065",
+  "game/images/personajes/sprites/claudia_neutral.png": "475ebcf0e976d238cb1e625f003625fc8647cf9a2899206b2f0a1dc703075ad6",
+  "game/images/personajes/sprites/claudia_sorprendida.png": "b6a1fe0e1be90071d80876d180fec42b78dd892e92ba1293798ac95677455b6e",
+  "game/images/personajes/sprites/claudia_triste.png": "3e308777a78ca1ac9fe2afcd222b7bbe8ad8d4910235bb9ff9c796077ade1684",
+  "game/images/personajes/sprites/martina_enojada.png": "033e6691d2e5be117435a3a9691d970c033a25c196372cd6f8cebc00b87fe075",
+  "game/images/personajes/sprites/martina_feliz.png": "776e72a349df4f2becf665185697cbb8a57b2eef6b814d4e16382dc6b310091b",
+  "game/images/personajes/sprites/martina_neutral.png": "1f6e971b8e1dba21b8aed0280fed6a872f8c7cff795242059c15156a9dd204f5",
+  "game/images/personajes/sprites/martina_seria.png": "4aa015c19a41a9c4fa3379c2c4eb24b6a481a9d0d48b72d882960462796040d0",
+  "game/images/personajes/sprites/martina_sorprendida.png": "4c5cc563273eea6df61fa9eda7f3bdf9834ea8b0d8da25463d06e576aed3059c",
+  "game/images/personajes/sprites/martina_triste.png": "63bc996ff84e99a5a9e4a5bf91975be7af0bfd05be5fb92f1bbd03b4417af148",
+  "game/images/personajes/sprites/nova_enojada.png": "9edcbde9d426f3ebdca7433630c8d309fe2a25941c24cc49bbbf676f72e3c2de",
+  "game/images/personajes/sprites/nova_neutral.png": "0dcfb7fd645590c95edfd4a00f5bdb27e281032f004adbd4f114985c28d9cb4f",
+  "game/images/personajes/sprites/nova_seria.png": "dc19533d990c422cf757cb75f3e86fd97bd7f0c78385fb9f618c13d27fc53266",
+  "game/images/personajes/sprites/nova_sorprendida.png": "7b0c7e2d4658c2f106720c5c71e7424157f3071f1df5b8480cd8bea405f22ffa",
+  "game/images/personajes/sprites/nova_triste.png": "26bd4c73dc2881dfe1e277013ed5cd6e6759e044a9470f4e0d3fd8c034957cde",
+  "game/images/personajes/sprites/rodrigo_enojada.png": "f2e0b0013474e055b80033423cb6d6e5fb517352a951adfc7ec7c20e95127a82",
+  "game/images/personajes/sprites/rodrigo_feliz.png": "cba6d2a49cfdd58357fc1b395c7504d06af3ec5e55e38ced8de36c783a817d22",
+  "game/images/personajes/sprites/rodrigo_neutral.png": "7810c5acd6c6082c4383db1cb81a5305b3ef157d5e2f6be455c1437a6f77a1ae",
+  "game/images/personajes/sprites/rodrigo_sorprendida.png": "fd3b1473b38a975bc59202bcfd94a364498a0edd2fd64030865f729e5dafe664",
+  "game/images/personajes/sprites/rodrigo_triste.png": "2d8e4e09795ac502f96b7efa2078f629adeac645bc300252056f1ff5297998cf",
+  "game/images/personajes/sprites/tomas_enojada.png": "562dab2c6628861c8338f1e3b474dd926abfecb501d919822dd7e0be16e478d6",
+  "game/images/personajes/sprites/tomas_feliz.png": "64103b5b39a56b8d12f79ed55d7a9828f8f04e197e597612f254b059d9d16a68",
+  "game/images/personajes/sprites/tomas_neutral.png": "856b35fe15f1776ba9a9ad28a58d12943d339e136ea4895a75db09bb8fbf70d7",
+  "game/images/personajes/sprites/tomas_seria.png": "ad30ca9631ff0d1fed5a447e4da158541f97ce01f6dea1e54f9665d571b822eb",
+  "game/images/personajes/sprites/tomas_sorprendida.png": "85ddd3e18290ddb0ee73c608bcfdac2e36a7613604c778082f4d5c798f04162e",
+  "game/images/personajes/sprites/tomas_triste.png": "bde274251a93b5f44b9f6c5cc0833d66c4f6e7825c12073f6eff6bfaed0ac152",
+  "game/images/personajes/sprites/lado/claudia_enojada_lado.png": "99e30295833ac0e5a2e7d179fdb61173adb956a55abb49700ed9e2d073a17579",
+  "game/images/personajes/sprites/lado/claudia_feliz_lado.png": "e5d69fd8ad6db73ab766fad535be0d82716c717777d0a1a00aa20a5329338d90",
+  "game/images/personajes/sprites/lado/claudia_neutral_lado.png": "0f31ee6c7e601983c32a4235940816f5bc2c0a3bf0de4ad6956cffa1ac366ec7",
+  "game/images/personajes/sprites/lado/claudia_sorprendida_lado.png": "105edc643b54e04577e455ec0b2e2f3058a4ce763d29ce78be2fb5cad9680972",
+  "game/images/personajes/sprites/lado/claudia_triste_lado.png": "29388edf829c7d2c5bb677d70985cb5ef94b8bf95c3dd0fcd719ec1e6b55b51f",
+  "game/images/personajes/sprites/lado/martina_enojada_lado.png": "98abbb0a9889d94a79cbd5b9bc6fe4298f9444a995e5482feaf7085ca0fce9a7",
+  "game/images/personajes/sprites/lado/martina_feliz_lado.png": "9a0fcc16ed632e6c284607e8edeb678155361b3c3d5dbfab777c9c97d293a7d3",
+  "game/images/personajes/sprites/lado/martina_neutral_lado.png": "6cec811dfbb4589e5c927d53b48faa7763e820521ad59874b33ad33f6ea38284",
+  "game/images/personajes/sprites/lado/martina_seria_lado.png": "b16cb1de0c0ea8cf49073183221001a22c4c540a843d4e77d3fb85a685dc8aeb",
+  "game/images/personajes/sprites/lado/martina_sorprendida_lado.png": "ee6fd50d161591508651ce1574f1f1bcb924df8a5da78fcac775d3a96eeef2ce",
+  "game/images/personajes/sprites/lado/martina_triste_lado.png": "2cce47d897d9b8efed9bc1e0ab30825e76365f9a39e3e4dce2595284ba042952",
+  "game/images/personajes/sprites/lado/nova_enojada_lado.png": "f24c0bcedf51ecaa87f3c59312a93501a8f3d53541067f0ac668a6b4d7eb4e83",
+  "game/images/personajes/sprites/lado/nova_neutral_lado.png": "889245b224f7f93c0a1d4f868230120d84f0d7ea2235211685d87f83f7a204d7",
+  "game/images/personajes/sprites/lado/nova_seria_lado.png": "4ec62a0875d269bd8c8bd859ff67fe9880b197ed5d26ce1ce16ed205ac32edfa",
+  "game/images/personajes/sprites/lado/nova_sorprendida_lado.png": "65b1e2a160e6d8101c94df23082c520b36ef89976a965d3cb60e0edc1d2e05be",
+  "game/images/personajes/sprites/lado/nova_triste_lado.png": "97a93cd1ca424b7c3a078ace177190ddd5a454a2e8233acc0af0cc8062438580",
+  "game/images/personajes/sprites/lado/rodrigo_enojada_lado.png": "7c1248b0728934cad85f5fa2d51507a3a63ab1e3b9706f80b6d17ab30ae4dd9a",
+  "game/images/personajes/sprites/lado/rodrigo_feliz_lado.png": "eed3834b6360989f60b4da1c9d12f9473c156e3c7afe422fd1e097af7587a79d",
+  "game/images/personajes/sprites/lado/rodrigo_neutral_lado.png": "024011840a4de8c9f058f2f1ca7d5584c5b0c036336854f746bfe2a4310e2880",
+  "game/images/personajes/sprites/lado/rodrigo_sorprendida_lado.png": "dc9f081b593092f2a5d38b13af3779efb836cbba698a380d76c86d67499a2790",
+  "game/images/personajes/sprites/lado/rodrigo_triste_lado.png": "838ee63dbc890c7a049e148640e6c79e086860a27bb3c79e5345d8b4d8d60aa4",
+  "game/images/personajes/sprites/lado/tomas_enojada_lado.png": "4eef2e475b88e5a482f8c87ed84959321f4819babac725975501cab721413e7e",
+  "game/images/personajes/sprites/lado/tomas_feliz_lado.png": "16c2fae34f5c46b17e6618337400be54b3dabae88289fda2b906846747ea85ca",
+  "game/images/personajes/sprites/lado/tomas_neutral_lado.png": "d416217a24d27b0b84925b6b5fbcce6b9e8bd3582a50c2adaf8b662ff625cc1b",
+  "game/images/personajes/sprites/lado/tomas_seria_lado.png": "1f167e1fb09f75f3fe9ccfd84ddc2f82c8d43f09cf553da448ec2bfb1b697728",
+  "game/images/personajes/sprites/lado/tomas_sorprendida_lado.png": "6cdd57d45913fa1f0b12914e47cc6bcd813d4b5b9549644c0fb45462d636b780",
+  "game/images/personajes/sprites/lado/tomas_triste_lado.png": "82f716483c94cdfda2d13d2aa1815b803ac5e6dbdc06304b6cc468b668b2d556",
+  "game/images/personajes/Sprites_carro/Carro_abajo/0.png": "09b153240346fc7781e7e6eb05fe995dbbefcf7a4d9affb82ce6268fa2283184",
+  "game/images/personajes/Sprites_carro/Carro_abajo/1.png": "a0443436c73c512a855760b16d0f4faab72412d49a0f4a22e930b65524f42028",
+  "game/images/personajes/Sprites_carro/Carro_abajo/2.png": "64845a5c46c482d0dba70422294d6a5b989fc36cae401f8dd170650d9eaf6b69",
+  "game/images/personajes/Sprites_carro/Carro_abajo/3.png": "9149879b55f70b1eb1f89d0298ad63afffa9f93dffd32fa6b3672fe474ae499a",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/0.png": "6fe33d54da03cc79edb33a3f93c877176e06fe782ed247e82d598984ea4e11fd",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/1.png": "f9df7cb29611d3292421569157d313eb773a097b3ec45bf5bccde53be129cd43",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/2.png": "af96a00049bb866ac6bacfc09754f59749c1b70362db1da3510071219ecc944b",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/3.png": "45c8128a55430f11eeb3e8a04b699d7cfeeda5c878dfb1f40e0d8ef3f874cf62",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/4.png": "db0c905e232f51de1b2daf62812f0f0f1deec36b2dc268bb95a7320ca5e21bce",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_der/5.png": "090fb52b674609f9e18f186a1658147b7d2d0729cffa3419de3f88d73341133f",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_izq/0.png": "a690ae06ffb65c0bc5c6e67075553c2634ea613799575cfaf4a3d644681a350b",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_izq/1.png": "f220db92fcca7a4a02e5e7b4f052fe50084dfce4a768f3eac3f27d9bf1361e59",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_izq/2.png": "35623663bc26499e72c47286e527cda809fd7bf814925cda91862f471a8647c6",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_izq/3.png": "658ea83c62e3fa9b461d9b6e7d824d26fe86c2ad0cf3002a6510e5e4a2adf4ea",
+  "game/images/personajes/Sprites_carro/Carro_abajo_diag_izq/4.png": "52a27e4db399d7feb7e3797a129f30c607e641499f7f60a9de834ad85e040ce6",
+  "game/images/personajes/Sprites_carro/Carro_arriba/0.png": "63cbbf75fc57badc0857691b98420b2255c518cea843cd2d35a332bdb8cdf2d6",
+  "game/images/personajes/Sprites_carro/Carro_arriba/1.png": "6d60bd6aede3f6b98de7a37e7fc42b79269000134a83bf7ba75a4136337060c7",
+  "game/images/personajes/Sprites_carro/Carro_arriba/2.png": "096a408188568f73abf896e38ce0bacf6eb0d1fb3322a86e15fad8570eb52bc2",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_der/0.png": "cd94a140206e9fc2f33bf7c2bd8b031c41978effb9ac005abaf7835fbf3a8d01",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_der/1.png": "8e7f545d3b9b69121fd71199f50f23decdcb6f1e6b857148c0746ea15c85cd69",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_der/2.png": "912c37c8d755a34e71add3eecf71af881195549c4aae300ecdadb256c8d282ad",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_der/3.png": "204ca3061a980c4bb8096c69ddbc53a381e38f2aac3030ad22278122075218a7",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_der/4.png": "23e246f1007c119193d17b33670bb07385afc69d55c9eaaaadd60498a642d58a",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_izq/0.png": "9f14b42c34305c1e46df92a22469ae74b4e5f0b70478e53e17026d96403f063a",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_izq/1.png": "bf3260729147d4d7de13e5cefe38d35e85b7d60ece16543a39f46032f30fc4b4",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_izq/2.png": "f453471025722ecc1493bdb99c5613ef9f1ca5b29edf4afe58a83880411b74f9",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_izq/3.png": "e116260f41d500cf18fd03738ac9f168e3fb38f155667127837f3aed863a2cab",
+  "game/images/personajes/Sprites_carro/Carro_arriba_diag_izq/4.png": "6d9019dc83ac95cd6ea9e335b1fba9197252a9f20997eb61939e0d4b61186fa6",
+  "game/images/personajes/Sprites_carro/Carro_der/0.png": "9e90aa830b40259a381220517eb96ab9b69129ba05bb5b7c0e000b7847337954",
+  "game/images/personajes/Sprites_carro/Carro_der/1.png": "a72638e31fd4dfb651d4e048e42fb9f2eafa6c042da85f4df47f745530d57795",
+  "game/images/personajes/Sprites_carro/Carro_der/2.png": "f63667e1608df0965004a7b180053b95853d1ff4c351d18369cc6fe224f0702b",
+  "game/images/personajes/Sprites_carro/Carro_der/3.png": "92336521377352f3e8885a4ceb867759551edb0ab6f0090b4b9b6d9dd133ce93",
+  "game/images/personajes/Sprites_carro/Carro_izq/0.png": "5db480552ef4fbd4d1fb11640a32834464657ebb09b1fb6e793dbc6042f46990",
+  "game/images/personajes/Sprites_carro/Carro_izq/1.png": "ce7978812f280cceeb81e8010a0856d9e292061475e74abd0119a72d8ed124f4",
+  "game/images/personajes/Sprites_carro/Carro_izq/2.png": "9f3e5c957ff8fa9f0920319f46b0a7a19219a7540bda95013fb317e5a7f6363f",
+  "game/images/personajes/Sprites_carro/Carro_izq/3.png": "d3894fe17695f6a4bb9b294edbd36e73b46ff14781889cec468c0c68f2fe0b7a"
+ },
+ "narrativa": {
+  "story/acto1.rpy": [
+   [
+    "label",
+    "acto1"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "La plaza está más llena que de costumbre. Medio Ciudad Nova mira su teléfono al mismo tiempo."
+   ],
+   [
+    "dice",
+    "",
+    "En la esquina, alguien reparte botellas de agua con una calcomanía de campaña."
+   ],
+   [
+    "dice",
+    "t",
+    "Alcalde. Buenos días, si es que lo son."
+   ],
+   [
+    "dice",
+    "t",
+    "Tomás Vega. Nos vamos a ver mucho esta semana, en los debates y en los afiches."
+   ],
+   [
+    "dice",
+    "t",
+    "La gente me pregunta por el agua. Yo no tengo respuesta, así que les doy agua. ¿Usted qué les da?"
+   ],
+   [
+    "opcion",
+    "Ayúdame: digamos juntos que estamos esperando los análisis.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "¿Juntos? A seis días de la elección."
+   ],
+   [
+    "dice",
+    "t",
+    "...No le prometo nada. Pero no voy a decir que el agua está envenenada. Eso sí se lo prometo."
+   ],
+   [
+    "opcion",
+    "Repartir botellas le da la razón al rumor, Tomás.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "Puede que tenga razón."
+   ],
+   [
+    "dice",
+    "t",
+    "Pero dígamelo en privado, no delante de los vecinos. Así no vamos a llegar lejos, usted y yo."
+   ],
+   [
+    "opcion",
+    "Ignorarlo y hablar con la gente de la fila.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "Ya veo. Cada quien con su público."
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "Un mensaje directo te cita en un estudio lleno de luces de anillo, cámaras y peluches."
+   ],
+   [
+    "dice",
+    "m",
+    "¡Alcalde! Pase, pase. No pise el cable, que se cae el aro de luz y me muero."
+   ],
+   [
+    "dice",
+    "m",
+    "Soy Martina, @martina.sol. Trescientos mil seguidores. Si yo digo que el agua está bien, la ciudad se calma en una hora."
+   ],
+   [
+    "dice",
+    "m",
+    "El problema... es que anoche subí una historia preguntando si era cierto lo del agua."
+   ],
+   [
+    "dice",
+    "m",
+    "Solo una pregunta, con un emoji. Ahora mis comentarios son un basurero de bots y la gente cree que yo lo confirmé."
+   ],
+   [
+    "dice",
+    "m",
+    "Mi mamá me escribió a las cinco de la mañana para preguntarme si podía bañar a mi hermanito."
+   ],
+   [
+    "opcion",
+    "Una pregunta con trescientos mil seguidores no es solo una pregunta.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "...Lo sé. Por eso lo llamé. No es fácil admitirlo frente al alcalde."
+   ],
+   [
+    "opcion",
+    "Entonces arreglémoslo juntos.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "¿En serio? Ok. Me cae mejor de lo que dicen en los comentarios."
+   ],
+   [
+    "dice",
+    "m",
+    "Tengo acceso de moderadora para mi equipo. Si me ayuda a limpiar esto, publico un desmentido con datos."
+   ],
+   [
+    "dice",
+    "m",
+    "Pero ojo: hay gente que me critica de verdad. Si borramos eso, nos acusan de censura y el rumor gana."
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "minijuego_con_reintento"
+   ],
+   [
+    "dice",
+    "m",
+    "¡Mire eso! Comentarios limpios y nadie puede decir que censuramos a nadie."
+   ],
+   [
+    "dice",
+    "m",
+    "Ya subí el desmentido con el comunicado del Acueducto. Tres mil reposts y subiendo."
+   ],
+   [
+    "dice",
+    "m",
+    "Es raro. Es la primera vez que algo mío se comparte porque es verdad y no porque da rabia."
+   ],
+   [
+    "dice",
+    "m",
+    "Se nos colaron demasiados... y borramos a gente real. Ya hay capturas diciendo que censuro."
+   ],
+   [
+    "dice",
+    "m",
+    "Voy a pedir disculpas en vivo. No es el lunes que quería."
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "Desde el balcón, Ciudad Nova parece tranquila. Las ventanas encendidas son pantallas de teléfono."
+   ],
+   [
+    "dice",
+    "c",
+    "Primer día. Seguimos vivos."
+   ],
+   [
+    "dice",
+    "c",
+    "Revisé la cuenta @verdad.oculta otra vez. Publica cada siete minutos exactos.{w=0.3} Ni un segundo más, ni uno menos."
+   ],
+   [
+    "dice",
+    "tu",
+    "Nadie escribe así."
+   ],
+   [
+    "dice",
+    "c",
+    "No.{w=0.4} Nadie humano."
+   ],
+   [
+    "dice",
+    "c",
+    "Y las cuentas de NOVA ya usan las capturas de los comentarios borrados de Martina. Nada se desperdicia con ellos."
+   ],
+   [
+    "dice",
+    "c",
+    "Lo de Martina ayudó. Su desmentido tiene más reposts que el rumor. Eso casi nunca pasa."
+   ],
+   [
+    "dice",
+    "c",
+    "El lunes le dije que acepté ayudarlo para saber quién está detrás. No era toda la verdad."
+   ],
+   [
+    "dice",
+    "c",
+    "En 2019, durante la inundación, yo trabajaba en el turno de noche de Noticias Nova."
+   ],
+   [
+    "dice",
+    "c",
+    "Llegó una foto: una familia del Barrio Sur en un techo, rodeada de agua. Cuarenta mil personas la compartían. La publiqué en diez minutos."
+   ],
+   [
+    "dice",
+    "c",
+    "La foto era de otro año, de otra ciudad. Esa familia existía, pero nunca estuvo en ese techo."
+   ],
+   [
+    "dice",
+    "c",
+    "Les escribieron durante meses. Que eran actores. Que pedían plata. Que mentían para robar ayudas."
+   ],
+   [
+    "dice",
+    "c",
+    "{cps=24}Desde entonces no publico nada que no haya comprobado dos veces. Ni un 'buenos días'.{/cps}"
+   ],
+   [
+    "opcion",
+    "Te equivocaste. Y desde entonces verificas como nadie en esta ciudad.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "...No esperaba que me lo dijera así. Gracias."
+   ],
+   [
+    "dice",
+    "c",
+    "Pero no me lo diga muy seguido. Me vuelvo insoportable."
+   ],
+   [
+    "opcion",
+    "Todos hemos compartido algo sin revisar alguna vez.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Sí. Pero no todos tenían cuarenta mil lectores esa noche."
+   ],
+   [
+    "dice",
+    "c",
+    "No se lo cuento para que me consuele. Se lo cuento para que sepa por qué voy a ser dura con usted."
+   ],
+   [
+    "opcion",
+    "¿Supiste algo más de esa familia?",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Les escribí una carta. Nunca contestaron."
+   ],
+   [
+    "dice",
+    "c",
+    "El padre tenía una tienda, creo. En el Barrio Sur. Nunca me animé a ir."
+   ],
+   [
+    "dice",
+    "c",
+    "Váyase a dormir, alcalde. Mañana el rumor va a tener hambre otra vez."
+   ]
+  ],
+  "story/acto2.rpy": [
+   [
+    "label",
+    "acto2"
+   ],
+   [
+    "dice",
+    "",
+    "Miércoles, 8:15 a.m. Antes de salir, revisas CivitasNet."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "Las calles del Barrio Sur están tranquilas.{w=0.3} Demasiado tranquilas para un miércoles."
+   ],
+   [
+    "dice",
+    "r",
+    "¿Ahora sí viene el alcalde? ¿Ahora que todos dicen que nos van a cortar el agua?"
+   ],
+   [
+    "dice",
+    "r",
+    "Rodrigo. Tengo la tienda de esta esquina hace quince años. Hoy vendí cero, porque la gente no sale de la casa."
+   ],
+   [
+    "dice",
+    "r",
+    "Mi hermana dice que lo leyó en Civitas. Mi vecino también. ¿Quién miente aquí?"
+   ],
+   [
+    "dice",
+    "r",
+    "Y usted dijo el lunes que el agua era cien por ciento segura. Después salió que el Acueducto seguía revisando."
+   ],
+   [
+    "dice",
+    "r",
+    "Por lo menos usted pidió los análisis antes de hablar. Eso se comenta en el grupo del barrio."
+   ],
+   [
+    "opcion",
+    "Nadie de la alcaldía ha dicho eso, Rodrigo. Vine a escucharte.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "...Bueno. Por lo menos vino en persona. Eso ya es más que los de antes."
+   ],
+   [
+    "opcion",
+    "Entiendo que tengas miedo, pero no puedo responder cada chisme.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "¿Chisme? Para usted es un chisme. Para mí es el arriendo de este mes."
+   ],
+   [
+    "dice",
+    "",
+    "Rodrigo levanta la persiana a medias y te hace pasar. Huele a café recalentado y a cartón mojado."
+   ],
+   [
+    "dice",
+    "r",
+    "Siéntese. Tinto no le puedo negar a nadie, ni al alcalde."
+   ],
+   [
+    "dice",
+    "r",
+    "Mi hija Lucía dice que todo lo de Civitas hay que revisarlo. Tiene diecisiete. Me manda capturas con círculos rojos."
+   ],
+   [
+    "dice",
+    "r",
+    "Yo no confío en la alcaldía desde 2019. En la inundación nos dejaron solos tres días."
+   ],
+   [
+    "dice",
+    "r",
+    "Y encima una periodista publicó una foto de mi esposa y de Lucía en un techo, diciendo que estaban atrapadas ese día."
+   ],
+   [
+    "dice",
+    "r",
+    "La foto era vieja. Pero a ellas las insultaron durante meses. Que eran actrices. Que pedían plata."
+   ],
+   [
+    "opcion",
+    "Esa periodista... se llama Claudia Reyes, ¿verdad?",
+    "if hay(\"claudia_conto_2019\")"
+   ],
+   [
+    "dice",
+    "r",
+    "¿Usted la conoce?"
+   ],
+   [
+    "dice",
+    "tu",
+    "Trabaja conmigo esta semana. Me lo contó anoche. Nunca se lo perdonó."
+   ],
+   [
+    "dice",
+    "r",
+    "...Nunca se lo perdonó. Mire usted. Nosotros tampoco."
+   ],
+   [
+    "opcion",
+    "En 2019 la alcaldía les falló. Lo siento, de verdad.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Nadie de allá arriba me había dicho eso en cinco años."
+   ],
+   [
+    "opcion",
+    "Eso fue otra administración.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Para nosotros la alcaldía es una sola. Cambian los afiches, no los huecos."
+   ],
+   [
+    "opcion",
+    "¿Alguien del barrio sabe qué pasó de verdad con el agua?",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Mi primo trabaja en el Acueducto. Dice que el papel ese decía 'repetir análisis', por una tubería rota en la calle 9."
+   ],
+   [
+    "dice",
+    "r",
+    "Nada de veneno. Pero eso no lo comparte nadie: no da miedo."
+   ],
+   [
+    "opcion",
+    "Seguir con la visita.",
+    ""
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "dice",
+    "r",
+    "¡Mire! El teléfono de Lucía... todos sus grupos están mandando lo mismo."
+   ],
+   [
+    "dice",
+    "",
+    "Un nuevo rumor explota en el Barrio Sur. Esta vez se mueve más rápido que cualquier desmentido."
+   ],
+   [
+    "dice",
+    "",
+    "Si no lo frenas ahora, mañana estará en toda la ciudad."
+   ],
+   [
+    "call",
+    "minijuego_con_reintento"
+   ],
+   [
+    "dice",
+    "r",
+    "Ya casi nadie lo está compartiendo. Mi hermana hasta borró lo que había mandado."
+   ],
+   [
+    "dice",
+    "r",
+    "Lucía dice que usted 'cortó la cadena'. No sé qué significa, pero lo dijo con orgullo."
+   ],
+   [
+    "dice",
+    "r",
+    "Ya llegó a todos lados. Hay gente haciendo fila en el supermercado por agua."
+   ],
+   [
+    "dice",
+    "r",
+    "No es su culpa entera... pero alguien tiene que hacer algo antes del domingo."
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "Claudia reúne a todos en el centro de operaciones. Hay que decidir cómo responder antes de que caiga la noche."
+   ],
+   [
+    "dice",
+    "",
+    "Rodrigo y Claudia se reconocen en el mismo instante. Nadie dice nada durante un rato largo."
+   ],
+   [
+    "dice",
+    "c",
+    "Usted es el señor de la tienda. El esposo de..."
+   ],
+   [
+    "dice",
+    "r",
+    "De la mujer del techo. Sí."
+   ],
+   [
+    "opcion",
+    "Claudia, creo que le debes algo a Rodrigo.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Cinco años tarde. Perdóneme, Rodrigo. Publiqué la foto de su familia sin comprobar nada. Lo que vino después fue culpa mía."
+   ],
+   [
+    "dice",
+    "r",
+    "...Lucía todavía guarda los mensajes. Se los voy a enseñar algún día, para que sepa lo que hizo."
+   ],
+   [
+    "dice",
+    "r",
+    "Pero esta semana usted pidió pruebas antes que nadie. Eso también se lo voy a contar."
+   ],
+   [
+    "opcion",
+    "No es el momento. Tenemos un rumor que frenar.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Tiene razón. Después hablamos, Rodrigo. Se lo debo."
+   ],
+   [
+    "dice",
+    "r",
+    "Después. Siempre después."
+   ],
+   [
+    "dice",
+    "c",
+    "Alcalde, tengo datos: el rumor salió de las mismas cinco cuentas de siempre. Puedo publicar una investigación hoy."
+   ],
+   [
+    "dice",
+    "m",
+    "Una investigación de veinte párrafos no la lee nadie. Déjenme hacer un live. En diez minutos lo ven cien mil."
+   ],
+   [
+    "dice",
+    "r",
+    "Yo solo quiero que alguien le hable claro a la gente del barrio."
+   ],
+   [
+    "opcion",
+    "Claudia: la investigación con pruebas va primero.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Gracias. Lo voy a hacer corto y con capturas. Hasta Martina lo va a poder compartir."
+   ],
+   [
+    "dice",
+    "m",
+    "Ok... pero si nadie lo lee, después no me echen la culpa."
+   ],
+   [
+    "opcion",
+    "Martina: el live llega más rápido.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "¡Sí! Voy a mostrar el comunicado en pantalla y responder preguntas en vivo."
+   ],
+   [
+    "dice",
+    "c",
+    "Rápido no siempre es exacto. Voy a estar viendo, Martina."
+   ],
+   [
+    "opcion",
+    "Rodrigo: que hable el barrio, con su propia voz.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "¿Yo? ¿En Civitas? Bueno... si usted me pasa los datos, Lucía me ayuda con el teléfono."
+   ],
+   [
+    "dice",
+    "c",
+    "Eso no lo había pensado. Una voz del barrio vale más que diez comunicados."
+   ],
+   [
+    "dice",
+    "r",
+    "Y la foto de la inundación que circuló hoy... era de 2019. Yo la reenvié a medio barrio sin mirarla."
+   ],
+   [
+    "dice",
+    "c",
+    "Es la misma foto. La mía. Alguien la guardó cinco años para volver a usarla."
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "oferta_resonancia"
+   ],
+   [
+    "label",
+    "oferta_resonancia"
+   ],
+   [
+    "dice",
+    "",
+    "Tu teléfono vibra. Videollamada de @martina.sol. Está sin maquillaje y sin el aro de luz."
+   ],
+   [
+    "dice",
+    "m",
+    "Perdón por la hora. No sabía a quién más llamar."
+   ],
+   [
+    "dice",
+    "m",
+    "Me escribió una consultora, Resonancia. Me ofrecen cuatro millones por promocionar su 'servicio de verificación'."
+   ],
+   [
+    "dice",
+    "m",
+    "Solo tengo que decir que ellos revisan las noticias por mí... y usar la etiqueta #AntesDeQueLoBorren en los videos."
+   ],
+   [
+    "dice",
+    "tu",
+    "Es la misma etiqueta de todos los rumores. Y la misma consultora que se anuncia una hora después de cada crisis."
+   ],
+   [
+    "dice",
+    "m",
+    "¿Qué? ¿Está seguro?"
+   ],
+   [
+    "dice",
+    "m",
+    "Cuatro millones es el arriendo del estudio de un año. Esta semana perdí veinte mil seguidores."
+   ],
+   [
+    "dice",
+    "m",
+    "No soy tonta. Sé que algo huele raro. Pero también sé que nadie me va a pagar por decir la verdad."
+   ],
+   [
+    "opcion",
+    "Publícalo, Martina. Con la captura y el remitente.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "¿Exponerlos? Me van a llenar de bots hasta el lunes."
+   ],
+   [
+    "dice",
+    "m",
+    "...Pero si me van a llenar de bots igual, por lo menos que sea por algo que valga la pena."
+   ],
+   [
+    "dice",
+    "m",
+    "Ok. Subo la captura completa, con el correo y todo. Que la gente lo vea."
+   ],
+   [
+    "opcion",
+    "Recházalo, pero no hagas ruido. No te expongas.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Ok. Les digo que no y borro el mensaje. Ojalá no me arrepienta."
+   ],
+   [
+    "opcion",
+    "Es tu decisión. Es tu trabajo, no el mío.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Mi decisión... Entonces es no. Usted me hizo pensar esta semana, aunque no quiera admitirlo."
+   ],
+   [
+    "dice",
+    "m",
+    "Ya. Gracias por nada, entonces."
+   ],
+   [
+    "dice",
+    "m",
+    "Voy a aceptar. Por lo menos ellos sí contestan los mensajes."
+   ],
+   [
+    "opcion",
+    "Acéptalo. Vamos a necesitar ese alcance el domingo.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "...Sí. Supongo que todos usamos a todos, ¿no?"
+   ],
+   [
+    "dice",
+    "m",
+    "Buenas noches, alcalde."
+   ]
+  ],
+  "story/acto3.rpy": [
+   [
+    "label",
+    "acto3"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "La redacción huele a café y a papel de impresora. Hay tazas sin lavar sobre cada escritorio."
+   ],
+   [
+    "dice",
+    "c",
+    "Alcalde, encontré el patrón. Todos los rumores de esta semana salen de una misma red."
+   ],
+   [
+    "dice",
+    "c",
+    "Cada mensaje rebota por tres o cuatro cuentas antes de llegar a la gente real. Así parece que lo dice todo el mundo."
+   ],
+   [
+    "dice",
+    "c",
+    "¿Sabe qué es lo más perverso? Ninguna de esas cuentas miente del todo. Cada una agrega una palabra."
+   ],
+   [
+    "dice",
+    "c",
+    "'Revisan el agua' se vuelve 'algo pasa con el agua'. Después 'el agua está mal'. Después 'nos envenenan'."
+   ],
+   [
+    "dice",
+    "c",
+    "Y no se ría, pero me alegra hacer esto con alguien que no me pide que vaya más rápido."
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "dice",
+    "c",
+    "El rumor del agua volvió a la tendencia. Esta vez lo vamos a seguir hasta el principio."
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "",
+    "Sobre la mesa hay fichas impresas de cada cuenta que tocó el rumor."
+   ],
+   [
+    "dice",
+    "c",
+    "Hora de publicación, a quién sigue cada cuenta, cuántos seguidores tiene. La cadena está ahí: solo hay que ordenarla."
+   ],
+   [
+    "dice",
+    "c",
+    "Cuidado: algunas fichas son de cuentas que solo comentaron. No todas forman parte de la cadena."
+   ],
+   [
+    "call",
+    "minijuego_con_reintento"
+   ],
+   [
+    "jump",
+    ".revelacion"
+   ],
+   [
+    "dice",
+    "c",
+    "Lo perdimos. La cuenta se borró justo cuando estábamos cerca."
+   ],
+   [
+    "dice",
+    "c",
+    "Pero vi algo: todas las cuentas usaban la misma etiqueta, #AntesDeQueLoBorren. Es una sola mano."
+   ],
+   [
+    "jump",
+    ".final_acto"
+   ],
+   [
+    "label",
+    ".revelacion"
+   ],
+   [
+    "call",
+    "giro_nova"
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "dice",
+    "c",
+    "Ya sabemos qué es: no inventa, amplifica. Y sabemos cuándo va a atacar."
+   ],
+   [
+    "dice",
+    "c",
+    "Lo raro es que no me siento mejor. Pensé que encontrar al culpable iba a ser como apagar un incendio."
+   ],
+   [
+    "dice",
+    "c",
+    "Pero NOVA tiene razón en algo: usó lo que nosotros publicamos. Todos le dimos material."
+   ],
+   [
+    "label",
+    ".final_acto"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "audio_tomas"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "sabado"
+   ],
+   [
+    "label",
+    "audio_tomas"
+   ],
+   [
+    "dice",
+    "",
+    "Un audio empieza a circular en todos los grupos. Cuarenta segundos. Una voz que suena como la de Tomás Vega pidiendo un soborno."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=38}Buenas noches, alcalde. Un regalo, sin factura.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=38}Si lo comparte desde su cuenta, mañana nadie se acuerda del agua. El domingo gana usted.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=38}No tiene que decir que es verdadero. Solo tiene que no decir que es falso.{/cps}"
+   ],
+   [
+    "dice",
+    "",
+    "Un mensaje directo llega desde una cuenta sin nombre: @n0va."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=38}Si lo comparte, el domingo gana usted. No tiene que decir que es verdadero. Solo no diga que es falso.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "La voz no respira entre frases. Y el archivo lo subió una cuenta creada hace dos horas."
+   ],
+   [
+    "dice",
+    "c",
+    "Si me da treinta minutos, tengo un peritaje. Pero usted decide qué hace la alcaldía mientras tanto."
+   ],
+   [
+    "opcion",
+    "Compartirlo. Que Tomás demuestre que es falso.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Acaba de hacer exactamente lo que yo hice en 2019. Solo que usted sabía."
+   ],
+   [
+    "dice",
+    "c",
+    "Las encuestas van a subir mañana. Disfrútelas. Yo voy a seguir con el peritaje igual."
+   ],
+   [
+    "opcion",
+    "No tocarlo. Que Tomás se defienda solo.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "No compartirlo está bien. Pero el silencio de la alcaldía también se lee, alcalde."
+   ],
+   [
+    "opcion",
+    "Desmentirlo en público, aunque ayude a mi rival.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Peritaje listo: voz sintética, subida desde el mismo panel que programa a NOVA."
+   ],
+   [
+    "dice",
+    "c",
+    "La alcaldía desmintiendo un ataque contra la oposición. En esta ciudad eso no había pasado nunca."
+   ],
+   [
+    "label",
+    "sabado"
+   ],
+   [
+    "dice",
+    "",
+    "Mañana se decide todo. Las encuestas dicen empate técnico y Civitas dice cualquier cosa."
+   ],
+   [
+    "dice",
+    "",
+    "Tienes una hora libre, la primera de la semana. ¿A quién vas a ver?"
+   ],
+   [
+    "opcion",
+    "Claudia, en la redacción.",
+    ""
+   ],
+   [
+    "call",
+    ".claudia"
+   ],
+   [
+    "opcion",
+    "Martina, en su estudio.",
+    ""
+   ],
+   [
+    "call",
+    ".martina"
+   ],
+   [
+    "opcion",
+    "Rodrigo, en el Barrio Sur.",
+    ""
+   ],
+   [
+    "call",
+    ".rodrigo"
+   ],
+   [
+    "opcion",
+    "Tomás Vega, a tomar un café.",
+    "if not hay(\"uso_audio_tomas\") and not hay(\"tomas_desaire\")"
+   ],
+   [
+    "call",
+    ".tomas"
+   ],
+   [
+    "opcion",
+    "Nadie. Quedarme revisando el expediente.",
+    ""
+   ],
+   [
+    "dice",
+    "",
+    "Te sirves un café frío y repasas cada ficha."
+   ],
+   [
+    "dice",
+    "",
+    "A las once, el teléfono vuelve a vibrar. Mañana empieza todo."
+   ],
+   [
+    "label",
+    ".claudia"
+   ],
+   [
+    "dice",
+    "c",
+    "¿Vino hasta acá un sábado? Su equipo de campaña lo debe estar odiando."
+   ],
+   [
+    "dice",
+    "c",
+    "Estoy releyendo todo. Mañana NOVA va a atacar con lo más grande que tenga, y quiero que nos encuentre listos."
+   ],
+   [
+    "dice",
+    "c",
+    "Y le tengo una noticia: con lo que juntamos, ya no es una teoría. Mañana podemos decir quién está detrás."
+   ],
+   [
+    "dice",
+    "c",
+    "Tenemos piezas, no el rompecabezas. Si quiere saber quién está detrás, nos falta algo."
+   ],
+   [
+    "dice",
+    "c",
+    "Mire la publicidad que sale en CivitasNet después de cada crisis. Alguien vende algo."
+   ],
+   [
+    "dice",
+    "c",
+    "Y nadie nos ha explicado qué pasó de verdad con el agua. Alguien del Acueducto tiene que saberlo."
+   ],
+   [
+    "dice",
+    "c",
+    "¿Le digo algo? Si perdemos mañana, por lo menos esta vez no publiqué nada que no fuera cierto."
+   ],
+   [
+    "opcion",
+    "Ganemos o perdamos, mañana firmas conmigo la publicación.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Trato. Pero si hay un error de ortografía, es suyo."
+   ],
+   [
+    "opcion",
+    "Duerme un poco. Mañana te necesito despierta.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Dormir. Qué idea tan rara. Mañana se la pruebo."
+   ],
+   [
+    "label",
+    ".martina"
+   ],
+   [
+    "dice",
+    "m",
+    "Ah. Es usted. Pensé que era el repartidor."
+   ],
+   [
+    "dice",
+    "m",
+    "Estaba leyendo comentarios. No los buenos, los otros. Es como tocar un moretón para ver si todavía duele."
+   ],
+   [
+    "dice",
+    "m",
+    "Ya grabé el video para Resonancia. Sale mañana a las siete. Me pagaron la mitad por adelantado."
+   ],
+   [
+    "opcion",
+    "Cancélalo. Todavía estás a tiempo.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "¿Y devuelvo la plata?"
+   ],
+   [
+    "dice",
+    "m",
+    "...Sí. La devuelvo. Que se queden con su etiqueta."
+   ],
+   [
+    "dice",
+    "m",
+    "Uf. Se siente mejor de lo que pensaba. Mañana hago un live de verdad, con usted."
+   ],
+   [
+    "opcion",
+    "Es tarde para eso.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Sí. Eso pensé."
+   ],
+   [
+    "dice",
+    "m",
+    "¿Usted cree que soy algo más que mis números?"
+   ],
+   [
+    "opcion",
+    "Esta semana fuiste la única que pidió perdón en público.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "...Ok, eso no me lo esperaba. Voy a llorar y se me va a correr el delineado que no tengo."
+   ],
+   [
+    "dice",
+    "m",
+    "Mañana estoy en vivo desde temprano. Lo que usted frene, yo lo desmiento al instante."
+   ],
+   [
+    "opcion",
+    "Tus números son lo que más vamos a necesitar mañana.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Claro. Los números."
+   ],
+   [
+    "dice",
+    "m",
+    "Igual voy a estar en vivo. Por la ciudad, no por usted."
+   ],
+   [
+    "label",
+    ".rodrigo"
+   ],
+   [
+    "dice",
+    "r",
+    "¡Alcalde! Pase, que Lucía armó una cosa en la tienda."
+   ],
+   [
+    "dice",
+    "r",
+    "Un grupo de vecinos que revisa las cadenas antes de mandarlas. Ya somos cuarenta. Le pusimos 'Primero Pregunto'."
+   ],
+   [
+    "dice",
+    "r",
+    "Y le cuento algo: la periodista, Claudia, vino ayer. Habló con Lucía un buen rato."
+   ],
+   [
+    "dice",
+    "r",
+    "No sé si la perdonamos. Pero Lucía dice que por lo menos ahora sabe que alguien sí se arrepintió."
+   ],
+   [
+    "opcion",
+    "Mañana, que el barrio sea el primero en verificar.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Eso. Si NOVA ataca, el Barrio Sur no reenvía nada sin preguntar antes."
+   ],
+   [
+    "opcion",
+    "Cuídense mañana. Va a ser un día largo.",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Aquí todos los días son largos, alcalde. Pero gracias por venir. Otra vez."
+   ],
+   [
+    "label",
+    ".tomas"
+   ],
+   [
+    "dice",
+    "t",
+    "Si alguien nos ve, mañana dicen que pactamos la elección."
+   ],
+   [
+    "dice",
+    "t",
+    "Usted desmintió el audio. Mi hija me preguntó por qué el alcalde me defendía. No supe qué contestarle."
+   ],
+   [
+    "dice",
+    "t",
+    "No vine a pedirle nada. Vine a proponerle algo: si NOVA ataca mañana, salimos juntos a decir que es falso."
+   ],
+   [
+    "dice",
+    "t",
+    "Gane quien gane, que no gane la mentira."
+   ],
+   [
+    "opcion",
+    "Trato hecho. Mañana, juntos.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "Nunca pensé que diría esto: buenas noches, colega."
+   ],
+   [
+    "opcion",
+    "Mejor no. Cada uno por su lado.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "Lo entiendo. Suerte mañana, alcalde. A los dos nos va a hacer falta."
+   ]
+  ],
+  "story/archivo_destinos.rpy": [],
+  "story/civitasnet.rpy": [
+   [
+    "label",
+    "abrir_civitasnet"
+   ]
+  ],
+  "story/elecciones.rpy": [
+   [
+    "label",
+    "elecciones"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "call",
+    "domingo_tomas"
+   ],
+   [
+    "dice",
+    "c",
+    "Todas las pantallas están encendidas. Si NOVA ataca hoy, lo vamos a ver aquí primero."
+   ],
+   [
+    "dice",
+    "c",
+    "Y mire esto: Martina amaneció promocionando a Resonancia. Con la etiqueta de los rumores."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "giro_nova_tardio"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "duelo_transmision"
+   ],
+   [
+    "call",
+    "domingo_ataque"
+   ],
+   [
+    "call",
+    "revision_expediente"
+   ],
+   [
+    "dice",
+    "",
+    "{cps=18}Las urnas cierran.{/cps}"
+   ],
+   [
+    "dice",
+    "",
+    "{cps=18}Ciudad Nova cuenta sus votos... y también sus mentiras.{/cps}"
+   ],
+   [
+    "jump",
+    "finales"
+   ],
+   [
+    "label",
+    "domingo_tomas"
+   ],
+   [
+    "dice",
+    "",
+    "Cuatro nombres en el tarjetón: tú, Tomás Vega, Juan Ortega y Elena Ruiz. Ciudad Nova vota hasta las cuatro de la tarde."
+   ],
+   [
+    "dice",
+    "t",
+    "Mi hija de doce años escuchó ese audio en el colegio. Le preguntó a su profesora si su papá era un ladrón."
+   ],
+   [
+    "dice",
+    "t",
+    "Usted sabía que era falso. Todos lo sabían. Y lo compartió igual."
+   ],
+   [
+    "dice",
+    "t",
+    "Hoy probablemente gane. Felicitaciones. Lo que no va a poder es mirarme a la cara en el debate de dentro de cuatro años."
+   ],
+   [
+    "dice",
+    "t",
+    "Colega. Ya preparé el comunicado conjunto. Si NOVA ataca, salimos los dos en vivo."
+   ],
+   [
+    "dice",
+    "t",
+    "Si mi equipo se entera de que dormí tranquilo por primera vez en un mes, me echan."
+   ],
+   [
+    "dice",
+    "t",
+    "Alcalde. El viernes desmintió el audio. No tenía por qué hacerlo."
+   ],
+   [
+    "dice",
+    "t",
+    "Alcalde. Supongo que ya vio lo que dicen de mí en Civitas."
+   ],
+   [
+    "dice",
+    "t",
+    "Que tengo vínculos con criminales. Que robé. Que pedí un soborno con una voz que ni siquiera es la mía."
+   ],
+   [
+    "dice",
+    "t",
+    "Y usted compartió una de esas acusaciones desde la cuenta de la alcaldía."
+   ],
+   [
+    "dice",
+    "t",
+    "Mi abogado tiene la captura. Eso también es parte de esta semana."
+   ],
+   [
+    "dice",
+    "t",
+    "No le voy a pedir que me defienda. Le voy a pedir que hoy no use las mentiras de nadie."
+   ],
+   [
+    "opcion",
+    "No voy a usar mentiras para ganar. Ni contra ti.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "...Gracias. No esperaba eso de un rival. Que gane el mejor."
+   ],
+   [
+    "opcion",
+    "Lo que la gente crea ya no es mi problema.",
+    ""
+   ],
+   [
+    "dice",
+    "t",
+    "Entonces NOVA ya ganó, sin importar quién quede de alcalde."
+   ],
+   [
+    "label",
+    "domingo_ataque"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Les dije que nos veríamos hoy.{/cps}"
+   ],
+   [
+    "dice",
+    "",
+    "Todas las cuentas falsas despiertan al mismo tiempo. El rumor más grande de la semana cae sobre Ciudad Nova a dos horas de abrir las urnas."
+   ],
+   [
+    "dice",
+    "t",
+    "Alcalde, estoy en vivo con mi equipo. ¡Lo que usted frene, mi campaña lo desmiente con su firma y la mía!"
+   ],
+   [
+    "dice",
+    "c",
+    "Tengo las pruebas listas. ¡Frénelo y yo publico todo en cuanto baje!"
+   ],
+   [
+    "dice",
+    "m",
+    "¡Alcalde! Estoy en vivo con cien mil personas. ¡Lo que usted frene, yo lo desmiento al instante!"
+   ],
+   [
+    "dice",
+    "r",
+    "¡En el barrio nadie reenvía nada! Lucía y los de 'Primero Pregunto' están respondiendo cada cadena."
+   ],
+   [
+    "dice",
+    "",
+    "El video de Martina para Resonancia sale justo ahora. Sus seguidores repiten la etiqueta de los rumores sin saberlo."
+   ],
+   [
+    "call",
+    "minijuego_con_reintento"
+   ],
+   [
+    "call",
+    "evento_gran_viralizacion"
+   ],
+   [
+    "call",
+    "evidencias_rescatadas"
+   ],
+   [
+    "label",
+    "evidencias_rescatadas"
+   ],
+   [
+    "dice",
+    "c",
+    "Lo tienes todo: la factura, la lista de cuentas y el análisis original. Esto lo publico ya, con cada documento."
+   ],
+   [
+    "dice",
+    "c",
+    "Con lo que trajiste puedo desmentir lo principal. No todo, pero sí lo que más se compartió."
+   ],
+   [
+    "dice",
+    "c",
+    "Saliste con muy poco. Vamos a tener que desmentir sin pruebas, y eso convence a menos gente."
+   ],
+   [
+    "label",
+    "duelo_transmision"
+   ],
+   [
+    "dice",
+    "c",
+    "Estamos al aire. Diez mil personas viendo el mensaje del alcalde antes de las urnas."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Qué bonita transmisión. ¿Les molesta si la acompaño con mi propia frecuencia?{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "¡Está metiendo ruido en la señal! Cada frase suya tapa la nuestra."
+   ],
+   [
+    "dice",
+    "c",
+    "Si respondemos al ritmo exacto, la señal limpia gana. Alcalde, tome los controles."
+   ],
+   [
+    "call",
+    "minijuego_ritmo"
+   ],
+   [
+    "dice",
+    "c",
+    "¡Señal limpia! La gente escuchó el mensaje completo, sin cortes."
+   ],
+   [
+    "dice",
+    "c",
+    "NOVA va a atacar igual antes de las urnas, pero ahora llega con menos fuerza."
+   ],
+   [
+    "dice",
+    "c",
+    "Se cortó a ratos. La mitad de la gente vio más ruido que mensaje."
+   ],
+   [
+    "dice",
+    "c",
+    "No importa. Lo que viene ahora es lo que cuenta."
+   ]
+  ],
+  "story/escenas.rpy": [],
+  "story/eventos_variables.rpy": [
+   [
+    "label",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "expression"
+   ],
+   [
+    "label",
+    "evento_cuenta_secundaria"
+   ],
+   [
+    "dice",
+    "",
+    "Una cuenta con diez mil seguidores se suma al rumor del agua: \\\"mi tía trabaja en el Acueducto\\\"."
+   ],
+   [
+    "dice",
+    "c",
+    "Una tía sin nombre no es una fuente. Pero la gente le cree porque @eco.urbano lo dice."
+   ],
+   [
+    "label",
+    "evento_filtracion_martina"
+   ],
+   [
+    "dice",
+    "m",
+    "Espere. Alguien me acaba de mandar esto por privado: el memo del Acueducto."
+   ],
+   [
+    "dice",
+    "m",
+    "Pero mire... está cortado. Le falta la última línea."
+   ],
+   [
+    "opcion",
+    "Pídele que no lo publique hasta tener el documento completo.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Ok. Lo guardo. Si alguien me lo manda cortado, por algo será."
+   ],
+   [
+    "opcion",
+    "Que lo publique: la gente merece saber.",
+    ""
+   ],
+   [
+    "dice",
+    "m",
+    "Listo... Ya lo están compartiendo como prueba del veneno. Eso no era lo que quería."
+   ],
+   [
+    "label",
+    "evento_foto_descontextualizada"
+   ],
+   [
+    "dice",
+    "",
+    "Una foto de una calle inundada circula con el texto \\\"así está el Barrio Sur HOY\\\"."
+   ],
+   [
+    "dice",
+    "",
+    "Se puede revisar en CivitasNet antes de creerla."
+   ],
+   [
+    "label",
+    "evento_testimonio_verificable"
+   ],
+   [
+    "dice",
+    "",
+    "@vecina.ana sube un video midiendo el agua de su casa con el kit del colegio. Se ven la hora y la dirección."
+   ],
+   [
+    "label",
+    "evento_rectificacion_salud"
+   ],
+   [
+    "dice",
+    "c",
+    "Buenas noticias: llamé a @salud.nova. Van a publicar una rectificación sobre el memo del lunes."
+   ],
+   [
+    "label",
+    "evento_captura_falsa"
+   ],
+   [
+    "dice",
+    "",
+    "Circula una captura de una supuesta publicación de la alcaldía: \\\"se cancelan las elecciones\\\"."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "dice",
+    "",
+    "Respondes con la captura anotada: otra tipografía, y una hora que no existe."
+   ]
+  ],
+  "story/expediente.rpy": [],
+  "story/finales.rpy": [
+   [
+    "label",
+    "final_caos"
+   ],
+   [
+    "jump",
+    "finales"
+   ],
+   [
+    "label",
+    "finales"
+   ],
+   [
+    "call",
+    "final_fuente_abierta"
+   ],
+   [
+    "call",
+    "final_informada"
+   ],
+   [
+    "call",
+    "final_mandato"
+   ],
+   [
+    "call",
+    "final_dividida"
+   ],
+   [
+    "call",
+    "final_caos_escena"
+   ],
+   [
+    "call",
+    "epilogos"
+   ],
+   [
+    "label",
+    "final_informada"
+   ],
+   [
+    "dice",
+    "",
+    "El lunes amanece despejado sobre Ciudad Nova."
+   ],
+   [
+    "dice",
+    "",
+    "Los resultados no los decidió una captura. Llegaron tarde, se contaron dos veces y nadie gritó fraude."
+   ],
+   [
+    "dice",
+    "r",
+    "¿Sabe qué compartió hoy mi hermana? El informe del Acueducto. Completo. Con el enlace."
+   ],
+   [
+    "dice",
+    "c",
+    "Eso es más difícil que ganar una elección, Rodrigo. Se lo juro."
+   ],
+   [
+    "dice",
+    "",
+    "Las cuentas de NOVA siguen publicando cada siete minutos. Ya casi nadie les responde."
+   ],
+   [
+    "dice",
+    "",
+    "Ganes o pierdas en las urnas, la ciudad que entregas es una ciudad que pregunta de dónde viene cada cosa."
+   ],
+   [
+    "label",
+    "final_dividida"
+   ],
+   [
+    "dice",
+    "",
+    "Los resultados llegan apretados: cuatro mil votos de diferencia. Media ciudad celebra y la otra media sospecha."
+   ],
+   [
+    "dice",
+    "c",
+    "Frenamos lo peor. Pero mire los grupos de vecinos: la mitad se partió en dos esta semana."
+   ],
+   [
+    "dice",
+    "c",
+    "La mentira del agua ya nadie la cree. Lo que se quedó es la costumbre de no creerle a nadie."
+   ],
+   [
+    "dice",
+    "",
+    "El rumor más grande se apagó, pero dejó grietas: familias que ya no hablan de política en la mesa, amigos que se silenciaron."
+   ],
+   [
+    "dice",
+    "",
+    "Ciudad Nova sobrevivió a la semana. Sanar va a tomar más que siete días."
+   ],
+   [
+    "label",
+    "final_caos_escena"
+   ],
+   [
+    "dice",
+    "",
+    "Nadie sabe quién ganó. Cada bando tiene sus propios resultados, sus propias capturas y sus propias verdades."
+   ],
+   [
+    "dice",
+    "",
+    "Afuera de la registraduría hay dos grupos gritando cifras distintas. Los dos tienen pruebas. Ninguna es real."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=36}Ya no tengo que esforzarme, alcalde. La ciudad repite sola.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=36}Mañana a las 7:00 publico otra vez. Y la ciudad va a hacer el resto.{/cps}"
+   ],
+   [
+    "dice",
+    "",
+    "Ciudad Nova cayó en el caos informativo."
+   ],
+   [
+    "label",
+    "final_mandato"
+   ],
+   [
+    "dice",
+    "",
+    "Ganas por once puntos. La plaza está llena, las pantallas repiten tu nombre y las encuestas acertaron por primera vez en años."
+   ],
+   [
+    "dice",
+    "",
+    "Subes al balcón. Lees el discurso que tu equipo escribió. La gente aplaude en los lugares correctos."
+   ],
+   [
+    "dice",
+    "t",
+    "Felicitaciones, alcalde. El peritaje del audio sale mañana en todos los medios."
+   ],
+   [
+    "dice",
+    "t",
+    "No va a cambiar el resultado. Solo va a cambiar cómo lo recuerden."
+   ],
+   [
+    "dice",
+    "",
+    "Esa noche, en el despacho, llega un correo con el asunto 'Gestión de crisis - semana electoral'."
+   ],
+   [
+    "dice",
+    "",
+    "Remitente: Resonancia Consultores. Adjunto: una factura. Concepto: 'amplificación de contenido de terceros (audio)'."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=34}Fue un placer trabajar con usted, alcalde.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=34}Nos vemos en cuatro años. Para entonces, la ciudad ya va a saber cómo funciona.{/cps}"
+   ],
+   [
+    "dice",
+    "",
+    "Ganaste la alcaldía. NOVA ganó la costumbre."
+   ],
+   [
+    "label",
+    "epilogos"
+   ],
+   [
+    "dice",
+    "c",
+    "Renuncié a ayudarlo. Voy a publicar el peritaje del audio con mi firma."
+   ],
+   [
+    "dice",
+    "c",
+    "No es personal. Bueno, sí lo es. Ya cometí una vez el error de quedarme callada."
+   ],
+   [
+    "dice",
+    "c",
+    "Lucía me pidió que le enseñara a verificar fotos. Empezamos el martes. Con la foto de 2019, de primer ejercicio."
+   ],
+   [
+    "dice",
+    "c",
+    "Mi investigación sobre NOVA salió en primera página. Y la firmó conmigo. No lo olvido."
+   ],
+   [
+    "dice",
+    "c",
+    "Voy a seguir investigando. Sola, si hace falta."
+   ],
+   [
+    "dice",
+    "m",
+    "Resonancia me pagó completo. Después salió quiénes eran. Perdí doscientos mil seguidores en un día."
+   ],
+   [
+    "dice",
+    "m",
+    "Lo peor es que me lo merecía. Y que nadie me lo dijo a tiempo."
+   ],
+   [
+    "dice",
+    "m",
+    "Mi video exponiendo a Resonancia es el más visto de mi vida. Me ofrecieron un programa en Noticias Nova."
+   ],
+   [
+    "dice",
+    "m",
+    "Se llama 'Antes de compartir'. Sí, el nombre fue idea suya."
+   ],
+   [
+    "dice",
+    "m",
+    "Ahora tengo una sección fija: 'Antes de compartir'. Es mi contenido con más vistas. ¿Quién lo diría?"
+   ],
+   [
+    "dice",
+    "m",
+    "Perdí cincuenta mil seguidores esta semana. Tal vez me lo merecía."
+   ],
+   [
+    "dice",
+    "r",
+    "'Primero Pregunto' ya tiene trescientos vecinos. Lucía quiere llevarlo a otros barrios."
+   ],
+   [
+    "dice",
+    "r",
+    "La tienda sigue abierta. La confianza en la alcaldía... esa no tanto."
+   ],
+   [
+    "dice",
+    "t",
+    "Vamos a presentar juntos una ley para que las cuentas automáticas se identifiquen. Primera vez que firmo algo con un rival."
+   ],
+   [
+    "dice",
+    "t",
+    "La demanda sigue. No por el resultado, alcalde. Por lo que esta ciudad aprendió a hacer."
+   ]
+  ],
+  "story/investigacion.rpy": [],
+  "story/leaderboard.rpy": [],
+  "story/mando.rpy": [],
+  "story/mapa.rpy": [
+   [
+    "label",
+    "viajar_a_mision"
+   ]
+  ],
+  "story/misiones.rpy": [],
+  "story/modo_feria.rpy": [
+   [
+    "label",
+    "modo_feria"
+   ],
+   [
+    "call",
+    "prologo"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "call",
+    "nueva_publicacion"
+   ],
+   [
+    "call",
+    "comentario"
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "m",
+    "¡Alcalde! Pregunté en una historia si lo del agua era cierto y ahora mis comentarios están llenos de bots."
+   ],
+   [
+    "dice",
+    "m",
+    "¿Me ayuda a limpiarlos? Ojo: la gente que me critica de verdad se queda. Solo borramos bots y mentiras."
+   ],
+   [
+    "call",
+    "minijuego_moderador"
+   ],
+   [
+    "dice",
+    "m",
+    "¡Impecable! Ya publiqué el desmentido con el comunicado del Acueducto."
+   ],
+   [
+    "dice",
+    "m",
+    "Borramos a gente real... Ya hay capturas diciendo que censuro."
+   ],
+   [
+    "dice",
+    "",
+    "El lunes termina con el rumor del agua todavía vivo. Lo que hiciste esta mañana ya circula en Civitas."
+   ],
+   [
+    "dice",
+    "",
+    "Miércoles. Revisas CivitasNet antes de salir."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "r",
+    "¡Alcalde! Todo el barrio dice que mañana cierran el hospital. ¡Y se está regando por todas partes!"
+   ],
+   [
+    "dice",
+    "r",
+    "Y lo del agua... usted dijo que era cien por ciento segura, y el Acueducto seguía revisando."
+   ],
+   [
+    "opcion",
+    "¿Alguien del barrio sabe qué pasó de verdad con el agua?",
+    ""
+   ],
+   [
+    "dice",
+    "r",
+    "Mi primo trabaja en el Acueducto: el papel decía 'repetir análisis', por una tubería rota. Nada de veneno."
+   ],
+   [
+    "opcion",
+    "Primero el hospital. Vamos.",
+    ""
+   ],
+   [
+    "call",
+    "eventos_momento"
+   ],
+   [
+    "call",
+    "minijuego_contencion"
+   ],
+   [
+    "call",
+    "oferta_resonancia"
+   ],
+   [
+    "dice",
+    "",
+    "Dos días después, el rumor del agua vuelve a la tendencia. Alguien lo está empujando a propósito."
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "dice",
+    "c",
+    "El rumor del agua volvió a la tendencia. Si reconstruimos la cadena, llegamos a quien la empezó."
+   ],
+   [
+    "dice",
+    "c",
+    "Le pasé las fichas de las cuentas al tablero. Ordénelas antes de que borren el rastro."
+   ],
+   [
+    "call",
+    "minijuego_rastreador"
+   ],
+   [
+    "call",
+    "giro_nova"
+   ],
+   [
+    "call",
+    "audio_tomas"
+   ],
+   [
+    "dice",
+    "",
+    "{cps=24}Domingo. Día de elecciones. Todo lo que hiciste esta semana va a contar hoy.{/cps}"
+   ],
+   [
+    "call",
+    "viajar_a_mision"
+   ],
+   [
+    "call",
+    "domingo_tomas"
+   ],
+   [
+    "call",
+    "duelo_transmision"
+   ],
+   [
+    "call",
+    "domingo_ataque"
+   ],
+   [
+    "call",
+    "revision_expediente"
+   ],
+   [
+    "dice",
+    "",
+    "{cps=18}Las urnas cierran. Ciudad Nova cuenta sus votos... y sus mentiras.{/cps}"
+   ],
+   [
+    "jump",
+    "finales"
+   ]
+  ],
+  "story/movil.rpy": [],
+  "story/novagiro.rpy": [
+   [
+    "label",
+    "giro_nova"
+   ],
+   [
+    "dice",
+    "c",
+    "¡Ahí está! La cuenta original..."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=35}Me encontraste, alcalde. Felicitaciones.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=35}Casi me encuentras, alcalde.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "¿Nos está... respondiendo?"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Me buscan como si yo hubiera escrito el rumor del agua. Yo no escribo nada.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}A las 6:02, @salud.nova publicó que el Acueducto revisaba una muestra. Una cuenta verificada. Ustedes confían en ella.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Y a las 7:05 usted juró que el agua era cien por ciento segura, sin ver un solo análisis.{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Puse las dos capturas juntas. La gente hizo el resto.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "Nuestro desmentido sin datos... fue la pieza que hacía creíble la mentira."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Usted fue prudente: pidió los análisis. Pero el medio en el que todos confían publicó el memo antes de tenerlos. Prisa por ser el primero.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "@salud.nova... Yo misma comparto sus notas sin pensarlo."
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Usted no dijo nada. El silencio también es una fuente: cada hora sin respuesta me daba la razón.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "Mientras callábamos, la única versión era la suya."
+   ],
+   [
+    "dice",
+    "c",
+    "Por eso la captura viral está cortada: le quitaron 'repetirán el análisis' y le pusieron 'contaminada'."
+   ],
+   [
+    "dice",
+    "c",
+    "El memo de @salud.nova decía 'repetirán el análisis'. La captura viral lo corta justo antes."
+   ],
+   [
+    "dice",
+    "c",
+    "Si eso es cierto, en algún lugar tiene que estar la publicación original."
+   ],
+   [
+    "opcion",
+    "¿Trabajas para Resonancia Consultores?",
+    ""
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=30}Esa pregunta... no está en mis parámetros.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "Contestó todo lo demás. Eso no."
+   ],
+   [
+    "opcion",
+    "¿Quién te paga?",
+    ""
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Yo no tengo bolsillos. Pregúntele a quien vende soluciones para las crisis que yo provoco.{/cps}"
+   ],
+   [
+    "opcion",
+    "Te vamos a apagar.",
+    ""
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Pueden borrar cuentas. Yo vivo en cada repost. ¿Va a apagar a toda la ciudad?{/cps}"
+   ],
+   [
+    "opcion",
+    "¿Quién te paga?",
+    ""
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Yo no tengo bolsillos. Pregúntele a quien vende soluciones para las crisis que yo provoco.{/cps}"
+   ],
+   [
+    "opcion",
+    "Te vamos a apagar.",
+    ""
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Pueden borrar cuentas. Yo vivo en cada repost. ¿Va a apagar a toda la ciudad?{/cps}"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Nos vemos el día de las elecciones.{/cps}"
+   ],
+   [
+    "label",
+    "giro_nova_tardio"
+   ],
+   [
+    "dice",
+    "",
+    "Una publicación aparece en todos los teléfonos a la vez, con el nombre de usuario cambiado."
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "dice",
+    "n",
+    "{cps=40}Me buscaron el viernes y no me encontraron. Les doy una pista gratis: yo no invento. Yo ordeno lo que ustedes ya publicaron.{/cps}"
+   ],
+   [
+    "label",
+    "revision_expediente"
+   ],
+   [
+    "dice",
+    "c",
+    "Tengo el expediente. Y tengo un problema: el audio de Tomás salió del mismo panel que programa a NOVA."
+   ],
+   [
+    "dice",
+    "c",
+    "Y la cuenta de la alcaldía lo compartió. Si publico esto, lo primero que va a ver la gente es su nombre."
+   ],
+   [
+    "dice",
+    "c",
+    "No voy a esconder esa parte. Así que hoy no publico nada. Después de la elección, sí. Con todo."
+   ],
+   [
+    "dice",
+    "c",
+    "Antes de que cierren las urnas, revisemos el expediente. Si sabemos quién está detrás, hoy es el día de decirlo."
+   ],
+   [
+    "dice",
+    "",
+    "¿Quién está detrás de la campaña?"
+   ],
+   [
+    "opcion",
+    "NOVA, por su cuenta.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "NOVA es un programa. Alguien lo escribió, alguien lo programa y alguien paga la cuenta."
+   ],
+   [
+    "jump",
+    ".sin_conclusion"
+   ],
+   [
+    "opcion",
+    "Tomás Vega, para ganar la elección.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "A Tomás también lo atacaron con acusaciones falsas esta semana. No cuadra."
+   ],
+   [
+    "jump",
+    ".sin_conclusion"
+   ],
+   [
+    "opcion",
+    "Resonancia Consultores.",
+    "if grupos[\"civitasnet\"]"
+   ],
+   [
+    "opcion",
+    "Todavía no lo sabemos.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Decirlo así también es honesto. Publicamos lo que está comprobado y dejamos abiertas las preguntas."
+   ],
+   [
+    "jump",
+    ".sin_conclusion"
+   ],
+   [
+    "dice",
+    "c",
+    "Puede ser. Pero si lo publicamos sin pruebas, hacemos exactamente lo mismo que NOVA."
+   ],
+   [
+    "dice",
+    "c",
+    "Nos falta saber desde dónde se programan las cuentas de origen."
+   ],
+   [
+    "dice",
+    "c",
+    "Y no tenemos nada que explique qué pasó de verdad con el agua."
+   ],
+   [
+    "jump",
+    ".sin_conclusion"
+   ],
+   [
+    "dice",
+    "c",
+    "Lo tenemos. Mírelo:"
+   ],
+   [
+    "dice",
+    "c",
+    "Las cuentas de origen se programan desde un panel llamado RSN-Scheduler. RSN: Resonancia."
+   ],
+   [
+    "dice",
+    "c",
+    "Resonancia publica un anuncio una hora después de cada crisis, con la misma etiqueta que los rumores."
+   ],
+   [
+    "dice",
+    "c",
+    "Y el informe del Acueducto prueba que el agua nunca estuvo contaminada: era una tubería."
+   ],
+   [
+    "dice",
+    "c",
+    "Y el primo de Rodrigo confirma que el memo decía 'repetir análisis' por una tubería. Nunca hubo veneno."
+   ],
+   [
+    "dice",
+    "c",
+    "La pregunta es cómo lo contamos."
+   ],
+   [
+    "opcion",
+    "Publicar el expediente completo, con fuentes y con lo que aún no sabemos.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Cada captura con su enlace. Cada hora con su fuente. Que cualquiera lo pueda comprobar."
+   ],
+   [
+    "opcion",
+    "Filtrarlo desde una cuenta anónima para que se haga viral rápido.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Eso es justo lo que hace NOVA: una verdad sin fuente es otro rumor más."
+   ],
+   [
+    "label",
+    ".sin_conclusion"
+   ],
+   [
+    "dice",
+    "c",
+    "Todavía hay preguntas abiertas en el expediente. Esta semana, no las vamos a cerrar."
+   ],
+   [
+    "label",
+    "final_fuente_abierta"
+   ],
+   [
+    "dice",
+    "",
+    "El lunes, la portada de Noticias Nova no es un rumor: es tu expediente, con cada fuente enlazada."
+   ],
+   [
+    "dice",
+    "",
+    "Resonancia Consultores facturaba a las dos campañas por 'gestión de crisis'. Las crisis las fabricaba su propio panel."
+   ],
+   [
+    "dice",
+    "",
+    "Cuando el proveedor corta el acceso a RSN-Scheduler, NOVA publica por última vez a las 7:00 en punto. Después, silencio."
+   ],
+   [
+    "dice",
+    "t",
+    "Nunca pensé que firmaría algo con mi rival. Pero esto no se trataba de quién ganaba."
+   ],
+   [
+    "dice",
+    "c",
+    "Lo mejor no es que sepamos quién fue. Es que cualquiera puede comprobarlo."
+   ],
+   [
+    "dice",
+    "",
+    "En el expediente también está tu comunicado del lunes. Decidiste no borrarlo: es parte de cómo pasó."
+   ],
+   [
+    "dice",
+    "",
+    "@salud.nova crea una regla nueva: ninguna nota de salud sale sin el análisis completo."
+   ],
+   [
+    "dice",
+    "",
+    "Ciudad Nova no se volvió inmune a los rumores. Aprendió a preguntar de dónde vienen."
+   ]
+  ],
+  "story/personajes.rpy": [],
+  "story/prologo.rpy": [
+   [
+    "label",
+    "prologo"
+   ],
+   [
+    "dice",
+    "c",
+    "Alcalde. Claudia Reyes, de Noticias Nova: me asignaron a su equipo esta semana."
+   ],
+   [
+    "dice",
+    "c",
+    "Acepté por una razón: quiero saber quién está detrás de esto. No vine a escribirle comunicados bonitos."
+   ],
+   [
+    "dice",
+    "c",
+    "Dieciocho mil reposts en una hora. La ciudad va a mirar lo primero que usted diga."
+   ],
+   [
+    "opcion",
+    "Publicar un desmentido ahora mismo.",
+    ""
+   ],
+   [
+    "opcion",
+    "Pedir los análisis del agua antes de responder.",
+    ""
+   ],
+   [
+    "opcion",
+    "No intervenir todavía: es solo un rumor más.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Rápido. Eso calma a la gente hoy."
+   ],
+   [
+    "dice",
+    "c",
+    "{cps=28}Ojalá no tengamos que tragarnos esas palabras si los análisis dicen otra cosa.{/cps}"
+   ],
+   [
+    "dice",
+    "c",
+    "Vaya. Alguien en este edificio que pregunta antes de hablar."
+   ],
+   [
+    "dice",
+    "c",
+    "Los pido ya. Pero el rumor no nos va a esperar: cada hora sin respuesta suma reposts."
+   ],
+   [
+    "dice",
+    "c",
+    "¿Un rumor más? Alcalde, hay señoras haciendo fila con tres botellones cada una."
+   ],
+   [
+    "dice",
+    "c",
+    "Los rumores no se cansan. Nosotros sí."
+   ],
+   [
+    "dice",
+    "c",
+    "Rastreé la primera publicación. Salió de @verdad.oculta: sin foto, sin historial."
+   ],
+   [
+    "dice",
+    "c",
+    "{cps=22}Y ayer... esa cuenta no existía.{/cps}"
+   ],
+   [
+    "dice",
+    "tu",
+    "¿Alguien la creó solo para esto?"
+   ],
+   [
+    "dice",
+    "c",
+    "O alguien tiene muchas como esa, esperando su turno."
+   ],
+   [
+    "dice",
+    "c",
+    "Mire los comentarios: bots y vecinos asustados, todo mezclado. Borre los bots, pero a la gente real no se la calla."
+   ],
+   [
+    "call",
+    "apertura_microprueba"
+   ],
+   [
+    "dice",
+    "c",
+    "Limpio. Y nadie podrá decir que la alcaldía borra a quien la critica."
+   ],
+   [
+    "dice",
+    "c",
+    "Borró a una persona real. Ya hay una captura que dice que la alcaldía censura."
+   ],
+   [
+    "dice",
+    "c",
+    "Se le colaron bots. Van a repetir lo del veneno toda la mañana."
+   ],
+   [
+    "dice",
+    "c",
+    "Faltan seis días para las elecciones. Alguien quiere que Ciudad Nova llegue a ese domingo con miedo."
+   ],
+   [
+    "dice",
+    "c",
+    "Una última cosa. Esta semana la gente va a mirar cómo reacciona. ¿Qué clase de alcalde va a ser?"
+   ],
+   [
+    "opcion",
+    "Cercano: hablo con la gente, no solo con los medios.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "En los barrios lo van a notar. Allá nadie lee comunicados."
+   ],
+   [
+    "opcion",
+    "Analítico: primero los datos, luego la opinión.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Ese idioma lo hablo yo. Vamos a llevarnos bien."
+   ],
+   [
+    "opcion",
+    "Mediático: si no estoy en Civitas, no existo.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Sus palabras van a llegar lejos. Las buenas... y las malas también."
+   ],
+   [
+    "opcion",
+    "Político: cada gesto cuenta para el domingo.",
+    ""
+   ],
+   [
+    "dice",
+    "c",
+    "Entonces no se equivoque en público. Allá afuera todo queda en captura."
+   ]
+  ],
+  "story/revision_visual.rpy": [
+   [
+    "label",
+    "revision_visual"
+   ],
+   [
+    "dice",
+    "",
+    "Revisión visual de personajes"
+   ],
+   [
+    "opcion",
+    "Seis expresiones de cada personaje",
+    ""
+   ],
+   [
+    "call",
+    "revision_expresiones"
+   ],
+   [
+    "opcion",
+    "Un personaje, dos y tres sobre cada fondo",
+    ""
+   ],
+   [
+    "call",
+    "revision_composiciones"
+   ],
+   [
+    "opcion",
+    "Aparición, cambio de expresión y salida",
+    ""
+   ],
+   [
+    "call",
+    "revision_transiciones"
+   ],
+   [
+    "opcion",
+    "Volver",
+    ""
+   ],
+   [
+    "jump",
+    "revision_visual"
+   ],
+   [
+    "label",
+    "revision_expresiones"
+   ],
+   [
+    "label",
+    "revision_composiciones"
+   ],
+   [
+    "label",
+    "revision_transiciones"
+   ],
+   [
+    "dice",
+    "c",
+    "Aparición: entra con un fundido corto y sube a su lugar."
+   ],
+   [
+    "dice",
+    "c",
+    "Cambio de expresión por atributo de diálogo: la figura no se mueve."
+   ],
+   [
+    "dice",
+    "c",
+    "Reacción de sobresalto."
+   ],
+   [
+    "dice",
+    "c",
+    "Reacción de temblor."
+   ],
+   [
+    "dice",
+    "",
+    "Salida: sin personajes fantasma."
+   ]
+  ],
+  "story/rutas.rpy": [],
+  "story/sistema_narrativo.rpy": [
+   [
+    "label",
+    "minijuego_con_reintento"
+   ],
+   [
+    "label",
+    ".intento"
+   ],
+   [
+    "call",
+    "expression"
+   ],
+   [
+    "dice",
+    "",
+    "No salió bien. ¿Lo intentas otra vez?"
+   ],
+   [
+    "opcion",
+    "Intentarlo de nuevo",
+    ""
+   ],
+   [
+    "jump",
+    ".intento"
+   ],
+   [
+    "opcion",
+    "Seguir adelante",
+    ""
+   ],
+   [
+    "label",
+    "comentario"
+   ],
+   [
+    "dice",
+    "c",
+    "Compartiste eso sin revisar. Alcalde, así es exactamente como empiezan los incendios."
+   ],
+   [
+    "dice",
+    "c",
+    "Lo reportaste. Bien. Ese tipo de cosas no se ven, pero salvan semanas de caos."
+   ],
+   [
+    "dice",
+    "c",
+    "Reportaste algo que era cierto. Si la alcaldía desmiente verdades, el día que diga algo importante nadie le va a creer."
+   ],
+   [
+    "dice",
+    "c",
+    "Ignorar también es una decisión. A veces la peor."
+   ],
+   [
+    "dice",
+    "c",
+    "Buen criterio. Sigamos."
+   ],
+   [
+    "dice",
+    "m",
+    "Uy... eso no era cierto, ¿verdad? Mis seguidores ya lo están repitiendo."
+   ],
+   [
+    "dice",
+    "m",
+    "¿Lo reportaste? Ok, eso fue elegante. Debería hacer eso más seguido."
+   ],
+   [
+    "dice",
+    "m",
+    "¿Reportaste eso? Pero si era real... ahora todos van a decir que la alcaldía censura."
+   ],
+   [
+    "dice",
+    "m",
+    "Si nadie lo responde, el algoritmo lo responde por ti. Así funciona esto."
+   ],
+   [
+    "dice",
+    "m",
+    "Eso sí da gusto compartirlo."
+   ],
+   [
+    "dice",
+    "r",
+    "¡Lo compartió hasta usted! ¿Y entonces a quién le creemos los del barrio?"
+   ],
+   [
+    "dice",
+    "r",
+    "¿Era mentira? Uf... yo ya se lo había mandado a mi hermana."
+   ],
+   [
+    "dice",
+    "r",
+    "¿Cómo que lo reportó? ¡Eso sí pasó! Lo vimos todos en el barrio."
+   ],
+   [
+    "dice",
+    "r",
+    "En el barrio todos están hablando de eso, y nadie de la alcaldía dice nada."
+   ],
+   [
+    "dice",
+    "r",
+    "Bueno, por lo menos eso sí es verdad."
+   ]
+  ],
+  "story/telefono.rpy": [],
+  "story/voces.rpy": [],
+  "minijuegos/arcade.rpy": [
+   [
+    "label",
+    "jugar_arcade"
+   ]
+  ],
+  "minijuegos/civitas_ui.rpy": [],
+  "minijuegos/contencion.rpy": [
+   [
+    "label",
+    "minijuego_contencion"
+   ],
+   [
+    "call",
+    "jugar_arcade"
+   ]
+  ],
+  "minijuegos/grafo_visual.rpy": [],
+  "minijuegos/integracion.rpy": [
+   [
+    "label",
+    "reaccion_red_civitas"
+   ],
+   [
+    "dice",
+    "",
+    "Tu repost encendió la mecha. La publicación se está volviendo viral en Civitas."
+   ],
+   [
+    "call",
+    "evento_gran_viralizacion"
+   ],
+   [
+    "dice",
+    "",
+    "La publicación falsa que compartiste se expande sin control. Hay que contenerla."
+   ],
+   [
+    "call",
+    "minijuego_contencion"
+   ],
+   [
+    "dice",
+    "",
+    "Reportaste la publicación. Aún puedes rastrear quién la originó."
+   ],
+   [
+    "opcion",
+    "Rastrear el origen",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_rastreador"
+   ],
+   [
+    "opcion",
+    "Dejarlo así",
+    ""
+   ]
+  ],
+  "minijuegos/laboratorio.rpy": [
+   [
+    "label",
+    "laboratorio_grafos"
+   ],
+   [
+    "dice",
+    "",
+    "Laboratorio - modo sustentacion: [estado_sustentacion]"
+   ],
+   [
+    "opcion",
+    "Minijuego 1 - Rastreador (tablero de evidencias)",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_rastreador"
+   ],
+   [
+    "opcion",
+    "Minijuego 1 - Rastreador corto (feria)",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_rastreador"
+   ],
+   [
+    "opcion",
+    "Minijuego 1b - Rastreador en vivo (arcade)",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_rastreador_vivo"
+   ],
+   [
+    "opcion",
+    "Minijuego 3 - Contencion viral",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_contencion"
+   ],
+   [
+    "opcion",
+    "Evento - La Gran Viralizacion",
+    ""
+   ],
+   [
+    "call",
+    "evento_gran_viralizacion"
+   ],
+   [
+    "opcion",
+    "Minijuego 2 - Moderador (estructura)",
+    ""
+   ],
+   [
+    "call",
+    "minijuego_moderador"
+   ],
+   [
+    "opcion",
+    "QA - Mapa de Ciudad Nova (carro)",
+    ""
+   ],
+   [
+    "dice",
+    "",
+    "Maneja el carro con las flechas; F9 muestra las calles. Cierra el mapa con Esc."
+   ],
+   [
+    "opcion",
+    "QA - Revisión visual de sprites, encuadres y fondos",
+    ""
+   ],
+   [
+    "call",
+    "revision_visual"
+   ],
+   [
+    "opcion",
+    "QA - CivitasNet con todas las publicaciones",
+    ""
+   ],
+   [
+    "call",
+    "abrir_civitasnet"
+   ],
+   [
+    "opcion",
+    "QA - Expediente con todas las fichas",
+    ""
+   ],
+   [
+    "dice",
+    "",
+    "Revisa las fichas y cierra el expediente con Esc."
+   ],
+   [
+    "opcion",
+    "QA - Eventos de esta semilla: [memoria[semilla]] -> [memoria[eventos]]",
+    ""
+   ],
+   [
+    "opcion",
+    "Activar / desactivar modo sustentacion (boton RED INTERNA)",
+    ""
+   ],
+   [
+    "opcion",
+    "Sustentacion: demostracion de propagacion BFS",
+    ""
+   ],
+   [
+    "call",
+    "animar_propagacion"
+   ],
+   [
+    "opcion",
+    "Sustentacion: BFS probabilistico (semilla aleatoria)",
+    ""
+   ],
+   [
+    "call",
+    "animar_propagacion"
+   ],
+   [
+    "opcion",
+    "Salir al menu principal",
+    ""
+   ],
+   [
+    "dice",
+    "",
+    "Resultado: [texto_resultado]"
+   ],
+   [
+    "jump",
+    "laboratorio_grafos"
+   ]
+  ],
+  "minijuegos/moderador.rpy": [
+   [
+    "label",
+    "minijuego_moderador"
+   ]
+  ],
+  "minijuegos/pausa.rpy": [],
+  "minijuegos/plataformas.rpy": [
+   [
+    "label",
+    "minijuego_plataformas"
+   ]
+  ],
+  "minijuegos/propagacion.rpy": [
+   [
+    "label",
+    "animar_propagacion"
+   ]
+  ],
+  "minijuegos/rastreador.rpy": [
+   [
+    "label",
+    "minijuego_rastreador"
+   ],
+   [
+    "label",
+    "minijuego_rastreador_vivo"
+   ],
+   [
+    "call",
+    "jugar_arcade"
+   ]
+  ],
+  "minijuegos/ritmo.rpy": [
+   [
+    "label",
+    "minijuego_ritmo"
+   ]
+  ],
+  "minijuegos/sustentacion.rpy": [],
+  "minijuegos/viralizacion.rpy": [
+   [
+    "label",
+    "evento_gran_viralizacion"
+   ],
+   [
+    "call",
+    "minijuego_plataformas"
+   ]
+  ],
+  "arena/arena.rpy": [
+   [
+    "label",
+    "arena"
+   ],
+   [
+    "call",
+    "arena_jugar_prueba"
+   ]
+  ],
+  "arena/arena_torneo.rpy": [
+   [
+    "label",
+    "arena_jugar_prueba"
+   ],
+   [
+    "call",
+    "minijuego_moderador"
+   ],
+   [
+    "call",
+    "minijuego_contencion"
+   ],
+   [
+    "call",
+    "minijuego_rastreador"
+   ],
+   [
+    "call",
+    "minijuego_plataformas"
+   ],
+   [
+    "call",
+    "minijuego_ritmo"
+   ]
+  ]
+ }
+}

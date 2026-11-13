@@ -1,0 +1,225 @@
+{
+ "song_id": "duelo_feria",
+ "version": 1,
+ "bpm": 120,
+ "offset_ms": 0,
+ "difficulty": "normal",
+ "duration_ms": 36000,
+ "notes": [
+  {
+   "time_ms": 4000,
+   "lane": 0,
+   "type": "tap"
+  },
+  {
+   "time_ms": 5000,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 6000,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 7000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 12000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 12250,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 12500,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 13000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 13500,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 14000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 14250,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 14500,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 15000,
+   "lane": 0,
+   "type": "tap"
+  },
+  {
+   "time_ms": 15500,
+   "lane": 0,
+   "type": "tap"
+  },
+  {
+   "time_ms": 20000,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 20250,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 20500,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 20750,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 21000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 21500,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 21750,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 22000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 22500,
+   "lane": 3,
+   "type": "tap"
+  },
+  {
+   "time_ms": 22750,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 23000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 23500,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 28000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 28125,
+   "lane": 3,
+   "type": "tap"
+  },
+  {
+   "time_ms": 28250,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 28500,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 28750,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 29000,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 29250,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 29500,
+   "lane": 3,
+   "type": "tap"
+  },
+  {
+   "time_ms": 30000,
+   "lane": 3,
+   "type": "tap"
+  },
+  {
+   "time_ms": 30250,
+   "lane": 3,
+   "type": "tap"
+  },
+  {
+   "time_ms": 30500,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 30750,
+   "lane": 2,
+   "type": "tap"
+  },
+  {
+   "time_ms": 31000,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 31250,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 31500,
+   "lane": 0,
+   "type": "tap"
+  },
+  {
+   "time_ms": 32000,
+   "lane": 1,
+   "type": "tap"
+  },
+  {
+   "time_ms": 32000,
+   "lane": 2,
+   "type": "tap"
+  }
+ ]
+}
