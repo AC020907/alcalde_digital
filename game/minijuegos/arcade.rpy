@@ -333,7 +333,7 @@ init python:
 
         def dibujar_hud(self, r, st, at):
             sim = self.sim
-            self.poner(r, Solid("#020617e8", xysize=(1920, 150)), 0, 0, st, at, (0, 0))
+            self.poner(r, Solid("#120d1cf0", xysize=(1920, 150)), 0, 0, st, at, (0, 0))
             self.poner(r, self.texto(self.titulo, 40, "#facc15" if self.rastreo else "#f87171", True), 40, 18, st, at, (0, 0))
             if self.rastreo:
                 objetivo = "Sigue el rastro hasta la cuenta que INICIÓ el rumor"
@@ -347,7 +347,7 @@ init python:
             v = sim.viralidad()
             color_v = "#ef4444" if v >= 0.75 else ("#f59e0b" if v >= 0.5 else "#22c55e")
             self.poner(r, self.texto("VIRALIDAD  %d%%" % int(v * 100), 18, color_v, True), 1010, 18, st, at, (0, 0))
-            self.poner(r, Solid("#1e293b", xysize=(300, 26)), 1010, 46, st, at, (0, 0))
+            self.poner(r, Solid("#3a3350", xysize=(300, 26)), 1010, 46, st, at, (0, 0))
             if v > 0:
                 self.poner(r, Solid(color_v, xysize=(max(1, int(300 * v)), 26)), 1010, 46, st, at, (0, 0))
             self.poner(r, self.texto("%s reposts" % formato_num(sim.reposts), 18, "#cbd5e1"), 1010, 80, st, at, (0, 0))
@@ -523,45 +523,9 @@ transform nota_golpe:
 
 screen resultado_arcade(sim):
     zorder 100
-    $ nota = sim.calificacion()
-    $ color_nota = {"S": "#facc15", "A": "#22c55e", "B": "#38bdf8", "C": "#a78bfa", "D": "#ef4444"}[nota]
-    add Solid("#000000b0")
-    frame:
-        align (0.5, 0.5)
-        xsize 980
-        background ("#0b1324f5")
-        padding (50, 36)
-        vbox:
-            spacing 12
-            xfill True
-            text ("VICTORIA" if sim.exito() else "DERROTA") size 60 bold True color ("#22c55e" if sim.exito() else "#ef4444") xalign 0.5
-            text nota size 160 bold True color color_nota xalign 0.5 at nota_golpe
-            text sim.motivo_fin size 24 color "#f1f5f9" xalign 0.5 textalign 0.5
-            null height 6
-            hbox:
-                xalign 0.5
-                spacing 50
-                vbox:
-                    text "PUNTOS" size 16 color "#94a3b8" xalign 0.5
-                    text formato_num(sim.puntos) size 34 bold True color "#f8fafc" xalign 0.5
-                vbox:
-                    text "INTERCEPTADOS" size 16 color "#94a3b8" xalign 0.5
-                    text "[sim.interceptados]" size 34 bold True color "#f8fafc" xalign 0.5
-                vbox:
-                    text "MEJOR COMBO" size 16 color "#94a3b8" xalign 0.5
-                    text "x[sim.mejor_combo]" size 34 bold True color "#facc15" xalign 0.5
-                vbox:
-                    text "REPOSTS" size 16 color "#94a3b8" xalign 0.5
-                    text formato_num(sim.reposts) size 34 bold True color "#f87171" xalign 0.5
-            null height 10
-            textbutton "CONTINUAR":
-                style "grafo_button"
-                text_style "grafo_button_text"
-                xalign 0.5
-                xsize 360
-                text_xalign 0.5
-                default_focus True
-                action Return()
+    use resultado_tarjeta(sim.exito(), ("VICTORIA" if sim.exito() else "DERROTA"), sim.calificacion(), sim.motivo_fin,
+                          [("PUNTOS", formato_num(sim.puntos), "#2b2440"), ("INTERCEPTADOS", "%d" % sim.interceptados, "#2b2440"),
+                           ("MEJOR COMBO", "x%d" % sim.mejor_combo, "#8c2f4b"), ("REPOSTS", formato_num(sim.reposts), "#d1495b")])
 
 
 label jugar_arcade(sim, titulo, rumor):

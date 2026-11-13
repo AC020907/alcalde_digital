@@ -7,6 +7,7 @@
 init python:
     import pygame
     import math
+    import math
     from clases import Plataformas as PL
 
     config.keymap.update({
@@ -21,8 +22,11 @@ init python:
     PLAT_ESCALA = 1.5                  # 48 px del motor -> 72 px en pantalla: el nivel (11 filas) llena el alto util
     PLAT_SUELO_Y = 1010                # y en pantalla del borde inferior del nivel
     PLAT_ANTICIPA = 260                # la camara mira hacia donde corre el jugador (ve antes los obstaculos)
-    COLOR_PARTICULA = {"evidencia": "#facc15", "dano": "#fb7185", "aterriza": "#c9b8d8", "salto": "#e9d5ff",
-                       "control": "#5eead4", "meta": "#5eead4"}
+    # Paleta de Civitas (remaster): papel, ambar de la evidencia, rojo del rumor, teal de la red ciudadana.
+    COLOR_PARTICULA = {"evidencia": "#e8b04b", "dano": "#d1495b", "aterriza": "#c9b8d8", "salto": "#c9b8d8",
+                       "control": "#2f9e8f", "meta": "#fbf6ee"}
+    PLAT_V2 = PLAT_DIR + "v2/"
+    PLAT_TINTA = "#2b2440"
     # Zonas tactiles (x0, y0, x1, y1): izquierda, derecha y salto.
     PLAT_ZONAS = {PL.IZQ: (30, 850, 230, 1050), PL.DER: (260, 850, 460, 1050), PL.SALTO: (1640, 820, 1890, 1050)}
 
@@ -53,17 +57,27 @@ init python:
             # QA visual: un piloto automatico juega por el mismo motor (store.qa_plataformas_auto = habilidad 0..1).
             auto = getattr(store, "qa_plataformas_auto", None)
             self.piloto = PL.Piloto(__import__("random").Random(7), auto) if auto is not None else None
-            z = PLAT_ESCALA
-            for n in ("suelo", "relleno", "pincho", "bloque_on", "bloque_aviso", "bloque_off", "evidencia",
-                      "control_off", "control_on"):
-                self.img[n] = Transform(PLAT_DIR + n + ".png", zoom=z)
-            self.img["meta"] = Transform(PLAT_DIR + "meta.png", zoom=z)
-            for n in ("idle_0", "idle_1", "corre_0", "corre_1", "corre_2", "corre_3", "salto", "cae", "dano"):
-                self.img[n] = Transform(PLAT_DIR + n + ".png", zoom=z)
-                self.img[n + "_izq"] = Transform(PLAT_DIR + n + ".png", zoom=z, xzoom=-1)
-            self.cielo = Transform(PLAT_DIR + "cielo.png", xysize=(1920, 1080))
-            self.lejos = Transform(PLAT_DIR + "fondo_lejos.png", zoom=2.0)
-            self.cerca = Transform(PLAT_DIR + "fondo_cerca.png", zoom=2.0)
+            # Arte v2 (tools/arte/plataformas_arte.py): tiles a 2x (zoom 0.5 -> 72 px), avatar a 4x.
+            for m in range(16):
+                for v in range(2):
+                    self.img["solido_%d_%d" % (m, v)] = Transform(PLAT_V2 + "solido_%d_%d.png" % (m, v), zoom=0.5)
+            for n in ("barrera_0", "barrera_1", "barrera_2", "inestable_on", "inestable_aviso", "inestable_off",
+                      "documento", "antena_off", "antena_on"):
+                self.img[n] = Transform(PLAT_V2 + n + ".png", zoom=0.5)
+            self.img["archivo"] = Transform(PLAT_V2 + "archivo.png", zoom=0.5)
+            for n in ("idle_0", "idle_1", "corre_0", "corre_1", "corre_2", "corre_3", "corre_4", "corre_5",
+                      "salto", "cae", "recoge", "dano", "victoria"):
+                self.img[n] = PLAT_V2 + "av_" + n + ".png"
+            self.za = PLAT_ESCALA / 4.0 * 1.7     # ~108 px de alto en pantalla
+            niv = self.p.nivel
+            self.controles_x = [fx for fy in range(niv.alto) for fx in range(niv.ancho) if niv.filas[fy][fx] == PL.CONTROL]
+            self.lejos = PLAT_V2 + "fondo_lejos.png"
+            self.medio = PLAT_V2 + "fondo_medio.png"
+            self.cables = PLAT_V2 + "primer_plano.png"
+            self.aterrizo_st = -9.0       # squash al aterrizar
+            self.recoge_st = -9.0         # pose de recoger evidencia
+            self.dano_st = -9.0           # sacudida y estatica al ser detectado
+            self.control_st = -9.0        # onda del punto de control
             self.flecha = Transform("gui/flecha_tactil.png", zoom=2.2, alpha=0.75)
             self.flecha_izq = Transform("gui/flecha_tactil.png", zoom=2.2, alpha=0.75, xzoom=-1)
 
@@ -72,7 +86,8 @@ init python:
             if k not in self.textos:
                 if len(self.textos) > 300:
                     self.textos.clear()
-                self.textos[k] = Text(s, size=size, color=color, bold=bold, outlines=[(3, "#0d0a1acc", 0, 0)])
+                self.textos[k] = Text(s, size=size, color=color, bold=bold,
+                                      outlines=([] if color in ("#2b2440", "#8c2f4b", "#8b84a8", "#d1495b") else [(3, "#2b2440", 0, 0)]))
             return self.textos[k]
 
         def mascara(self):
@@ -153,13 +168,18 @@ init python:
                 if tipo in COLOR_PARTICULA:
                     self.chispas(tipo, {"evidencia": 22, "dano": 26, "aterriza": 7, "salto": 5, "control": 16, "meta": 40}[tipo],
                                  {"evidencia": 420, "dano": 380, "aterriza": 160, "salto": 120, "control": 300, "meta": 520}[tipo])
+                if tipo == "aterriza":
+                    self.aterrizo_st = st
                 if tipo == "evidencia":
+                    self.recoge_st = st
                     sfx("pista")
                     self.aviso = (PL.FRAGMENTOS[dato % len(PL.FRAGMENTOS)], "#facc15", st)
                 elif tipo == "dano":
+                    self.dano_st = st
                     sfx("error")
                     self.aviso = ("NOVA te detectó: vuelves al último punto de control", "#fb7185", st)
                 elif tipo == "control":
+                    self.control_st = st
                     sfx("decision")
                     self.aviso = ("Punto de control", "#5eead4", st)
                 elif tipo == "meta":
@@ -181,6 +201,8 @@ init python:
             r = renpy.Render(1920, 1080)
 
             def poner(d, x, y):
+                if isinstance(d, str):
+                    d = renpy.easy.displayable(d)
                 r.blit(renpy.render(d, 1920, 1080, st, at), (int(x), int(y)))
 
             px = p.x / float(PL.SUB) * z
@@ -189,83 +211,149 @@ init python:
             objetivo = max(0.0, min(ancho_mundo - 1920.0, px - 760.0 + p.mira * PLAT_ANTICIPA))
             self.camara += (objetivo - self.camara) * (0.18 if not persistent.reducir_movimiento else 1.0)
             cam = self.camara
+            # Sacudida breve al ser detectado (no con movimiento reducido); solo desplaza la imagen.
+            sac = 0
+            if st - self.dano_st < 0.28 and not persistent.reducir_movimiento:
+                sac = int(9 * math.sin((st - self.dano_st) * 70) * (1 - (st - self.dano_st) / 0.28))
+            cam_v = cam + sac
             y0 = PLAT_SUELO_Y - n.alto * lado
-            poner(self.cielo, 0, 0)
-            poner(self.lejos, -(cam * 0.15) % 1920, 0)
-            poner(self.lejos, -(cam * 0.15) % 1920 - 1920, 0)
-            poner(self.cerca, -(cam * 0.35) % 1920, 0)
-            poner(self.cerca, -(cam * 0.35) % 1920 - 1920, 0)
+
+            # Tres planos: Ciudad Nova entintada (0.12), torres de NOVA (0.35) y, al final, cables (1.25).
+            r.blit(renpy.render(Solid("#120d1c"), 1920, 1080, st, at), (0, 0))
+            for capa, fac, yy in ((self.lejos, 0.12, 0), (self.medio, 0.35, 40)):
+                off = -(cam_v * fac) % 3840
+                poner(capa, off, yy)
+                poner(capa, off - 3840, yy)
 
             activo = PL.intermitente_activo(p.tick)
             falta = PL.PARPADEO - p.tick % PL.PARPADEO
-            fx0 = max(0, int(cam // lado))
+
+            def es(fx, fy, ch=PL.SOLIDO):
+                return 0 <= fy < n.alto and 0 <= fx < n.ancho and n.filas[fy][fx] == ch
+
+            fx0 = max(0, int(cam_v // lado))
             for fy in range(n.alto):
                 fila = n.filas[fy]
-                for fx in range(fx0, min(n.ancho, fx0 + 34)):
+                for fx in range(fx0, min(n.ancho, fx0 + 29)):
                     ch = fila[fx]
                     if ch == ".":
                         continue
-                    x, y = fx * lado - cam, y0 + fy * lado
+                    x, y = fx * lado - cam_v, y0 + fy * lado
                     if ch == PL.SOLIDO:
-                        poner(self.img["suelo" if fy == 0 or n.filas[fy - 1][fx] != PL.SOLIDO else "relleno"], x, y)
+                        # Autotiling: los lados expuestos llevan contorno de tinta; los internos se unen sin costura.
+                        m = ((not es(fx, fy - 1)) * 1 | (not es(fx - 1, fy)) * 2 | (not es(fx + 1, fy)) * 4
+                             | (fy + 1 < n.alto and not es(fx, fy + 1)) * 8)
+                        poner(self.img["solido_%d_%d" % (m, (fx + fy) % 2)], x, y)
                     elif ch == PL.PINCHO:
-                        poner(self.img["pincho"], x, y)
+                        poner(self.img["barrera_%d" % (int(st * 9 + fx) % 3)], x, y)
                     elif ch == PL.INTERMITENTE:
-                        # Aviso visual medio segundo antes de cambiar (no depende del color: tambien cambia la forma).
-                        poner(self.img["bloque_aviso" if falta < 30 and int(st * 10) % 2 else ("bloque_on" if activo else "bloque_off")], x, y)
+                        # Aviso medio segundo antes de cambiar: cambia la forma (grietas, barra), no solo el color.
+                        estado = "aviso" if (falta < 30 and activo) else ("on" if activo else "off")
+                        tiembla = 3 if estado == "aviso" and not persistent.reducir_movimiento else 0
+                        poner(self.img["inestable_" + estado], x + (tiembla if int(st * 30) % 2 else -tiembla), y)
                     elif ch == PL.EVIDENCIA:
                         if n.evidencias.index((fx, fy)) not in p.recogidas:
-                            poner(self.img["evidencia"], x, y + math.sin(st * 3 + fx) * 5)
+                            flota = 0 if persistent.reducir_movimiento else math.sin(st * 3 + fx) * 6
+                            gira = 0 if persistent.reducir_movimiento else math.sin(st * 2 + fx) * 6
+                            poner(Transform(self.img["documento"], rotate=gira), x - 8, y + flota - 8)
                     elif ch == PL.CONTROL:
-                        poner(self.img["control_on" if p.control == (fx, fy) else "control_off"], x, y)
+                        on = p.control == (fx, fy)
+                        poner(self.img["antena_on" if on else "antena_off"], x, y)
+                        if on and st - self.control_st < 0.8:
+                            k = (st - self.control_st) / 0.8
+                            rr = renpy.Render(1920, 1080)
+                            rr.canvas().circle("#2f9e8f", (int(x + lado / 2), int(y + 18)), int(20 + 90 * k), 4)
+                            r.blit(rr, (0, 0))
                     elif ch == PL.META:
-                        poner(self.img["meta"], x - 15, y - lado)
+                        poner(self.img["archivo"], x - 18, y - lado)
 
-            # jugador
+            # Jugador: pose segun el estado del motor (sin tocar su caja); squash al aterrizar.
             if p.respawn > 0:
                 cuadro = "dano"
+            elif p.completado():
+                cuadro = "victoria"
+            elif st - self.recoge_st < 0.35:
+                cuadro = "recoge"
             elif not p.en_suelo:
                 cuadro = "salto" if p.vy < 0 else "cae"
             elif abs(p.vx) > 12:
-                cuadro = "corre_%d" % (int(st * 12) % 4)
+                cuadro = "corre_%d" % (int(st * 14) % 6)
             else:
                 cuadro = "idle_%d" % (int(st * 2) % 2)
-            if p.mira < 0:
-                cuadro += "_izq"
+            sx, sy = 1.0, 1.0
+            if st - self.aterrizo_st < 0.14 and not persistent.reducir_movimiento:
+                sx, sy = 1.12, 0.86
             if not (p.respawn > 0 and int(st * 14) % 2):
-                poner(self.img[cuadro], px - cam - (56 - 30) * z / 2.0, y0 + py - (64 - 42) * z)
+                # El avatar se dibuja mayor que su caja (legible a 1080p); pies sobre el borde inferior de la caja.
+                ancho_img, alto_img = 224 * self.za * sx, 256 * self.za * sy
+                img = Transform(self.img[cuadro], zoom=self.za, xzoom=(-sx if p.mira < 0 else sx), yzoom=sy)
+                bx = px - cam_v + PL.ANCHO / float(PL.SUB) * z / 2.0 - ancho_img / 2.0
+                by = y0 + py + PL.ALTO / float(PL.SUB) * z - alto_img + 4
+                poner(img, bx, by)
 
-            for q in self.particulas:
-                tam = q[6]
-                r.blit(renpy.render(Transform(Solid(q[5]), xysize=(tam, tam), alpha=min(1.0, q[4] * 2)), tam, tam, st, at),
-                       (int(q[0] - cam - tam / 2), int(y0 + q[1] - tam / 2)))
+            # Particulas: circulos planos con contorno (polvo, papeles, chispas), en la paleta.
+            if self.particulas:
+                rp = renpy.Render(1920, 1080)
+                c = rp.canvas()
+                for q in self.particulas:
+                    tam = max(2, int(q[6] * min(1.0, q[4] * 2)))
+                    cx, cy = int(q[0] - cam_v), int(y0 + q[1])
+                    c.circle(PLAT_TINTA, (cx, cy), tam + 2)
+                    c.circle(q[5], (cx, cy), tam)
+                r.blit(rp, (0, 0))
+            # Primer plano: cables (se mueven mas rapido que el juego: profundidad sin tapar plataformas).
+            off = -(cam_v * 1.25) % 3840
+            poner(self.cables, off, 0)
+            poner(self.cables, off - 3840, 0)
+            # Deteccion: estatica breve en franjas (sin destellos a pantalla completa).
+            if st - self.dano_st < 0.22 and not persistent.reducir_movimiento:
+                for i, yy in enumerate((180, 420, 700, 900)):
+                    r.blit(renpy.render(Transform(Solid("#d1495b"), xysize=(1920, 6 + i * 3), alpha=0.35), 1920, 20, st, at),
+                           (int((i * 37 + st * 900) % 60) - 30, yy))
             if self.fin_st is not None and self.p.completado():
-                destello = max(0.0, 1.0 - (st - self.fin_st) / 0.9)
-                if destello > 0 and not persistent.reducir_movimiento:
-                    r.blit(renpy.render(Transform(Solid("#5eead4"), xysize=(1920, 1080), alpha=destello * 0.55), 1920, 1080, st, at), (0, 0))
                 if not self.resultado_listo():
-                    t = self.texto("ARCHIVO RECUPERADO", 90, "#5eead4")
+                    k = min(1.0, (st - self.fin_st) / 0.5)
+                    r.blit(renpy.render(Transform(Solid("#120d1c"), xysize=(1920, 1080), alpha=0.55 * k), 1920, 1080, st, at), (0, 0))
+                    t = self.texto("ARCHIVO RECUPERADO", 72, "#fbf6ee")
                     tr = renpy.render(t, 1920, 200, st, at)
-                    r.blit(tr, (960 - tr.width // 2, 420))
+                    r.blit(tr, (960 - tr.width // 2, 440))
 
-            # HUD minimo: evidencias, tiempo, muertes
-            barra = renpy.render(Solid("#0d0a1acc"), 1920, 84, st, at)
-            r.blit(barra, (0, 0))
-            poner(self.texto(self.titulo, 30, "#f0abfc"), 40, 22)
-            poner(self.img["evidencia"], 660, 12)
-            poner(self.texto("%d / %d" % (len(p.recogidas), len(n.evidencias)), 34), 730, 20)
+            # HUD: fichas de papel (mismo lenguaje que CivitasNet) y la ruta como linea de red.
+            def ficha(x, w, contenido):
+                r.blit(renpy.render(Solid(PLAT_TINTA), w + 8, 64, st, at), (x - 4, 18))
+                r.blit(renpy.render(Solid("#fbf6ee"), w, 56, st, at), (x, 22))
+                for d_, dx, dy in contenido:
+                    poner(d_, x + dx, 22 + dy)
+            ficha(32, 360, [(self.texto(self.titulo, 26, "#8c2f4b"), 20, 12)])
+            ficha(412, 190, [(Transform(PLAT_V2 + "documento.png", zoom=0.38), 2, -3),
+                             (self.texto("%d / %d" % (len(p.recogidas), len(n.evidencias)), 30, PLAT_TINTA), 76, 9)])
             restante = max(0, (n.limite_ticks - p.tick) // PL.TICKS_S)
-            poner(self.texto("TIEMPO %d:%02d" % (restante // 60, restante % 60), 34, "#fb7185" if restante <= 10 else "#fbf6ee"), 960, 20)
-            poner(self.texto("Detecciones: %d" % p.muertes, 26, "#c9b8d8"), 1330, 26)
+            ficha(622, 220, [(self.texto("%d:%02d" % (restante // 60, restante % 60), 30, "#d1495b" if restante <= 10 else PLAT_TINTA), 24, 9),
+                             (self.texto("tiempo", 18, "#8b84a8", False), 126, 17)])
+            ficha(862, 250, [(self.texto("%d" % p.muertes, 30, PLAT_TINTA), 22, 9),
+                             (self.texto("detecciones", 18, "#8b84a8", False), 66, 17)])
+            # Ruta: linea con un punto por punto de control y el archivo al final.
             avance = min(1.0, (p.x / float(PL.T)) / max(1, n.meta[0]))
-            r.blit(renpy.render(Solid("#3b2f6b"), 1920, 6, st, at), (0, 84))
-            r.blit(renpy.render(Solid("#5eead4"), int(1920 * avance), 6, st, at), (0, 84))
+            rr = renpy.Render(1920, 1080)
+            c = rr.canvas()
+            x0r, x1r, yr = 1170, 1860, 50
+            c.line("#c9b8d8", (x0r, yr), (x1r, yr), 4)
+            c.line("#2f9e8f", (x0r, yr), (int(x0r + (x1r - x0r) * avance), yr), 6)
+            for cfx in self.controles_x:
+                cxr = int(x0r + (x1r - x0r) * min(1.0, cfx / float(max(1, n.meta[0]))))
+                c.circle(PLAT_TINTA, (cxr, yr), 10)
+                c.circle("#2f9e8f" if p.x / float(PL.T) >= cfx else "#fbf6ee", (cxr, yr), 6)
+            c.circle(PLAT_TINTA, (x1r, yr), 13)
+            c.circle("#e8b04b", (x1r, yr), 9)
+            c.circle(PLAT_TINTA, (int(x0r + (x1r - x0r) * avance), yr), 12)
+            c.circle("#d1495b", (int(x0r + (x1r - x0r) * avance), yr), 8)
+            r.blit(rr, (0, 0))
             if self.aviso and st - self.aviso[2] < 2.6:
                 t = self.texto(self.aviso[0], 28, self.aviso[1])
                 tr = renpy.render(t, 1920, 60, st, at)
-                r.blit(tr, (960 - tr.width // 2, 118))
+                r.blit(tr, (960 - tr.width // 2, 104))
             if self.cuenta > 0:
-                c = self.texto(str(int(self.cuenta / 0.8) + 1), 150, "#facc15")
+                c = self.texto(str(int(self.cuenta / 0.8) + 1), 150, "#fbf6ee")
                 cr = renpy.render(c, 400, 200, st, at)
                 r.blit(cr, (960 - cr.width // 2, 400))
             if self.tactil:
@@ -321,7 +409,7 @@ init python:
             return None
 
         def visit(self):
-            return list(self.img.values()) + [self.cielo, self.lejos, self.cerca, self.flecha, self.flecha_izq]
+            return [renpy.easy.displayable(d) for d in list(self.img.values()) + [self.lejos, self.medio, self.cables]] + [self.flecha, self.flecha_izq]
 
     def extra_plataformas(ajustes):
         """Traduce la ayuda narrativa del domingo (pensada para el arcade) a segundos de margen en la infiltracion."""
@@ -336,8 +424,9 @@ init python:
 screen plataformas_tutorial(extra_s=0):
     modal True
     zorder 46
-    add "bg viral"
-    add Solid("#0d0a1ae0")
+    add PLAT_V2 + "fondo_lejos.png"
+    add PLAT_V2 + "fondo_medio.png" ypos 40
+    add Solid("#120d1cc0")
     frame:
         align (0.5, 0.5)
         xsize 1240
@@ -352,12 +441,12 @@ screen plataformas_tutorial(extra_s=0):
         hbox:
             xalign 0.5
             spacing 40
-            for imagen, titulo, texto in (("evidencia", "Fragmentos", "Recógelos: son lo que más puntúa."), ("pincho", "Interferencia", "Si la tocas, vuelves al punto de control."),
-                                          ("bloque_on", "Bloques que parpadean", "Cruza mientras están encendidos."), ("control_on", "Punto de control", "Guarda tu avance.")):
+            for imagen, titulo, texto in (("documento", "Fragmentos", "Recógelos: son lo que más puntúa."), ("barrera_0", "Interferencia", "Si la tocas, vuelves al punto de control."),
+                                          ("inestable_on", "Plataformas inestables", "Se agrietan antes de apagarse: cruza mientras están firmes."), ("antena_on", "Punto de control", "Guarda tu avance.")):
                 vbox:
                     xsize 250
                     spacing 4
-                    add PLAT_DIR + imagen + ".png" xalign 0.5 zoom 1.4
+                    add PLAT_V2 + imagen + ".png" xalign 0.5 zoom 0.75
                     text titulo size 20 bold True color "#2b2440" xalign 0.5
                     text texto size 17 color "#5b4f72" xalign 0.5 text_align 0.5
         text ("Toca las flechas para moverte y SALTO para saltar." if renpy.variant("touch") else "Muévete con A/D o las flechas. Salta con Espacio, W o flecha arriba (mantén para saltar más alto). Con mando: cruceta y A.") size 20 bold True color "#2b2440" xalign 0.5 text_align 0.5
@@ -391,41 +480,73 @@ screen plataformas_ui(vista):
     elif vista.resultado_listo():
         use plataformas_resultado(vista.p)
 
+transform plat_entra(retraso):
+    alpha 0.0 yoffset (0 if persistent.reducir_movimiento else 24)
+    pause retraso
+    easein 0.35 alpha 1.0 yoffset 0
+
 screen plataformas_resultado(p):
     zorder 100
     $ res = p.resultado()
     $ nota = res["calificacion"]
-    $ color_nota = {"S": "#facc15", "A": "#22c55e", "B": "#38bdf8", "C": "#a78bfa", "D": "#ef4444"}[nota]
-    add Solid("#000000b0")
-    frame:
+    $ exito = res["exito"]
+    add Solid("#120d1cc8")
+    fixed at plat_entra(0.0):
         align (0.5, 0.5)
-        xsize 1040
-        background "#0b1324f5"
-        padding (50, 36)
-        vbox:
-            spacing 12
-            xfill True
-            text ("ARCHIVO RECUPERADO" if res["exito"] else "SESIÓN CERRADA") size 54 bold True color ("#22c55e" if res["exito"] else "#ef4444") xalign 0.5
-            text nota size 150 bold True color color_nota xalign 0.5 at nota_golpe
-            text res["mensaje"] size 24 color "#f1f5f9" xalign 0.5 textalign 0.5
-            hbox:
-                xalign 0.5
-                spacing 50
-                for titulo, valor, col in (("PUNTOS", "%d" % res["puntos"], "#f8fafc"), ("EVIDENCIAS", "%d / %d" % (res["evidencias"], res["evidencias_total"]), "#facc15"),
-                                           ("DETECCIONES", "%d" % res["muertes"], "#f87171"), ("TIEMPO", "%d s" % res["segundos"], "#f8fafc")):
+        xysize (1180, 680)
+        add Solid("#2b2440")
+        frame:
+            pos (10, 10)
+            xysize (1160, 660)
+            background Solid("#fbf6ee")
+            padding (60, 44)
+            vbox:
+                spacing 18
+                hbox:
+                    spacing 34
+                    fixed:
+                        xysize (170, 170)
+                        add circulo("#e8b04b" if exito else "#d1495b", "#2b2440", 80) align (0.5, 0.5)
+                        text nota size 110 bold True color "#2b2440" align (0.5, 0.52) at nota_golpe
                     vbox:
-                        text titulo size 16 color "#94a3b8" xalign 0.5
-                        text valor size 34 bold True color col xalign 0.5
-            if p.recogidas:
-                text "Lo que trajiste: " + " · ".join(PL.FRAGMENTOS[i % len(PL.FRAGMENTOS)] for i in sorted(p.recogidas)[:4]) + ("…" if len(p.recogidas) > 4 else "") size 17 color "#cbd5e1" xalign 0.5 textalign 0.5
-            textbutton "CONTINUAR":
-                style "grafo_button"
-                text_style "grafo_button_text"
-                xalign 0.5
-                xsize 360
-                text_xalign 0.5
-                default_focus True
-                action Return()
+                        yalign 0.5
+                        spacing 6
+                        text ("ARCHIVO RECUPERADO" if exito else "SESIÓN CERRADA") size 50 bold True color ("#2f9e8f" if exito else "#d1495b")
+                        text res["mensaje"] size 23 color "#2b2440" xmaximum 860
+                        hbox:
+                            spacing 10
+                            add circulo("#2f9e8f" if exito else "#e6deee", "#2b2440", 11) yalign 0.5
+                            text ("Objetivo cumplido: llegaste al archivo original." if exito else "Objetivo pendiente: no llegaste al archivo.") size 20 color "#5b4f72"
+                hbox:
+                    spacing 18
+                    for i, (titulo, valor, col) in enumerate((("PUNTOS", "%d" % res["puntos"], "#2b2440"), ("EVIDENCIAS", "%d / %d" % (res["evidencias"], res["evidencias_total"]), "#8c2f4b"),
+                                               ("DETECCIONES", "%d" % res["muertes"], "#d1495b" if res["muertes"] else "#2b2440"), ("TIEMPO", "%d s" % res["segundos"], "#2b2440"))):
+                        frame at plat_entra(0.25 + i * 0.08):
+                            background Solid("#efe8f5")
+                            xsize 244
+                            padding (20, 14)
+                            vbox:
+                                text titulo size 15 bold True color "#8b84a8" kerning 3
+                                text valor size 40 bold True color col
+                text "EVIDENCIA RECUPERADA" size 15 bold True color "#8c2f4b" kerning 3
+                hbox:
+                    spacing 14
+                    box_wrap True
+                    xmaximum 1040
+                    if p.recogidas:
+                        for k, i in enumerate(sorted(p.recogidas)[:5]):
+                            frame at plat_entra(0.6 + k * 0.1):
+                                background Solid("#ffffff")
+                                xsize 196
+                                padding (12, 10)
+                                hbox:
+                                    spacing 8
+                                    add PLAT_V2 + "documento.png" zoom 0.28 yalign 0.0
+                                    text PL.FRAGMENTOS[i % len(PL.FRAGMENTOS)] size 15 color "#2b2440" xmaximum 130
+                    else:
+                        text "Ningún documento: habrá que desmentir sin pruebas." size 20 color "#5b4f72"
+                null height 4
+                textbutton "CONTINUAR" style "boton_vn" text_style "boton_vn_text" xalign 0.5 action Return() default_focus True
 
 ## Minijuego reutilizable: Historia (nivel "historia"), Feria ("feria"), Arena ("arena") y tutorial.
 label minijuego_plataformas(nivel="historia", aplicar=True, ajustes=None, tutorial=True, reinicio=True):

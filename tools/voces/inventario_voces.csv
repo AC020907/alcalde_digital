@@ -351,35 +351,29 @@ final_fuente_abierta_fa12fb9a,c,feliz,Lo mejor no es que sepamos quién fue. Es 
 final_fuente_abierta_20552fbd,,,En el expediente también está tu comunicado del lunes. Decidiste no borrarlo: es parte de cómo pasó.,no,narrador (no se dobla)
 final_fuente_abierta_e2b286a2,,,arroba salud nova crea una regla nueva: ninguna nota de salud sale sin el análisis completo.,no,narrador (no se dobla)
 final_fuente_abierta_520041ae,,,Ciudad Nova no se volvió inmune a los rumores. Aprendió a preguntar de dónde vienen.,no,narrador (no se dobla)
-prologo_0e0730a7,,,Tu teléfono no ha dejado de vibrar en toda la noche.,no,narrador (no se dobla)
-prologo_f692fb39,,,"Sobre el escritorio, el discurso de cierre de campaña sigue a medio escribir. Faltan seis días para las elecciones.",no,narrador (no se dobla)
-prologo_13a5b618,,,La puerta se abre sin que nadie llame.,no,narrador (no se dobla)
-prologo_cc16fc61,c,sorprendida,Alcalde. ¿Ya vio Cívitas?,yes,ok
-prologo_abff1baa,c,,Una cuenta dice que el agua de Ciudad Nova está envenenada. Cuarenta mil reposts. En una hora.,yes,ok
-prologo_d5089846,c,,En el supermercado de la nueve ya no queda agua embotellada. Mire.,yes,ok
-prologo_579de158,c,,"Soy Claudia Reyes, de Noticias Nova, por si los de su equipo no se lo dijeron. Me pidieron ayudar esta semana.",yes,ok
-prologo_78359ffd,c,,Acepté por una razón: yo también quiero saber quién está detrás de esto. No vine a escribirle comunicados bonitos.,yes,ok
-prologo_c4ca4fdf,c,,"Claudia Reyes, de Noticias Nova. Esta semana trabajo con usted: alguien está fabricando miedo y quiero saber quién.",yes,ok
-prologo_4b3b065d,c,,La ciudad va a mirar lo primero que usted diga. ¿Qué hacemos?,yes,ok
-prologo_4b85ec22,c,,Rápido. Eso calma a la gente hoy.,yes,ok
+prologo_7e0020b7,c,sorprendida,"Alcalde. Claudia Reyes, de Noticias Nova: me asignaron a su equipo esta semana.",yes,ok
+prologo_7b1ec9d4,c,seria,Acepté por una razón: quiero saber quién está detrás de esto. No vine a escribirle comunicados bonitos.,yes,ok
+prologo_190be76b,c,seria,Dieciocho mil reposts en una hora. La ciudad va a mirar lo primero que usted diga.,yes,ok
+prologo_f39b6dc5,c,seria,Rápido. Eso calma a la gente hoy.,yes,ok
 prologo_5c902665,c,,Ojalá no tengamos que tragarnos esas palabras si los análisis dicen otra cosa.,yes,ok
 prologo_c40c8546,c,feliz,Vaya. Alguien en este edificio que pregunta antes de hablar.,yes,ok
 prologo_927ca49b,c,seria,Los pido ya. Pero el rumor no nos va a esperar: cada hora sin respuesta suma reposts.,yes,ok
 prologo_8ab3bebd,c,enojada,"¿Un rumor más? Alcalde, hay señoras haciendo fila con tres botellones cada una.",yes,ok
 prologo_0238b3b6,c,,Los rumores no se cansan. Nosotros sí.,yes,ok
-prologo_00cbf571,c,,Hay algo más. Rastreé la primera publicación que habla de veneno.,yes,ok
-prologo_375f1fe1,c,,Salió de una cuenta llamada arroba verdad oculta. Sin foto. Sin historial.,yes,ok
-prologo_799199c3,c,,Y ayer... esa cuenta no existía.,yes,ok
+prologo_8630ce52,c,seria,"Rastreé la primera publicación. Salió de arroba verdad oculta: sin foto, sin historial.",yes,ok
+prologo_bdcbf9ca,c,,Y ayer... esa cuenta no existía.,yes,ok
 prologo_e1d7ceae,tu,,¿Alguien la creó solo para esto?,no,jugador (no se dobla)
 prologo_8c33170a,c,,"O alguien tiene muchas como esa, esperando su turno.",yes,ok
-prologo_db7e4374,c,,Faltan seis días para las elecciones. Alguien quiere que Ciudad Nova llegue a ese domingo con miedo.,yes,ok
-prologo_583031ad,c,,Una última cosa antes de salir.,yes,ok
-prologo_1b58bd39,c,,Esta semana la gente no va a escuchar lo que usted diga. Va a mirar cómo reacciona. ¿Qué clase de alcalde va a ser?,yes,ok
+prologo_ac41baa9,c,,"Mire los comentarios: bots y vecinos asustados, todo mezclado. Borre los bots, pero a la gente real no se la calla.",yes,ok
+prologo_66780740,c,feliz,Limpio. Y nadie podrá decir que la alcaldía borra a quien la critica.,yes,ok
+prologo_482cdc0f,c,seria,Borró a una persona real. Ya hay una captura que dice que la alcaldía censura.,yes,ok
+prologo_be163b9e,c,seria,Se le colaron bots. Van a repetir lo del veneno toda la mañana.,yes,ok
+prologo_15a24ecd,c,seria,Faltan seis días para las elecciones. Alguien quiere que Ciudad Nova llegue a ese domingo con miedo.,yes,ok
+prologo_0fa926df,c,,Una última cosa. Esta semana la gente va a mirar cómo reacciona. ¿Qué clase de alcalde va a ser?,yes,ok
 prologo_c4dcee64,c,feliz,En los barrios lo van a notar. Allá nadie lee comunicados.,yes,ok
 prologo_facab735,c,feliz,Ese idioma lo hablo yo. Vamos a llevarnos bien.,yes,ok
 prologo_afcdd54e,c,seria,Sus palabras van a llegar lejos. Las buenas... y las malas también.,yes,ok
 prologo_4d125486,c,seria,Entonces no se equivoque en público. Allá afuera todo queda en captura.,yes,ok
-prologo_99798264,c,,"Revise su teléfono. Cívitas no duerme, y hoy nosotros tampoco.",yes,ok
 revision_transiciones_a9e170ff,c,,Aparición: entra con un fundido corto y sube a su lugar.,no,herramienta de desarrollo (no es dialogo del juego)
 revision_transiciones_2f367a89,c,feliz,Cambio de expresión por atributo de diálogo: la figura no se mueve.,no,herramienta de desarrollo (no es dialogo del juego)
 revision_transiciones_e8b3fc34,c,,Reacción de sobresalto.,no,herramienta de desarrollo (no es dialogo del juego)

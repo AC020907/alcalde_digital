@@ -105,6 +105,8 @@ label qa_galeria:
         jump qa_gal_arena_solo
     if etapa_gal == "arena_solo_completa":
         jump qa_gal_arena_solo_completa
+    if etapa_gal == "apertura":
+        jump qa_gal_apertura
     if etapa_gal in ("arena", "arena_cliente"):
         jump qa_gal_arena
     if etapa_gal == "dialogo":
@@ -326,12 +328,32 @@ label qa_gal_finales:
         $ ind_gal = {"info_verificada": 70 - i_gal * 10, "confianza": 72 - i_gal * 11, "convivencia": 60, "bienestar": 60,
                      "desinformacion": 20 + i_gal * 14, "conflictos": 15 + i_gal * 12}
         $ from clases.Eleccion import escrutinio_historia as _esc_gal
+        # Remaster: cartela, escena con la identidad visual del desenlace, escrutinio contando y revelado, cierre.
+        show screen final_cartela(final_gal)
+        call qa_foto("f%02d_cartela_%s" % (i_gal + 1, final_gal), 1.9)
+        hide screen final_cartela
+        $ escena_gal = {"informada": ("bg panorama", "fin_informada", None, "claudia", "feliz"),
+                        "dividida": ("bg ciudad tarde", "fin_dividida", "fin_capa_grieta", "claudia", "seria"),
+                        "caos": ("bg ciudad noche", "fin_caos", "fin_capa_caos", "nova", "neutral"),
+                        "mandato": ("bg alcaldia", "fin_mandato", "fin_capa_franjas", "tomas", "seria"),
+                        "secreto": ("bg panorama", "fin_secreto", "fin_capa_expediente", "claudia", "feliz")}[final_gal]
+        $ renpy.scene()
+        $ renpy.show(escena_gal[0], at_list=[getattr(store, escena_gal[1])])
+        if escena_gal[2]:
+            $ renpy.show(escena_gal[2])
+        $ renpy.show(escena_gal[3] + " " + escena_gal[4], at_list=[escena(escena_gal[3])])
+        call qa_foto("f%02d_escena_%s" % (i_gal + 1, final_gal), 3.2)
+        $ renpy.scene()
         show screen escrutinio_historia(_esc_gal(final_gal, ind_gal, 70 - i_gal * 8, 1))
-        call qa_foto("f%02d_escrutinio_%s" % (i_gal + 1, final_gal), 1.6)
+        call qa_foto("f%02d_escrutinio_conteo_%s" % (i_gal + 1, final_gal), 1.2)
+        call qa_foto("f%02d_escrutinio_%s" % (i_gal + 1, final_gal), 3.4)
         hide screen escrutinio_historia
         show screen pantalla_resultados(final_gal, resultado_qa, i_gal % 2 == 0)
         call qa_foto("f%02d_resultados_%s" % (i_gal + 1, final_gal), 2.4)
         hide screen pantalla_resultados
+        show screen cierre_civitas(final_gal)
+        call qa_foto("f%02d_cierre_%s" % (i_gal + 1, final_gal), 2.6)
+        hide screen cierre_civitas
         $ i_gal += 1
     $ qa_gal_volcar(etapa="finales", ok=True)
     $ renpy.quit()
@@ -621,4 +643,102 @@ label qa_gal_personajes:
     n feliz "Todas las cuentas despiertan al mismo tiempo.{w=1.4}{nw}"
     hide screen qa_disparo
     $ qa_gal_volcar(etapa="personajes", ok=True)
+    $ renpy.quit()
+
+
+## ---------------- Apertura (Feria Gamer): recorrido real con ritmo de lectura simulado ----------------
+## ALCALDE_QA_ETAPA=apertura. Actua como una persona: lee (~15 caracteres/s), elige (ALCALDE_QA_APERTURA =
+## desmentir | analisis | ignorar), modera los 4 comentarios y elige estilo. Mide apertura_tiempos y
+## fotografia cada fase. Los tiempos son de una simulacion, no de personas reales.
+init python:
+    qa_ap = {"t": 0.0, "fase": None, "desde": 0.0, "fotos": set(), "lineas": 0, "interacciones": 0}
+    QA_AP_INDICE = {"desmentir": 0, "analisis": 1, "ignorar": 2}
+
+    def qa_ap_foto(nombre):
+        if nombre not in qa_ap["fotos"]:
+            qa_ap["fotos"].add(nombre)
+            qa_gal_foto(nombre)
+
+    def qa_apertura_fase():
+        for nombre, fase in (("apertura_montaje", "montaje"), ("apertura_decision", "decision"),
+                             ("apertura_reaccion", "reaccion"), ("moderador_ui", "micro"),
+                             ("apertura_titulo", "titulo"), ("choice", "estilo"), ("say", "say")):
+            if renpy.get_screen(nombre):
+                return fase
+        return None
+
+    def qa_apertura_auto():
+        import os as _o
+        qa_ap["t"] += 0.25
+        fase = qa_apertura_fase()
+        if fase != qa_ap["fase"]:
+            qa_ap["fase"], qa_ap["desde"] = fase, qa_ap["t"]
+        dt = qa_ap["t"] - qa_ap["desde"]
+        if fase == "montaje":
+            # Serie temporal: una captura por segundo para evaluar ritmo y transiciones.
+            seg = int(dt)
+            if dt - seg < 0.26:
+                qa_ap_foto("ap00_montaje_%02d" % seg)
+        elif fase == "decision":
+            if dt >= 1.2:
+                qa_ap_foto("ap03_decision")
+            if dt >= 5.0:
+                qa_ap["interacciones"] += 1
+                items = renpy.get_screen("apertura_decision").scope["items"]
+                return items[QA_AP_INDICE[_o.environ.get("ALCALDE_QA_APERTURA", "analisis")]].action()
+        elif fase == "reaccion":
+            if dt >= 1.2:
+                qa_ap_foto("ap04_propagacion")
+            if dt >= 5.5:
+                qa_ap_foto("ap05_consecuencia")
+            if dt >= 8.0:
+                qa_ap["interacciones"] += 1
+                return True
+        elif fase == "micro":
+            cola = renpy.get_screen("moderador_ui").scope["cola"]
+            if cola.terminado():
+                qa_ap_foto("ap08_micro_resultado")
+                if dt >= 1.5:
+                    qa_ap["interacciones"] += 1
+                    return True
+            elif cola.jugando() and dt >= 1.0:
+                qa_ap_foto("ap07_microprueba")
+                qa_ap["desde"] = qa_ap["t"]
+                qa_ap["interacciones"] += 1
+                moderar(cola, cola.actual.es_falsa)
+        elif fase == "titulo":
+            if dt >= 1.0:
+                qa_ap_foto("ap09_titulo")
+        elif fase == "estilo":
+            if dt >= 3.0:
+                qa_ap["interacciones"] += 1
+                return renpy.get_screen("choice").scope["items"][1].action()
+        elif fase == "say":
+            pantalla = renpy.get_screen("say")
+            quien = pantalla.scope.get("who")
+            texto = pantalla.scope.get("what") or ""
+            if quien and "claudia" not in qa_ap["fotos"] and dt >= 1.0:
+                qa_ap["fotos"].add("claudia")
+                qa_gal_foto("ap06_claudia")
+            if dt >= max(1.6, len(texto) / 15.0):
+                qa_ap["lineas"] += 1
+                qa_ap["interacciones"] += 1
+                return True
+        return None
+
+screen qa_apertura_auto():
+    zorder 1001
+    timer 0.25 repeat True action Function(qa_apertura_auto)
+
+label qa_gal_apertura:
+    $ qa_pad_limite = 400
+    $ modo_feria_activo = _qa_os.environ.get("ALCALDE_QA_APERTURA_MODO", "feria") == "feria"
+    $ persistent.reducir_movimiento = _qa_os.environ.get("ALCALDE_QA_REDUCIR") == "1"
+    show screen qa_apertura_auto
+    call prologo(corto=modo_feria_activo)
+    hide screen qa_apertura_auto
+    $ qa_gal["eventos"].append(("apertura", {k: v for k, v in apertura_tiempos.items() if k != "_t0"},
+                                apertura_decision, apertura_micro, qa_ap["lineas"], qa_ap["interacciones"],
+                                indicadores_ciudad(), sorted(mem()["pistas"]), dict(afinidad), sorted(mem()["hechos"])))
+    $ qa_gal_volcar(etapa="apertura", ok=True)
     $ renpy.quit()

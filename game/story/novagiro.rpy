@@ -175,7 +175,8 @@ label .sin_conclusion:
 
 ## Final secreto: la campana tiene nombre y apellido.
 label final_fuente_abierta:
-    scene bg panorama at paneo with lento
+    scene bg panorama at fin_secreto with lento
+    show fin_capa_expediente
     "El lunes, la portada de Noticias Nova no es un rumor: es tu expediente, con cada fuente enlazada."
     "Resonancia Consultores facturaba a las dos campañas por 'gestión de crisis'. Las crisis las fabricaba su propio panel."
     "Cuando el proveedor corta el acceso a RSN-Scheduler, NOVA publica por última vez a las 7:00 en punto. Después, silencio."

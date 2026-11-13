@@ -43,7 +43,7 @@ init 999 python:
                           "no puedo responder", "Eso fue otra", "Martina: el live", "Acéptalo", "Compartirlo",
                           "Martina, en su estudio", "Tus números", "Es tarde", "Lo que la gente crea", "Tomás Vega, para",
                           "Mediático"],
-            "casual": ["Seguir adelante", "Ignorarlo", "Ignorarlo y hablar", "Una pregunta con", "no puedo responder",
+            "casual": ["Seguir adelante", "No intervenir", "Ignorarlo", "Ignorarlo y hablar", "Una pregunta con", "no puedo responder",
                        "Todos hemos", "Eso fue otra", "Seguir con la visita", "Martina: el live", "Es tu decisión",
                        "No tocarlo", "Nadie. Quedarme", "Lo que la gente crea", "NOVA, por su cuenta", "Político"],
             "dividido": ["Seguir adelante", "Publicar un desmentido", "Ignorarlo y hablar", "Entonces arreglémoslo",

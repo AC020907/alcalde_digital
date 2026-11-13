@@ -70,6 +70,7 @@ label finales:
     $ resultado_partida = puntuacion_partida(final_actual)
     hide screen hud_ciudad
     $ musica("final_" + final_actual, fadein=2.5)
+    call screen final_cartela(final_actual)
 
     if final_actual == "secreto":
         call final_fuente_abierta
@@ -96,11 +97,12 @@ label finales:
         call screen elegir_alias
     $ enviar_resultado_partida(final_actual, resultado_partida)
     call screen pantalla_resultados(final_actual, resultado_partida, final_nuevo)
+    call screen cierre_civitas(final_actual)
     return
 
 
 label final_informada:
-    scene bg panorama at paneo with lento
+    scene bg panorama at fin_informada with lento
     "El lunes amanece despejado sobre Ciudad Nova."
     "Los resultados no los decidió una captura. Llegaron tarde, se contaron dos veces y nadie gritó fraude."
     show claudia feliz at escena("claudia", 0.28) with suave
@@ -115,7 +117,8 @@ label final_informada:
     return
 
 label final_dividida:
-    scene bg ciudad tarde at paneo with lento
+    scene bg ciudad tarde at fin_dividida with lento
+    show fin_capa_grieta
     "Los resultados llegan apretados: cuatro mil votos de diferencia. Media ciudad celebra y la otra media sospecha."
     show claudia seria at escena("claudia") with suave
     c seria "Frenamos lo peor. Pero mire los grupos de vecinos: la mitad se partió en dos esta semana."
@@ -126,7 +129,8 @@ label final_dividida:
     return
 
 label final_caos_escena:
-    scene bg ciudad noche at paneo with lento
+    scene bg ciudad noche at fin_caos with lento
+    show fin_capa_caos
     $ interferencia()
     "Nadie sabe quién ganó. Cada bando tiene sus propios resultados, sus propias capturas y sus propias verdades."
     "Afuera de la registraduría hay dos grupos gritando cifras distintas. Los dos tienen pruebas. Ninguna es real."
@@ -139,14 +143,16 @@ label final_caos_escena:
     return
 
 label final_mandato:
-    scene bg alcaldia at paneo with lento
+    scene bg alcaldia at fin_mandato with lento
+    show fin_capa_franjas at fin_franjas
     "Ganas por once puntos. La plaza está llena, las pantallas repiten tu nombre y las encuestas acertaron por primera vez en años."
     "Subes al balcón. Lees el discurso que tu equipo escribió. La gente aplaude en los lugares correctos."
     show tomas seria at escena("tomas") with suave
     t seria "Felicitaciones, alcalde. El peritaje del audio sale mañana en todos los medios."
     t "No va a cambiar el resultado. Solo va a cambiar cómo lo recuerden."
     hide tomas with suave
-    scene bg despacho with negro
+    scene bg despacho at fin_mandato with negro
+    show fin_capa_franjas
     $ musica("final_mandato")
     "Esa noche, en el despacho, llega un correo con el asunto 'Gestión de crisis - semana electoral'."
     "Remitente: Resonancia Consultores. Adjunto: una factura. Concepto: 'amplificación de contenido de terceros (audio)'."
@@ -309,32 +315,4 @@ screen pantalla_resultados(final_actual, resultado, final_nuevo=False):
                 default_focus True
 
 
-screen escrutinio_historia(e):
-    modal True
-    zorder 60
-    add Solid("#120d1ce6")
-    key "civ_accion" action Return()
-    $ maximo = max(1, max(c["votos"] for c in e["candidatos"]))
-    frame:
-        background Frame("gui/frame.png", 30, 30)
-        padding (50, 36)
-        align (0.5, 0.5)
-        xsize 1300
-        vbox:
-            spacing 14
-            text "ESCRUTINIO  ·  ELECCIONES DE CIUDAD NOVA" size 36 bold True color "#8c2f4b"
-            if e["impugnado"]:
-                text "Resultado impugnado: cada bando tiene sus propias cifras." size 30 bold True color "#c0392b"
-            else:
-                text "Gana %s" % e["ganador_nombre"] size 34 bold True color "#2b2440"
-            for c in e["candidatos"]:
-                hbox:
-                    spacing 14
-                    text c["nombre"] size 24 bold (c["id"] == e["ganador"]) color "#2b2440" min_width 260 yalign 0.5
-                    bar value StaticValue(c["votos"], maximo) xsize 560 ysize 22 yalign 0.5 left_bar Solid("#8c2f4b" if c["id"] == e["ganador"] else "#a7a5f2") right_bar Solid("#ece6f5")
-                    text "{:,}".format(c["votos"]).replace(",", ".") + " votos" size 22 color "#2b2440" yalign 0.5
-            text "Abstención: %s personas" % "{:,}".format(e["abstencion"]).replace(",", ".") size 20 italic True color "#5b4f72"
-            text "¿Por qué este resultado?" size 26 bold True color "#2b2440"
-            for linea in e["explicacion"]:
-                text "· " + linea size 21 color "#2b2440"
-            textbutton "Continuar" style "boton_vn" text_style "boton_vn_text" xalign 0.5 action Return() default_focus True
+## escrutinio_historia: ver story/finales_cine.rpy (version cinematografica, mismos datos).

@@ -705,8 +705,12 @@ function dibujarCaza(cv, yo, cfg, pos, escala){
 }
 
 /* ---------------- Reto 4: Ruta de la Verdad (plataformas) ---------------- */
-const PLAT_IMGS = ["suelo","relleno","pincho","bloque_on","bloque_aviso","bloque_off","evidencia","control_off","control_on","meta",
-  "idle_0","idle_1","corre_0","corre_1","corre_2","corre_3","salto","cae","dano","fondo_lejos","fondo_cerca","cielo"];
+const MOV_REDUCIDO = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+const PLAT_IMGS = [   /* arte v2: el mismo que Ren'Py (tools/arte/plataformas_arte.py -> exportar_plataformas_web.py) */
+  ...Array.from({length:32}, (_, k) => "solido_" + (k >> 1) + "_" + (k & 1)),
+  "barrera_0","barrera_1","barrera_2","inestable_on","inestable_aviso","inestable_off","documento","antena_off","antena_on","archivo",
+  "av_idle_0","av_idle_1","av_corre_0","av_corre_1","av_corre_2","av_corre_3","av_corre_4","av_corre_5",
+  "av_salto","av_cae","av_recoge","av_dano","av_victoria","fondo_lejos","fondo_medio","primer_plano"];
 function iniciarPlataformas(d, cuerpo){
   const yo = R, cfg = R.cfg, p = new PlatCivitas.Partida(cfg);
   Object.assign(R, {p, imgs:{}, teclas:new Set(), tactil:{}, acum:0, ultimo:null, fin:false, cam:0, vistos:0, aviso:null, part:[], finT:null});
@@ -726,7 +730,8 @@ function iniciarPlataformas(d, cuerpo){
     const m = {ArrowLeft:1, KeyA:1, ArrowRight:2, KeyD:2, Space:4, ArrowUp:4, KeyW:4, KeyZ:4}[ev.code];
     if (m) { ev.preventDefault(); (abajo ? yo.teclas.add(m) : yo.teclas.delete(m)); }
   };
-  PLAT_IMGS.forEach(n => cargarImg(`/static/plataformas/${n}.png`).then(i => { yo.imgs[n] = i; }));
+  PLAT_IMGS.forEach(n => cargarImg(`/static/plataformas/v2/${n}.webp`).then(i => { yo.imgs[n] = i; }));
+  Object.assign(yo, {aterrizoT:-9e9, recogeT:-9e9, danoT:-9e9, controlT:-9e9});
   const piloto = AUTO ? pilotoJS(p) : null;
   const mascara = () => { let m = 0; for (const k of yo.teclas) m |= k; for (const k in yo.tactil) if (yo.tactil[k]) m |= +k; return m; };
   const bucle = () => {
@@ -740,7 +745,9 @@ function iniciarPlataformas(d, cuerpo){
       const paso = 1000 / cfg.ticks_s;
       while (yo.acum >= paso && p.jugando()) { yo.acum -= paso; p.avanzar(piloto ? piloto() : mascara()); }
       for (const e of p.eventos.slice(yo.vistos)) {
-        const PC = {evidencia:["#facc15",18,420], dano:["#fb7185",22,380], aterriza:["#c9b8d8",6,160], salto:["#e9d5ff",4,120], control:["#5eead4",14,300], meta:["#5eead4",36,520]}[e[1]];
+        const PC = {evidencia:["#e8b04b",18,420], dano:["#d1495b",22,380], aterriza:["#c9b8d8",6,160], salto:["#c9b8d8",4,120], control:["#2f9e8f",14,300], meta:["#fbf6ee",36,520]}[e[1]];
+        if (e[1] === "aterriza") yo.aterrizoT = ahora; else if (e[1] === "evidencia") yo.recogeT = ahora;
+        else if (e[1] === "dano") yo.danoT = ahora; else if (e[1] === "control") yo.controlT = ahora;
         if (PC) { const suelo = e[1] === "aterriza" || e[1] === "salto";
           const cx = (p.x + p.c.ANCHO / 2) / cfg.sub, cy = (p.y + (suelo ? p.c.ALTO : p.c.ALTO / 2)) / cfg.sub;
           for (let k = 0; k < PC[1]; k++) { const a = suelo ? Math.PI + Math.random() * Math.PI : Math.random() * 2 * Math.PI, v = (0.4 + Math.random() * 0.6) * PC[2] / 72;
@@ -778,49 +785,79 @@ function pilotoJS(p){   /* pruebas automaticas: el mismo piloto que Plataformas.
   };
 }
 function dibujarPlat(cv, yo, cfg, ahora){
-  const p = yo.p, [g, W, H] = ajustar(cv), I = yo.imgs, filas = p.alto;
+  /* Remaster: misma presentacion que Ren'Py (autotiling, parallax en 3 planos, avatar con poses, HUD en fichas). */
+  const p = yo.p, [g, W, H] = ajustar(cv), I = yo.imgs, filas = p.alto, quieto = MOV_REDUCIDO;
   const lado = Math.max(24, Math.min(64, Math.floor(H / (filas + 0.6)))), e = lado / cfg.tile;
   const px = p.x / cfg.sub * e, py = p.y / cfg.sub * e, anchoMundo = p.ancho * lado;
-  const objetivo = Math.max(0, Math.min(anchoMundo - W, px - W * 0.38 + p.mira * W * 0.12));    // mira hacia donde corre
-  yo.cam += (objetivo - yo.cam) * 0.2; const cam = yo.cam, y0 = H - filas * lado;
-  if (I.cielo) g.drawImage(I.cielo, 0, 0, W, H); else { g.fillStyle = "#0d0a1a"; g.fillRect(0, 0, W, H); }
-  for (const [img, f] of [[I.fondo_lejos, 0.15], [I.fondo_cerca, 0.35]]) if (img) {
+  const objetivo = Math.max(0, Math.min(anchoMundo - W, px - W * 0.38 + p.mira * W * 0.12));
+  yo.cam += (objetivo - yo.cam) * (quieto ? 1 : 0.2);
+  const sac = (!quieto && ahora - yo.danoT < 280) ? Math.round(6 * Math.sin((ahora - yo.danoT) / 14) * (1 - (ahora - yo.danoT) / 280)) : 0;
+  const cam = yo.cam + sac, y0 = H - filas * lado;
+  g.fillStyle = "#120d1c"; g.fillRect(0, 0, W, H);
+  for (const [img, f] of [[I.fondo_lejos, 0.12], [I.fondo_medio, 0.35]]) if (img) {
     const h = H, w = img.width * h / img.height, x = -((cam * f) % w);
     for (let k = -1; k < W / w + 1; k++) g.drawImage(img, x + k * w, 0, w, h);
   }
   const activo = p.activo(p.tick), falta = cfg.constantes.PARPADEO - p.tick % cfg.constantes.PARPADEO;
+  const es = (fx, fy) => fy >= 0 && fy < filas && fx >= 0 && fx < p.ancho && p.filas[fy][fx] === "#";
   const fx0 = Math.max(0, Math.floor(cam / lado));
   for (let fy = 0; fy < filas; fy++) for (let fx = fx0; fx < Math.min(p.ancho, fx0 + Math.ceil(W / lado) + 2); fx++) {
     const ch = p.filas[fy][fx]; if (ch === ".") continue;
     const x = fx * lado - cam, y = y0 + fy * lado;
     let img = null;
-    if (ch === "#") img = (fy === 0 || p.filas[fy-1][fx] !== "#") ? I.suelo : I.relleno;
-    else if (ch === "^") img = I.pincho;
-    else if (ch === "~") img = falta < 30 && Math.floor(ahora / 100) % 2 ? I.bloque_aviso : activo ? I.bloque_on : I.bloque_off;
-    else if (ch === "E") { const i = p.evidencias.findIndex(v => v[0] === fx && v[1] === fy); if (!p.recogidas.includes(i) && I.evidencia) g.drawImage(I.evidencia, x, y + Math.sin(ahora / 300 + fx) * 4, lado, lado); continue; }
-    else if (ch === "C") img = (p.control[0] === fx && p.control[1] === fy) ? I.control_on : I.control_off;
-    else if (ch === "M") { if (I.meta) g.drawImage(I.meta, x - lado * 0.25, y - lado, lado * 1.5, lado * 2); continue; }
+    if (ch === "#") {
+      const m = (!es(fx, fy - 1) ? 1 : 0) | (!es(fx - 1, fy) ? 2 : 0) | (!es(fx + 1, fy) ? 4 : 0) | ((fy + 1 < filas && !es(fx, fy + 1)) ? 8 : 0);
+      img = I["solido_" + m + "_" + ((fx + fy) % 2)];
+    }
+    else if (ch === "^") img = I["barrera_" + (Math.floor(ahora / 110 + fx) % 3)];
+    else if (ch === "~") {
+      const est = (falta < 30 && activo) ? "aviso" : (activo ? "on" : "off");
+      const t = (est === "aviso" && !quieto) ? (Math.floor(ahora / 33) % 2 ? 2 : -2) : 0;
+      if (I["inestable_" + est]) g.drawImage(I["inestable_" + est], x + t, y, lado, lado);
+      continue;
+    }
+    else if (ch === "E") { const i = p.evidencias.findIndex(v => v[0] === fx && v[1] === fy);
+      if (!p.recogidas.includes(i) && I.documento) { g.save(); g.translate(x + lado / 2, y + lado / 2 + (quieto ? 0 : Math.sin(ahora / 330 + fx) * 4));
+        g.rotate(quieto ? 0 : Math.sin(ahora / 500 + fx) * 0.1); g.drawImage(I.documento, -lado * 0.62, -lado * 0.62, lado * 1.24, lado * 1.24); g.restore(); } continue; }
+    else if (ch === "C") { const on = p.control[0] === fx && p.control[1] === fy; img = on ? I.antena_on : I.antena_off;
+      if (on && ahora - yo.controlT < 800) { const k = (ahora - yo.controlT) / 800; g.strokeStyle = "#2f9e8f"; g.lineWidth = 3; g.beginPath(); g.arc(x + lado / 2, y + lado * 0.25, lado * (0.3 + 1.2 * k), 0, 7); g.stroke(); } }
+    else if (ch === "M") { if (I.archivo) g.drawImage(I.archivo, x - lado * 0.25, y - lado, lado * 1.5, lado * 2); continue; }
     if (img) g.drawImage(img, x, y, lado, lado);
   }
-  const cuadro = p.respawn > 0 ? "dano" : !p.enSuelo ? (p.vy < 0 ? "salto" : "cae") : Math.abs(p.vx) > 12 ? "corre_" + (Math.floor(ahora / 83) % 4) : "idle_" + (Math.floor(ahora / 500) % 2);
-  const spr = I[cuadro], sw = 56 * e, sh = 64 * e;
+  const cuadro = p.respawn > 0 ? "dano" : p.completado() ? "victoria" : (ahora - yo.recogeT < 350) ? "recoge"
+    : !p.enSuelo ? (p.vy < 0 ? "salto" : "cae") : Math.abs(p.vx) > 12 ? "corre_" + (Math.floor(ahora / 71) % 6) : "idle_" + (Math.floor(ahora / 500) % 2);
+  const spr = I["av_" + cuadro];
   if (spr && !(p.respawn > 0 && Math.floor(ahora / 70) % 2)) {
-    g.save(); const sx = px - cam - (56 - 30) * e / 2, sy = y0 + py - (64 - 42) * e;
-    if (p.mira < 0) { g.translate(sx + sw, sy); g.scale(-1, 1); g.drawImage(spr, 0, 0, sw, sh); } else g.drawImage(spr, sx, sy, sw, sh);
+    const squash = (!quieto && ahora - yo.aterrizoT < 140);
+    const sxk = squash ? 1.12 : 1, syk = squash ? 0.86 : 1;
+    const sw = 224 * e * 1.7 / 4 * sxk, sh = 256 * e * 1.7 / 4 * syk;
+    const bx = px - cam + p.c.ANCHO / cfg.sub * e / 2 - sw / 2, by = y0 + py + p.c.ALTO / cfg.sub * e - sh + 3;
+    g.save();
+    if (p.mira < 0) { g.translate(bx + sw, by); g.scale(-1, 1); g.drawImage(spr, 0, 0, sw, sh); } else g.drawImage(spr, bx, by, sw, sh);
     g.restore();
   }
-  for (const q of yo.part) { g.globalAlpha = Math.min(1, q.vida * 2); g.fillStyle = q.c; g.fillRect(q.x * e - cam - q.t / 2, y0 + q.y * e - q.t / 2, q.t, q.t); }
+  for (const q of yo.part) { g.globalAlpha = Math.min(1, q.vida * 2); const r = Math.max(1.5, q.t / 2);
+    g.fillStyle = "#2b2440"; g.beginPath(); g.arc(q.x * e - cam, y0 + q.y * e, r + 1.5, 0, 7); g.fill();
+    g.fillStyle = q.c; g.beginPath(); g.arc(q.x * e - cam, y0 + q.y * e, r, 0, 7); g.fill(); }
   g.globalAlpha = 1;
-  if (yo.finT && p.completado()) {
-    const dd = Math.max(0, 1 - (ahora - yo.finT) / 900);
-    g.fillStyle = "rgba(94,234,212," + (dd * 0.5) + ")"; g.fillRect(0, 0, W, H);
-    if (ahora - yo.finT < 1100) { g.textAlign = "center"; g.font = "900 40px system-ui"; g.fillStyle = "#5eead4"; g.fillText("ARCHIVO RECUPERADO", W / 2, H * 0.42); }
+  if (I.primer_plano) { const img = I.primer_plano, h = Math.min(H * 0.24, img.height * W / 1920), w = img.width * h / img.height, x = -((cam * 1.25) % w);
+    for (let k = -1; k < W / w + 1; k++) g.drawImage(img, x + k * w, 0, w, h); }
+  if (!quieto && ahora - yo.danoT < 220) { g.fillStyle = "rgba(209,73,91,0.35)"; for (const yy of [0.18, 0.42, 0.68, 0.86]) g.fillRect(0, H * yy, W, 5); }
+  if (yo.finT && p.completado() && ahora - yo.finT < 1100) {
+    g.fillStyle = "rgba(18,13,28," + Math.min(0.55, (ahora - yo.finT) / 900) + ")"; g.fillRect(0, 0, W, H);
+    g.textAlign = "center"; g.font = "900 40px system-ui"; g.fillStyle = "#fbf6ee"; g.fillText("ARCHIVO RECUPERADO", W / 2, H * 0.42);
   }
-  g.fillStyle = "#0d0a1acc"; g.fillRect(0, 0, W, 44);
-  g.fillStyle = "#fbf6ee"; g.font = "900 17px system-ui"; g.textAlign = "left";
+  /* HUD: fichas de papel con contorno de tinta */
   const rest = Math.max(0, Math.floor((p.limite - p.tick) / cfg.ticks_s));
-  g.fillText(`Evidencias ${p.recogidas.length}/${p.evidencias.length}  ·  ${Math.floor(rest/60)}:${String(rest%60).padStart(2,"0")}  ·  detecciones ${p.muertes}  ·  ${p.puntuacion()} pts`, 12, 29);
-  if (yo.aviso && ahora - yo.aviso[2] < 2400) { g.textAlign = "center"; g.font = "800 18px system-ui"; g.fillStyle = yo.aviso[1]; g.fillText(yo.aviso[0], W/2, 72); }
+  const fichas = [[`${p.recogidas.length}/${p.evidencias.length}`, "evidencias"], [`${Math.floor(rest/60)}:${String(rest%60).padStart(2,"0")}`, "tiempo"],
+                  [`${p.muertes}`, "detecciones"], [`${p.puntuacion()}`, "pts"]];
+  let fxh = 10; g.textAlign = "left";
+  for (const [v, t] of fichas) { g.font = "900 17px system-ui"; const w1 = g.measureText(v).width; g.font = "500 12px system-ui"; const w = w1 + g.measureText(t).width + 28;
+    g.fillStyle = "#2b2440"; g.fillRect(fxh - 3, 7, w + 6, 34); g.fillStyle = "#fbf6ee"; g.fillRect(fxh, 10, w, 28);
+    g.fillStyle = (t === "tiempo" && rest <= 10) ? "#d1495b" : "#2b2440"; g.font = "900 17px system-ui"; g.fillText(v, fxh + 9, 30);
+    g.fillStyle = "#8b84a8"; g.font = "500 12px system-ui"; g.fillText(t, fxh + 15 + w1, 30); fxh += w + 14; }
+  if (yo.aviso && ahora - yo.aviso[2] < 2400) { g.textAlign = "center"; g.font = "800 18px system-ui"; g.lineWidth = 4; g.strokeStyle = "#2b2440";
+    g.strokeText(yo.aviso[0], W/2, 72); g.fillStyle = yo.aviso[1]; g.fillText(yo.aviso[0], W/2, 72); }
 }
 
 /* ---------------- Reto 5: Duelo de Frecuencias (gran final) ---------------- */

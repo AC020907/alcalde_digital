@@ -60,16 +60,17 @@ transform tarjeta_lugar_anim:
     easeout 0.5 alpha 0.0 xoffset -20
 
 screen tarjeta_lugar(dia, lugar):
+    # Remaster: la tarjeta de CivitasNet (papel, franja roja, contorno de tinta) como rotulo de lugar.
     zorder 30
-    frame at tarjeta_lugar_anim:
+    fixed at tarjeta_lugar_anim:
         xpos 60
-        ypos 60
-        background Frame("gui/frame.png", 30, 30)
-        padding (34, 18, 40, 20)
-        vbox:
-            spacing 2
-            text dia size 18 bold True color "#8c2f4b" kerning 3
-            text lugar size 32 bold True color "#2b2440"
+        ypos 56
+        xysize (520, 104)
+        add Solid("#2b2440")
+        add Solid("#fbf6ee", xsize=508, ysize=92, xpos=6, ypos=6)
+        add Solid("#d1495b", xsize=10, ysize=92, xpos=6, ypos=6)
+        text dia size 17 bold True color "#8c2f4b" kerning 3 xpos 38 ypos 20
+        text lugar font AP_FUENTE_FINA size 38 color "#2b2440" xpos 36 ypos 44
     timer 3.4 action Hide("tarjeta_lugar")
 
 ## Titulo de acto a pantalla completa.
@@ -77,13 +78,30 @@ transform titulo_acto_anim:
     alpha 0.0 yoffset 20
     easein 0.8 alpha 1.0 yoffset 0
 
+init python:
+    def titulo_acto_dia(numero):
+        """Que punto de la semana marca la linea de la cartela (prologo, I, II, III, domingo)."""
+        for i, clave in enumerate(("ACTO III", "ACTO II", "ACTO I")):
+            if numero.startswith(clave):
+                return 3 - i
+        return 4 if "DOMINGO" in numero.upper() else 0
+
 screen titulo_acto(numero, titulo, subtitulo):
-    add Solid("#1b1426")
+    # Remaster: la misma identidad que el logo. La linea es la semana (lunes -> domingo) y marca el acto.
+    $ dia_act = titulo_acto_dia(numero)
+    add Solid("#120d1c")
+    add Transform("images/bg/mapa.jpg", zoom=0.625, alpha=0.14)
     vbox at titulo_acto_anim:
-        align (0.5, 0.5)
-        spacing 14
-        text numero size 26 bold True color "#e86a7e" xalign 0.5 kerning 6
-        text titulo size 74 bold True color "#fbf6ee" xalign 0.5
+        align (0.5, 0.48)
+        spacing 18
+        text numero font AP_FUENTE_FINA size 28 color "#c9b8d8" xalign 0.5 kerning 12
+        text titulo font AP_FUENTE_FINA size 92 color "#fbf6ee" xalign 0.5 kerning 4
+        fixed:
+            xysize (640, 26)
+            xalign 0.5
+            add Solid("#c9b8d8", xsize=640, ysize=3, ypos=11)
+            for k in range(5):
+                add circulo(("#d1495b" if k == dia_act else ("#fbf6ee" if k < dia_act else "#3a3350")), "#2b2440", (11 if k == dia_act else 8)) xpos (k * 160 - (11 if k == dia_act else 8)) ypos (2 if k == dia_act else 5)
         text subtitulo size 28 color "#c9b8d8" xalign 0.5
     timer 3.2 action Return()
     key "dismiss" action Return()
